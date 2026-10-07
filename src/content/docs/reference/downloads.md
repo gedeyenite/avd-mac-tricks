@@ -23,6 +23,15 @@ mkdir -p ~/.config/karabiner/assets/complex_modifications
 curl -fsSL https://raw.githubusercontent.com/stephenmurphy/avd-mac-tricks/main/public/windows_app_mods.json -o ~/.config/karabiner/assets/complex_modifications/windows_app_mods.json
 ```
 
+### Alfred Workflow
+
+Prefer running it from Alfred? You can download and install the packaged Alfred Workflow:
+
+* **Download:** [Update-AVD-Windows-Shortcuts.alfredworkflow](/Update-AVD-Windows-Shortcuts.alfredworkflow)
+* **Keyword Trigger:** `avd-update`
+* **Action:** Automatically downloads and validates the latest rules file and sends a macOS notification when complete.
+
+
 ---
 
 ## 2. Keyboard Maestro Macro Bundles
