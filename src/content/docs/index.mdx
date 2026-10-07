@@ -1,0 +1,41 @@
+---
+title: AVD Mac Tricks
+description: The ultimate guide to making Microsoft Windows App and Azure Virtual Desktop behave natively on macOS.
+template: splash
+hero:
+  tagline: Overcome modifier key trapping, Start Menu focus-stealing, and remote clipboard pain. Turn Microsoft Windows App on macOS into a seamless powerhouse.
+  actions:
+    - text: Start Reading
+      link: /getting-started/overview/
+      icon: right-arrow
+      variant: primary
+    - text: Download Karabiner Config
+      link: /reference/downloads/
+      icon: document
+      variant: secondary
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+## What This Guide Solves
+
+<CardGrid stagger>
+  <Card title="No More Focus Stealing" icon="warning">
+    Fix the dreaded bug where pressing <kbd>⌘ Cmd</kbd> sends `Win Down`/`Win Up`, popping the Windows Start menu and pulling focus out of active Teams chats and Excel cells.
+  </Card>
+  <Card title="Native Mac Muscle Memory" icon="laptop">
+    Keep using <kbd>⌘C</kbd>, <kbd>⌘V</kbd>, <kbd>⌘Z</kbd>, and <kbd>⌘A</kbd> inside Windows, while keeping the physical <kbd>Right ⌘</kbd> key for when you genuinely need the Windows key.
+  </Card>
+  <Card title="Window Snapping & Switching" icon="random">
+    Snap Windows to screen edges with <kbd>⌘ + Arrows</kbd>, hop multi-monitor setups with <kbd>⇧ + ⌘ + Arrows</kbd>, and switch open apps with <kbd>⌘ + Tab</kbd> without breaking browser tabs.
+  </Card>
+  <Card title="macOS Global Pass-Throughs" icon="external">
+    Summon **Alfred** (<kbd>⌘ + Space</kbd>), **Todoist Quick Add** (<kbd>Ctrl + Space</kbd>), and media controls even when focused deep inside a full-screen remote desktop session.
+  </Card>
+  <Card title="Keyboard Maestro Power Suite" icon="puzzle">
+    Automate rock-solid remote pasting (<kbd>⌥⌘V</kbd>), Teams compose routines, CAC PIN insertion, and context-aware macros that adapt based on whether Mac or Windows is frontmost.
+  </Card>
+  <Card title="Free Forever & Community Driven" icon="comment">
+    100% static, fast, and unmetered with free GitHub Discussions comments on every section.
+  </Card>
+</CardGrid>

@@ -1,0 +1,76 @@
+---
+// Giscus comments widget integration for GitHub Discussions
+// Once you enable GitHub Discussions on your repository, paste your repo/category IDs here.
+---
+
+<div class="giscus-wrapper">
+  <div class="giscus-header">
+    <h3>💬 Questions & Discussion</h3>
+    <p>Leave a tip, ask a question, or share your own workaround using GitHub Discussions.</p>
+  </div>
+  <div class="giscus"></div>
+</div>
+
+<script>
+  function loadGiscus() {
+    const container = document.querySelector('.giscus');
+    if (!container || container.querySelector('iframe')) return;
+
+    const theme = document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light';
+    const script = document.createElement('script');
+    script.src = 'https://giscus.app/client.js';
+    // Configure with your GitHub repo details:
+    script.setAttribute('data-repo', 'stephenmurphy/avd-mac-tricks');
+    script.setAttribute('data-repo-id', '');
+    script.setAttribute('data-category', 'General');
+    script.setAttribute('data-category-id', '');
+    script.setAttribute('data-mapping', 'pathname');
+    script.setAttribute('data-strict', '0');
+    script.setAttribute('data-reactions-enabled', '1');
+    script.setAttribute('data-emit-metadata', '0');
+    script.setAttribute('data-input-position', 'top');
+    script.setAttribute('data-theme', theme);
+    script.setAttribute('data-lang', 'en');
+    script.setAttribute('data-loading', 'lazy');
+    script.crossOrigin = 'anonymous';
+    script.async = true;
+    container.appendChild(script);
+  }
+
+  // Load when DOM is ready and on page navigation
+  document.addEventListener('DOMContentLoaded', loadGiscus);
+  document.addEventListener('astro:page-load', loadGiscus);
+
+  // Sync theme changes with Giscus
+  const observer = new MutationObserver(() => {
+    const iframe = document.querySelector<HTMLIFrameElement>('iframe.giscus-frame');
+    if (!iframe) return;
+    const theme = document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light';
+    iframe.contentWindow?.postMessage(
+      { giscus: { setConfig: { theme } } },
+      'https://giscus.app'
+    );
+  });
+  observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+</script>
+
+<style>
+  .giscus-wrapper {
+    margin-top: 3.5rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--sl-color-gray-5);
+  }
+  .giscus-header {
+    margin-bottom: 1.5rem;
+  }
+  .giscus-header h3 {
+    margin: 0 0 0.25rem 0;
+    font-size: 1.25rem;
+    font-weight: 700;
+  }
+  .giscus-header p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--sl-color-gray-3);
+  }
+</style>
