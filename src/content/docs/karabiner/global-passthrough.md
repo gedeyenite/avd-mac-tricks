@@ -127,3 +127,17 @@ For custom system global hotkeys (like a pause/play macro or stream controller),
   ]
 }
 ```
+
+---
+
+## 4. CleanShot X Screenshot Overlay (<kbd>⇧ + ⌘ + 4</kbd> / <kbd>⇧ + ⌘ + 5</kbd>)
+
+By default, when Windows App has focus in full-screen or multiple monitors, pressing native macOS screenshot keys can be swallowed by the remote session or trigger Windows snipping tools.
+
+### The Problem
+* Mac users rely on **CleanShot X** for OCR text extraction, floating pinned screenshots (pinning a spec sheet on screen while typing into remote Windows), and quick annotations.
+* Windows App captures the modifier stream unless explicit pass-through directives are defined.
+
+### The Workaround
+Pass CleanShot's native capture hotkeys (<kbd>⇧ + ⌘ + 4</kbd> for Area Capture, <kbd>⇧ + ⌘ + 3</kbd> for Fullscreen) through Karabiner, or configure CleanShot's **"Pin to Screen"** overlay floating window to maintain macOS Window Level `NSFloatingWindowLevel` above fullscreen RDP sessions.
+

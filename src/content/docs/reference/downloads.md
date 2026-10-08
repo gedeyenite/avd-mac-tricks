@@ -36,11 +36,25 @@ Prefer running it from Alfred? You can download and install the packaged Alfred 
 
 ## 2. Keyboard Maestro Macro Bundles
 
-The Keyboard Maestro macro suites described in this guide are structured into four modular groups:
+The Keyboard Maestro macro suites described in this guide are pre-packaged into modular `.kmmacros` bundles ready to import:
 
-| Group Name | Download Link | Scope |
+| Group Name | Download Link | Scope & Highlights |
 | :--- | :--- | :--- |
-| **`Windows/AVD: UNIVERSAL`** | [Download .kmmacros](#) | Active when Windows App is frontmost |
-| **`SPLIT: AVD and macOS`** | [Download .kmmacros](#) | Active everywhere (Context-aware logic) |
-| **`Windows/AVD: TEAMS`** | [Download .kmmacros](#) | Teams compose and banner automations |
-| **`Windows/AVD: OUTLOOK`** | [Download .kmmacros](#) | Email transmittal and template routines |
+| **`Windows/AVD: UNIVERSAL`** | [Download .kmmacros](/macros/Windows-AVD-Universal.kmmacros) | Active when Windows App is frontmost. Includes Safe Remote Paste (<kbd>⌥⌘V</kbd>) and Window Centering (<kbd>⌥⌘C</kbd>). |
+| **`SPLIT: AVD and macOS`** | [Download .kmmacros](/macros/SPLIT-AVD-and-macOS.kmmacros) | Active everywhere. Context-aware logic (e.g. adaptive `;;date` stamps). |
+| **`Windows/AVD: TEAMS`** | [Download .kmmacros](/macros/Windows-AVD-Teams.kmmacros) | Fast compose box navigation (<kbd>⌥R</kbd>) and standup templates. |
+| **`Windows/AVD: OUTLOOK`** | [Download .kmmacros](/macros/Windows-AVD-Outlook.kmmacros) | Email transmittal templates (`;;att`) and fast filing routines. |
+
+---
+
+## 3. Recommended macOS Power User Apps
+
+These are the primary apps referenced throughout our workarounds and guides:
+
+* **[Karabiner-Elements](https://karabiner-elements.pqrs.org/)** — Low-level DriverKit keyboard remapping for macOS. (Free / Open Source)
+* **[Keyboard Maestro](https://www.keyboardmaestro.com/)** — Automation powerhouse for macOS workflows, context detection, and typing routines.
+* **[Alfred](https://www.alfredapp.com/)** — Productivity launcher, clipboard history manager, and workflow engine.
+* **[CleanShot X](https://cleanshot.com/)** — Screen capture, OCR text grabber, and floating overlay pin tool.
+* **[Todoist](https://todoist.com/)** — Task management with global Quick Add capability.
+* **[Microsoft Windows App](https://apps.apple.com/us/app/windows-app/id1295203466?mt=12)** — Official client for Azure Virtual Desktop and Windows 365.
+
