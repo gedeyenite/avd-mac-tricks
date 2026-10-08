@@ -34,8 +34,9 @@ Else:
 * **When in Windows App:** Outputs Windows-compatible file naming format: `YYYY-MM-DD` or `YYYYMMDD_HHMM`.
 * **When in macOS:** Formats according to macOS preferences with standard formatting and clipboard history tags.
 
-### 3. Password / Credential Vault Autofill
-* Safely dispatches the appropriate enterprise password or PIN into AVD, while sending local macOS credentials when working locally.
+### 3. Application & Folder Quick Launcher
+* **When in Windows App:** Uses keystrokes to open Windows-specific network drives and mapped enterprise paths (`X:\Shared\Projects`).
+* **When in macOS:** Triggers native macOS Finder or opens local project repositories directly.
 
 ---
 

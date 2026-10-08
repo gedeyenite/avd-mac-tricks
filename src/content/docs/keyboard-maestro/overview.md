@@ -19,7 +19,7 @@ Together, they form a complete pair:
 │  • Sanitized text pasting across RDP network latency   │
 │  • Smart Split Macros (Mac vs AVD context detection)   │
 │  • Teams compose box & notification automation         │
-│  • Snippet expansions (CAC PIN, emails, signatures)    │
+│  • Snippet expansions (emails, signatures, templates)  │
 └────────────────────────────────────────────────────────┘
 ```
 

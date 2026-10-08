@@ -1,6 +1,6 @@
 ---
 title: Anti-Idle & Routine Utilities
-description: Smart keep-alive anti-idle pingers, CAC PIN insertion, and email automation routines.
+description: Smart keep-alive anti-idle pingers, window centering, and email automation routines.
 ---
 
 In enterprise and government Azure Virtual Desktop environments, strict timeout policies, smart card (CAC/PIV) prompts, and repetitive communications consume significant focus.
@@ -21,16 +21,12 @@ In Keyboard Maestro, create a macro that triggers every 5–10 minutes:
 
 ---
 
-## 2. One-Key CAC PIN Insertion
-
-When authenticating against DoD, government, or corporate portals inside AVD, Smart Card / CAC dialogs frequently pop up to request your PIN.
-
-### The Macro
-* **Trigger:** Dedicated hotkey (or Stream Deck button)
+## 2. Fast Window Reset & Center
+When multi-monitor sessions get reorganized or windows open partially off-screen inside AVD:
+* **Trigger:** Dedicated hotkey (e.g., <kbd>⌥ + ⌘ + C</kbd>)
 * **Action:**
-  1. Activates the PIN entry prompt.
-  2. Inserts your configured PIN with high-speed keystroke simulation.
-  3. Presses <kbd>Enter</kbd> to confirm the authentication challenge.
+  1. Issues standard Windows keyboard commands to maximize, restore, or center the active application window.
+  2. Snaps the focused document into primary view without needing to hunt down window titlebars with your mouse cursor.
 
 ---
 
