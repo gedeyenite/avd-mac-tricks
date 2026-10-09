@@ -30,3 +30,11 @@ Whenever the user prompts "Update Website":
 4. Run `npm run build` to verify formatting and sitemaps.
 5. Commit and push changes to `origin master` so GitHub Pages deploys the updates automatically.
 
+## Project Context Verification
+
+This project is **"AVD Mac Tricks / Website"** (`friendly-noether`): an Astro/Starlight documentation site for Microsoft Windows App workarounds on macOS.
+
+If the user gives a prompt or command that appears to belong to another project (e.g., real estate / house hunting scraper, Kindle downloader, Home Assistant, or unrelated app tasks), **DO NOT execute it immediately**. Always ask:
+> *"It looks like this request might be intended for another project (e.g., [Project Name]). Are we in the correct project, or did you mean to run this in that workspace?"*
+
+
