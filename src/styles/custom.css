@@ -61,4 +61,15 @@ kbd {
   text-decoration: underline;
 }
 
+/* Allow hero title and tagline to expand to the full width of the grid */
+.hero .copy > * {
+  max-width: 100% !important;
+}
+
+.hero .copy {
+  max-width: 100% !important;
+  width: 100%;
+}
+
+
 
