@@ -6,8 +6,6 @@ updateBadge: "NEW"
 updateSummary: "Vibe-coding Karabiner modifications with Antigravity & Gemini Pro"
 ---
 
-import { Aside } from '@astrojs/starlight/components';
-
 :::caution[Level: Extreme Power User]
 This method gives an agentic AI coding environment permission to view, edit, and test configuration files directly on your Mac. If you are comfortable working in Terminal and want to skip hours of manual JSON debugging, this is the holy grail.
 :::
