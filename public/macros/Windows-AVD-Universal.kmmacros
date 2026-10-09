@@ -15,70 +15,172 @@
 				<key>Actions</key>
 				<array>
 					<dict>
+						<key>Action</key>
+						<string>Unwrap</string>
 						<key>ActionUID</key>
-						<integer>1001</integer>
-						<key>IsDisclosed</key>
-						<true/>
+						<integer>61973</integer>
 						<key>MacroActionType</key>
-						<string>Comment</string>
-						<key>Text</key>
-						<string>Safely pastes clipboard text across remote desktop RDP network latency.</string>
-						<key>Title</key>
-						<string>Paste Plain Text into AVD</string>
+						<string>Filter</string>
+						<key>Source</key>
+						<string>Clipboard</string>
+					</dict>
+					<dict>
+						<key>Action</key>
+						<string>WindowsLineEndings</string>
+						<key>ActionUID</key>
+						<integer>61977</integer>
+						<key>MacroActionType</key>
+						<string>Filter</string>
+						<key>Source</key>
+						<string>Clipboard</string>
 					</dict>
 					<dict>
 						<key>ActionUID</key>
-						<integer>1002</integer>
+						<integer>61978</integer>
 						<key>Conditions</key>
 						<dict>
 							<key>ConditionList</key>
 							<array>
 								<dict>
 									<key>ConditionType</key>
-									<string>Calculation</string>
-									<key>IsMet</key>
-									<true/>
-									<key>Value</key>
-									<string>CHARACTERS(%CurrentClipboard%) &gt; 200</string>
+									<string>Modifiers</string>
+									<key>ModifiersDown</key>
+									<integer>0</integer>
+									<key>ModifiersUp</key>
+									<integer>4864</integer>
 								</dict>
 							</array>
+							<key>ConditionListMatch</key>
+							<string>All</string>
 						</dict>
-						<key>ElseActions</key>
+						<key>MacroActionType</key>
+						<string>PauseUntil</string>
+						<key>TimeOutAbortsMacro</key>
+						<true/>
+					</dict>
+					<dict>
+						<key>ActionUID</key>
+						<integer>61974</integer>
+						<key>IsActive</key>
+						<false/>
+						<key>MacroActionType</key>
+						<string>SetActionDelay</string>
+						<key>Permanent</key>
+						<false/>
+						<key>Preference</key>
+						<string>SimulateKeystrokeNormalKey</string>
+						<key>Reset</key>
+						<false/>
+						<key>Value</key>
+						<string>0.01</string>
+					</dict>
+					<dict>
+						<key>Action</key>
+						<string>ByTyping</string>
+						<key>ActionUID</key>
+						<integer>61972</integer>
+						<key>IsActive</key>
+						<false/>
+						<key>MacroActionType</key>
+						<string>InsertText</string>
+						<key>ProcessingMode</key>
+						<string>TextTokensOnly</string>
+						<key>TargetApplication</key>
+						<dict/>
+						<key>TargetingType</key>
+						<string>Front</string>
+						<key>Text</key>
+						<string>%SystemClipboard%</string>
+					</dict>
+					<dict>
+						<key>ActionUID</key>
+						<integer>62788</integer>
+						<key>DisplayKind</key>
+						<string>None</string>
+						<key>HonourFailureSettings</key>
+						<true/>
+						<key>IncludeStdErr</key>
+						<false/>
+						<key>IncludedVariables</key>
 						<array>
-							<dict>
-								<key>ActionUID</key>
-								<integer>1003</integer>
-								<key>MacroActionType</key>
-								<string>InsertText</string>
-								<key>Target</key>
-								<string>Type</string>
-								<key>Text</key>
-								<string>%CurrentClipboard%</string>
-							</dict>
+							<string>9999</string>
 						</array>
 						<key>MacroActionType</key>
-						<string>IfThenElse</string>
-						<key>ThenActions</key>
-						<array>
-							<dict>
-								<key>ActionUID</key>
-								<integer>1004</integer>
-								<key>MacroActionType</key>
-								<string>InsertText</string>
-								<key>Target</key>
-								<string>Paste</string>
-								<key>Text</key>
-								<string>%CurrentClipboard%</string>
-							</dict>
-						</array>
+						<string>ExecuteAppleScript</string>
+						<key>Path</key>
+						<string></string>
+						<key>Text</key>
+						<string>set clipText to (the clipboard as text)
+
+-- Normalize line breaks to LF
+set AppleScript's text item delimiters to return &amp; linefeed
+set clipItems to text items of clipText
+set AppleScript's text item delimiters to linefeed
+set clipText to clipItems as text
+
+set AppleScript's text item delimiters to return
+set clipItems to text items of clipText
+set AppleScript's text item delimiters to linefeed
+set clipText to clipItems as text
+set AppleScript's text item delimiters to ""
+
+-- Release any stuck modifier keys
+tell application "System Events"
+	key up shift
+	key up option
+	key up control
+	key up command
+end tell
+
+-- Problematic characters in AVD that require Alt codes
+set problemChars to "!@#$%^&amp;*()_+{}:\"&lt;&gt;?|~`"
+
+repeat with i from 1 to count of characters in clipText
+	set currentChar to character i of clipText
+	set asciiNum to id of currentChar
+	
+	tell application "System Events"
+		if asciiNum is 10 then
+			-- Shift + Enter for new lines
+			key down shift
+			key code 36
+			key up shift
+			delay 0.02
+		else if problemChars contains currentChar then
+			-- Fast Alt-code injection for shifted/special characters
+			set numStr to asciiNum as text
+			if asciiNum &lt; 100 then
+				set altCode to "0" &amp; numStr
+			else
+				set altCode to numStr
+			end if
+			
+			key down option
+			keystroke altCode
+			key up option
+			delay 0.005
+		else
+			-- Direct keystroke for regular letters, numbers, spaces, and unshifted punctuation
+			keystroke currentChar
+		end if
+	end tell
+end repeat</string>
+						<key>TimeOutAbortsMacro</key>
+						<true/>
+						<key>TrimResults</key>
+						<true/>
+						<key>TrimResultsNew</key>
+						<true/>
+						<key>UseText</key>
+						<true/>
 					</dict>
 				</array>
 				<key>CreationDate</key>
-				<real>749000000.0</real>
+				<real>739290109.738655</real>
 				<key>ModificationDate</key>
-				<real>749000000.0</real>
+				<real>813239875.008224</real>
 				<key>Name</key>
-				<string>Safe Remote Paste (⌥⌘V)</string>
+				<string>Paste from macOS to AVD</string>
 				<key>Triggers</key>
 				<array>
 					<dict>
@@ -89,11 +191,11 @@
 						<key>MacroTriggerType</key>
 						<string>HotKey</string>
 						<key>Modifiers</key>
-						<integer>2560</integer>
+						<integer>2304</integer>
 					</dict>
 				</array>
 				<key>UID</key>
-				<string>C77A5B01-460B-48F8-9271-92A385984101</string>
+				<string>0A868E2E-8CF7-4F9A-8141-5214F27F8D53</string>
 			</dict>
 			<dict>
 				<key>Actions</key>

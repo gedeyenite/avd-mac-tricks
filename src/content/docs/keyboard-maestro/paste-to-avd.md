@@ -19,35 +19,116 @@ Here is the exact **Keyboard Maestro "Paste from macOS to AVD" macro** that solv
 * **Group:** `Windows/AVD: UNIVERSAL` (Active only when Windows App is frontmost)
 
 ```text title="Keyboard Maestro Action Sequence"
-1. Filter Clipboard: Set to Plain Text
-2. Filter Clipboard: Trim Whitespace
-3. Set Action Delay: 0.05 seconds between simulated events
-4. Insert Text by Typing (or Paste via System Events):
-   • If length < 250 characters: "Insert Text by Typing: %CurrentClipboard%"
-   • If length >= 250 characters: Trigger simulated Ctrl+V with 0.1s settle delay
+1. Filter Clipboard: Unwrap
+2. Filter Clipboard: WindowsLineEndings
+3. Pause Until: All physical modifiers (Ctrl, Shift, Command, Option) are UP
+4. Execute AppleScript:
+   • Release any stuck modifier keys
+   • Normalize line breaks to LF
+   • Type normal characters directly with small pauses
+   • Inject Alt-codes (via Option key) for shifted/special characters (!@#$%^&*()_+{}:"<>?|~`)
 ```
 
 ---
 
-## AppleScript Implementation (Zero-Jitter Pasting)
+## The Production AppleScript (Special Characters & Alt-Code Injection)
 
-If you prefer executing the paste via an AppleScript action inside Keyboard Maestro or an Alfred workflow:
+When typing into remote AVD sessions, shifted symbols (like `!`, `@`, `#`, `$`) can drop their Shift modifier across latency, typing `1`, `2`, `3`, `4` instead. 
 
-```applescript title="Paste to AVD AppleScript"
--- Ensure the clipboard contains clean plain text
-set cleanText to (the clipboard as text)
-set the clipboard to cleanText
+This production script handles this by calculating the ASCII value and typing Windows Alt-codes via `key down option` for problematic symbols:
 
+```applescript title="Paste from macOS to AVD.applescript"
+set clipText to (the clipboard as text)
+
+-- Normalize line breaks to LF
+set AppleScript's text item delimiters to return & linefeed
+set clipItems to text items of clipText
+set AppleScript's text item delimiters to linefeed
+set clipText to clipItems as text
+
+set AppleScript's text item delimiters to return
+set clipItems to text items of clipText
+set AppleScript's text item delimiters to linefeed
+set clipText to clipItems as text
+set AppleScript's text item delimiters to ""
+
+-- Release any stuck modifier keys
 tell application "System Events"
-    tell process "Windows App"
-        set frontmost to true
-        delay 0.05
-        -- Send native Windows Ctrl+V
-        key down control
-        keystroke "v"
-        key up control
-    end tell
+	key up shift
+	key up option
+	key up control
+	key up command
 end tell
+
+-- Problematic characters in AVD that require Alt codes
+set problemChars to "!@#$%^&*()_+{}:\"<>?|~`"
+
+repeat with i from 1 to count of characters in clipText
+	set currentChar to character i of clipText
+	set asciiNum to id of currentChar
+	
+	tell application "System Events"
+		if asciiNum is 10 then
+			-- Shift + Enter for new lines
+			key down shift
+			key code 36
+			key up shift
+			delay 0.02
+		else if problemChars contains currentChar then
+			-- Fast Alt-code injection for shifted/special characters
+			set numStr to asciiNum as text
+			if asciiNum < 100 then
+				set altCode to "0" & numStr
+			else
+				set altCode to numStr
+			end if
+			
+			key down option
+			keystroke altCode
+			key up option
+			delay 0.005
+		else
+			-- Direct keystroke for regular letters, numbers, spaces, and unshifted punctuation
+			keystroke currentChar
+		end if
+	end tell
+end repeat
+```
+
+---
+
+## Karabiner Pass-Through Requirement
+
+Because Karabiner remaps <kbd>Left Command</kbd> to <kbd>Control</kbd> inside Windows App, you must pass <kbd>⌥ + ⌘ + V</kbd> through to macOS uninhibited so Keyboard Maestro can catch the hotkey:
+
+```json title="Karabiner Rule (Included in windows_app_mods.json)"
+{
+  "description": "Windows App: Paste from macOS Pass-Through (Opt + Cmd + V / Shift + Opt + Cmd + V)",
+  "manipulators": [
+    {
+      "type": "basic",
+      "conditions": [
+        {
+          "type": "frontmost_application_if",
+          "bundle_identifiers": ["^com\\.microsoft\\.rdc\\.macos$"]
+        }
+      ],
+      "from": {
+        "key_code": "v",
+        "modifiers": {
+          "mandatory": ["left_command", "left_option"],
+          "optional": ["any"]
+        }
+      },
+      "to": [
+        {
+          "key_code": "v",
+          "modifiers": ["left_command", "left_option"]
+        }
+      ]
+    }
+  ]
+}
 ```
 
 ---
