@@ -16,6 +16,9 @@
   - Populate downloadable `.kmmacros` files for the Universal, Split, Teams, and Outlook suites.
   - Test and verify paste-to-AVD latency delay settings across varying network conditions.
 
-- [ ] **Site Deployment**
-  - Link repository to Cloudflare Pages (`avd-mac-tricks.pages.dev`).
-  - Configure Giscus discussion categories for comment integration.
+- [x] **Configure Giscus discussion categories for live comment integration**
+- [x] **Deploy Todoist Sync Workflow for CRM Tickets**
+  - Workflow added at `.github/workflows/todoist-sync.yml`
+  - Labels `accepted` and `approved` created in repo
+  - Remaining: Add `TODOIST_API_TOKEN` secret in GitHub repo settings (or via `gh secret set TODOIST_API_TOKEN`)
+
