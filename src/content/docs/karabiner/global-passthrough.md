@@ -11,6 +11,10 @@ One of the most frustrating aspects of working inside a full-screen remote deskt
 
 Here is how we configure clean pass-throughs.
 
+:::tip[🥷 Automated Setup Option]
+Tuning complex passthrough triggers and `to_after_key_up` reset behaviors is effortless when delegated to an AI agent. Learn how to do this in the **[Super Double Ninja Power User Extreme Setup](/avd-mac-tricks/karabiner/ai-automated-setup/)**. *(Note: Requires an AI subscription or API tier).*
+:::
+
 ---
 
 ## 1. Alfred Pass-Through (<kbd>⌘ + Space</kbd>)

@@ -5,6 +5,10 @@ description: How remapping Left Command to Control while leaving Right Command u
 
 The core breakthrough of this setup is the **asymmetric split** between your left and right Command keys.
 
+:::tip[🥷 Automated Setup Option]
+Rather than hand-crafting or tweaking DriverKit rules yourself, see how to automate Karabiner modifications using Antigravity and Gemini Pro in the **[Super Double Ninja Power User Extreme Setup](/avd-mac-tricks/karabiner/ai-automated-setup/)**. *(Note: Requires an AI subscription or API tier).*
+:::
+
 ---
 
 ## The Design Principle

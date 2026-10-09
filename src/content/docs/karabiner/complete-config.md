@@ -7,6 +7,10 @@ This page contains the **complete, battle-tested `windows_app_mods.json`** file.
 
 It remaps modifiers, enables window snapping, fixes the app switcher, syncs clipboard history, and allows macOS global hotkeys like **Alfred** and **Todoist** to pass through seamlessly.
 
+:::tip[🥷 Skip the Manual Copy-Paste: Automated AI Setup Available]
+Tired of manually managing JSON files and reloading rules? Check out the **[Super Double Ninja Power User Extreme Setup](/avd-mac-tricks/karabiner/ai-automated-setup/)** to see how we used the Antigravity app with Google Gemini Pro to inspect, write, and reload Karabiner modifications hands-free. *(Note: Requires an AI subscription or API tier).*
+:::
+
 ---
 
 ## Installation Quick Start

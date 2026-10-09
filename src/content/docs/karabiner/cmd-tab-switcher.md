@@ -11,6 +11,10 @@ Reaching for <kbd>Option + Tab</kbd> breaks years of Mac muscle memory. However,
 
 Here is how we solved both problems simultaneously.
 
+:::tip[🥷 Automated Setup Option]
+The App Switcher requires precise condition blocks and modifier handling. Learn how to let an AI assistant write and update this rule hands-free in the **[Super Double Ninja Power User Extreme Setup](/avd-mac-tricks/karabiner/ai-automated-setup/)**. *(Note: Requires an AI subscription or API tier).*
+:::
+
 ---
 
 ## The Desired Experience

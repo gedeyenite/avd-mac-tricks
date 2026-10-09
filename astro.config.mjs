@@ -39,6 +39,7 @@ export default defineConfig({
 						{ label: 'Cmd + Tab Window Switcher', slug: 'karabiner/cmd-tab-switcher' },
 						{ label: 'Shift + Cmd + V Clipboard History', slug: 'karabiner/clipboard-history' },
 						{ label: 'macOS Hotkey Pass-Throughs (Alfred & Todoist)', slug: 'karabiner/global-passthrough' },
+						{ label: '🥷 Super Double Ninja: AI Automated Setup', slug: 'karabiner/ai-automated-setup' },
 					],
 				},
 				{

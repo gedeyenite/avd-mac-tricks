@@ -11,6 +11,10 @@ When switching into Windows App, pressing <kbd>⇧ Shift + ⌘ + V</kbd> usually
 
 This rule maps your familiar Mac clipboard manager shortcut to summon the native Windows Clipboard History popup on demand.
 
+:::tip[🥷 Automated Setup Option]
+Skip manual JSON editing: use Antigravity and Gemini Pro to wire and test clipboard history rules directly. See the **[Super Double Ninja Power User Extreme Setup](/avd-mac-tricks/karabiner/ai-automated-setup/)**. *(Note: Requires an AI subscription or API tier).*
+:::
+
 ---
 
 ## The Mapping

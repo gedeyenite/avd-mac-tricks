@@ -11,6 +11,10 @@ Because our general rule converts <kbd>Left ⌘</kbd> to <kbd>Control</kbd>, pre
 
 This rule restores full native window management using your left hand.
 
+:::tip[🥷 Automated Setup Option]
+You can have an AI agent write, test, and insert window-snapping manipulators directly into your Karabiner configuration file. Check out the **[Super Double Ninja Power User Extreme Setup](/avd-mac-tricks/karabiner/ai-automated-setup/)**. *(Note: Requires an AI subscription or API tier).*
+:::
+
 ---
 
 ## Shortcuts Overview
