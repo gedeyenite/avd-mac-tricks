@@ -145,3 +145,78 @@ By default, when Windows App has focus in full-screen or multiple monitors, pres
 ### The Workaround
 Pass CleanShot's native capture hotkeys (<kbd>⇧ + ⌘ + 4</kbd> for Area Capture, <kbd>⇧ + ⌘ + 3</kbd> for Fullscreen) through Karabiner, or configure CleanShot's **"Pin to Screen"** overlay floating window to maintain macOS Window Level `NSFloatingWindowLevel` above fullscreen RDP sessions.
 
+---
+
+## 5. Remote Windows Snipping Tool (<kbd>⇧ + ⌘ + S</kbd>)
+
+If you prefer using Windows's built-in **Snipping Tool** directly inside your remote virtual desktop rather than macOS screenshot utilities, you run into the same modifier conflict: Windows triggers snipping via <kbd>Win + ⇧ + S</kbd>.
+
+### The Remap
+Our Karabiner rule intercepts <kbd>Shift + Cmd + S</kbd> inside Windows App and emits physical <kbd>Right Command (Win)</kbd> + <kbd>Left Shift</kbd> + <kbd>S</kbd>:
+
+```json
+{
+  "description": "Windows App: Windows Snipping Tool (Shift + Cmd + S to Win + Shift + S)",
+  "manipulators": [
+    {
+      "type": "basic",
+      "conditions": [
+        {
+          "type": "frontmost_application_if",
+          "bundle_identifiers": ["^com\\.microsoft\\.rdc\\.macos$"]
+        }
+      ],
+      "from": {
+        "key_code": "s",
+        "modifiers": {
+          "mandatory": ["command", "shift"],
+          "optional": ["caps_lock"]
+        }
+      },
+      "to": [
+        {
+          "key_code": "s",
+          "modifiers": ["right_command", "left_shift"]
+        }
+      ]
+    }
+  ]
+}
+```
+
+---
+
+## 6. Shortcuts Cheat Sheet Overlay (<kbd>⌘ + ?</kbd>)
+
+Remembering every remote remap, passthrough key, and modifier difference can take time. To help keep shortcuts at your fingertips, you can bind <kbd>⌘ + ?</kbd> (<kbd>⇧ + ⌘ + /</kbd>) to a shell script trigger that toggles a floating cheat sheet overlay on your Mac screen.
+
+```json
+{
+  "description": "Windows App: Shortcuts Cheat Sheet Overlay (Cmd + ?)",
+  "manipulators": [
+    {
+      "type": "basic",
+      "conditions": [
+        {
+          "type": "frontmost_application_if",
+          "bundle_identifiers": ["^com\\.microsoft\\.rdc\\.macos$"]
+        }
+      ],
+      "from": {
+        "key_code": "slash",
+        "modifiers": {
+          "mandatory": ["command", "shift"],
+          "optional": ["caps_lock"]
+        }
+      },
+      "to": [
+        {
+          "shell_command": "/Users/stephenmurphy/.config/karabiner/bin/toggle_overlay.sh"
+        }
+      ]
+    }
+  ]
+}
+```
+
+

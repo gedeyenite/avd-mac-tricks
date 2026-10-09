@@ -262,8 +262,10 @@ end repeat</string>
 				</dict>
 			</array>
 		</dict>
+		<key>ToggleMacroUID</key>
+		<string>1F232B32-EAA5-429E-8622-683EEA36A089</string>
 		<key>UID</key>
-		<string>C77A5B01-460B-48F8-9271-92A385984000</string>
+		<string>3C02B823-3801-45D4-BFF7-7977F47F243E</string>
 	</dict>
 </array>
 </plist>

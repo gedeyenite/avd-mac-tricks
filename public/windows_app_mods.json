@@ -106,6 +106,80 @@
       ]
     },
     {
+      "description": "Windows App: Windows Snipping Tool (Shift + Cmd + S to Win + Shift + S)",
+      "manipulators": [
+        {
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "frontmost_application_if",
+              "bundle_identifiers": [
+                "^com\\.microsoft\\.rdc\\.macos$"
+              ]
+            }
+          ],
+          "from": {
+            "key_code": "s",
+            "modifiers": {
+              "mandatory": [
+                "command",
+                "shift"
+              ],
+              "optional": [
+                "caps_lock"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "s",
+              "modifiers": [
+                "right_command",
+                "left_shift"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "frontmost_application_if",
+              "bundle_identifiers": [
+                "^com\\.microsoft\\.rdc\\.macos$"
+              ]
+            },
+            {
+              "type": "variable_unless",
+              "name": "is_physical_control",
+              "value": 1
+            }
+          ],
+          "from": {
+            "key_code": "s",
+            "modifiers": {
+              "mandatory": [
+                "left_control",
+                "shift"
+              ],
+              "optional": [
+                "caps_lock"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "s",
+              "modifiers": [
+                "right_command",
+                "left_shift"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
       "description": "Windows App: Window Management Shortcuts (Option A: Left Command [+ Shift] + Arrows)",
       "manipulators": [
         {
@@ -1498,6 +1572,72 @@
           "to_after_key_up": [
             {
               "key_code": "left_control"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "Windows App: Shortcuts Cheat Sheet Overlay (Cmd + ?)",
+      "manipulators": [
+        {
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "frontmost_application_if",
+              "bundle_identifiers": [
+                "^com\\.microsoft\\.rdc\\.macos$"
+              ]
+            }
+          ],
+          "from": {
+            "key_code": "slash",
+            "modifiers": {
+              "mandatory": [
+                "command",
+                "shift"
+              ],
+              "optional": [
+                "caps_lock"
+              ]
+            }
+          },
+          "to": [
+            {
+              "shell_command": "/Users/stephenmurphy/.config/karabiner/bin/toggle_overlay.sh"
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "frontmost_application_if",
+              "bundle_identifiers": [
+                "^com\\.microsoft\\.rdc\\.macos$"
+              ]
+            },
+            {
+              "type": "variable_unless",
+              "name": "is_physical_control",
+              "value": 1
+            }
+          ],
+          "from": {
+            "key_code": "slash",
+            "modifiers": {
+              "mandatory": [
+                "left_control",
+                "shift"
+              ],
+              "optional": [
+                "caps_lock"
+              ]
+            }
+          },
+          "to": [
+            {
+              "shell_command": "/Users/stephenmurphy/.config/karabiner/bin/toggle_overlay.sh"
             }
           ]
         }
