@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Windows App Shortcuts Cheat Sheet</title>
+<style>
+:root {
+  --bg: rgba(28, 28, 30, 0.88);
+  --card-bg: rgba(44, 44, 46, 0.75);
+  --card-border: rgba(255, 255, 255, 0.1);
+  --text: #ffffff;
+  --text-muted: #a1a1aa;
+  --accent: #38bdf8;
+  --key-bg: rgba(255, 255, 255, 0.12);
+  --key-border: rgba(255, 255, 255, 0.2);
+  --key-shadow: 0 2px 0 rgba(0, 0, 0, 0.35);
+  --highlight: rgba(56, 189, 248, 0.18);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", sans-serif;
+  background: var(--bg);
+  backdrop-filter: blur(28px) saturate(190%);
+  -webkit-backdrop-filter: blur(28px) saturate(190%);
+  color: var(--text);
+  padding: 30px 36px 36px;
+  user-select: none;
+  -webkit-user-select: none;
+  overflow-y: auto;
+  height: 100vh;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--card-border);
+}
+
+.title-area h1 {
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.title-area h1 span.badge {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: var(--highlight);
+  color: var(--accent);
+  padding: 3px 10px;
+  border-radius: 6px;
+  border: 1px solid rgba(56, 189, 248, 0.3);
+}
+
+.title-area p {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin-top: 5px;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.search-box {
+  position: relative;
+}
+
+.search-box input {
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid var(--card-border);
+  color: #fff;
+  border-radius: 8px;
+  padding: 8px 14px 8px 34px;
+  font-size: 14px;
+  width: 250px;
+  outline: none;
+  transition: all 0.15s ease;
+}
+
+.search-box input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.25);
+  width: 300px;
+}
+
+.search-box svg {
+  position: absolute;
+  left: 11px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+  fill: var(--text-muted);
+}
+
+.close-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--card-border);
+  color: var(--text-muted);
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-size: 13px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.15s ease;
+}
+
+.close-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 14px;
+  padding: 20px 22px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.card-title {
+  font-size: 13.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--accent);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.shortcut-list {
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+}
+
+.item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 0;
+  transition: opacity 0.15s ease;
+}
+
+.desc {
+  font-size: 14.5px;
+  color: #e4e4e7;
+  font-weight: 500;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.desc small {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-weight: 400;
+}
+
+.keys {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+}
+
+kbd {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  background: var(--key-bg);
+  color: #f4f4f5;
+  border: 1px solid var(--key-border);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.28);
+  border-radius: 6px;
+  padding: 3px 9px;
+  box-shadow: var(--key-shadow);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 26px;
+  text-align: center;
+}
+
+kbd.plus {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0 1px;
+  color: var(--text-muted);
+  font-weight: 400;
+  min-width: unset;
+}
+
+.card-tip {
+  margin-top: 14px;
+  padding: 10px 12px;
+  background: rgba(56, 189, 248, 0.08);
+  border: 1px solid rgba(56, 189, 248, 0.22);
+  border-radius: 8px;
+  font-size: 12.5px;
+  color: #e0f2fe;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  line-height: 1.4;
+}
+
+.card-tip span.icon {
+  font-size: 15px;
+  flex-shrink: 0;
+}
+
+.card-tip kbd {
+  font-size: 11.5px;
+  padding: 2px 6px;
+  min-width: 20px;
+}
+
+.footer {
+  margin-top: 22px;
+  text-align: center;
+  font-size: 12.5px;
+  color: var(--text-muted);
+}
+
+.hidden { display: none !important; }
+</style>
+</head>
+<body data-kmwindow="FLOAT,CENTER,1090,825">
+
+<header>
+  <div class="title-area">
+    <h1>Windows App (AVD) Shortcuts <span class="badge">Cheat Sheet</span></h1>
+    <p>All customized Mac-to-Windows shortcuts active while Windows App is focused</p>
+  </div>
+  <div class="header-right">
+    <div class="search-box">
+      <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+      <input type="text" id="searchInput" placeholder="Search shortcuts..." autofocus>
+    </div>
+    <button class="close-btn" onclick="closeOverlay()">
+      <span>Esc</span> to Close
+    </button>
+  </div>
+</header>
+
+<div class="grid" id="shortcutsGrid">
+
+  <!-- CLIPBOARD & TEXT -->
+  <div class="card">
+    <div class="card-title">📋 Clipboard & Text</div>
+    <div class="shortcut-list">
+      <div class="item" data-keywords="paste mac windows avd text transfer clipboard">
+        <div class="desc">
+          Paste from Mac to Windows (AVD)
+          <small>Types Mac clipboard text into remote Windows session</small>
+        </div>
+        <div class="keys">
+          <kbd>⌥ Opt</kbd><kbd class="plus">+</kbd><kbd>⌘ Cmd</kbd><kbd class="plus">+</kbd><kbd>V</kbd>
+        </div>
+      </div>
+      <div class="item" data-keywords="windows clipboard history win+v paste history">
+        <div class="desc">
+          Windows Clipboard History
+          <small>Invokes native Windows Win + V history palette</small>
+        </div>
+        <div class="keys">
+          <kbd>⇧ Shift</kbd><kbd class="plus">+</kbd><kbd>⌘ Cmd</kbd><kbd class="plus">+</kbd><kbd>V</kbd>
+        </div>
+      </div>
+      <div class="item" data-keywords="copy paste undo select cut standard">
+        <div class="desc">
+          Standard Edit Commands
+          <small>Remapped automatically to Windows Ctrl+C, Ctrl+V, etc.</small>
+        </div>
+        <div class="keys">
+          <kbd>⌘ Cmd</kbd><kbd class="plus">+</kbd><kbd>C / V / Z / A</kbd>
+        </div>
+      </div>
+    </div>
+    <div class="card-tip">
+      <span class="icon">💡</span>
+      <span><strong>Copying WA → macOS:</strong> Best done via <strong>CleanShot X OCR</strong> (<kbd>⇧</kbd><kbd>⌘</kbd><kbd>0</kbd>) to instantly grab any text on screen directly into macOS!</span>
+    </div>
+  </div>
+
+  <!-- NAVIGATION & WINDOWS -->
+  <div class="card">
+    <div class="card-title">🖥️ Windows Navigation & Snapping</div>
+    <div class="shortcut-list">
+      <div class="item" data-keywords="switch windows app switcher alt tab cycle">
+        <div class="desc">
+          Switch Windows Apps
+          <small>Invokes native Windows Alt + Tab switcher</small>
+        </div>
+        <div class="keys">
+          <kbd>⌘ Cmd</kbd><kbd class="plus">+</kbd><kbd>Tab</kbd>
+        </div>
+      </div>
+      <div class="item" data-keywords="snap maximize minimize left right tile">
+        <div class="desc">
+          Snap Windows (Left / Right / Max / Min)
+          <small>Windows key + Arrow snapping inside AVD</small>
+        </div>
+        <div class="keys">
+          <kbd>⌘ Cmd</kbd><kbd class="plus">+</kbd><kbd>← / → / ↑ / ↓</kbd>
+        </div>
+      </div>
+      <div class="item" data-keywords="move monitor screen resize shift arrow">
+        <div class="desc">
+          Move Window to Another Monitor
+          <small>Shift + Win + Arrow across multi-monitors</small>
+        </div>
+        <div class="keys">
+          <kbd>⇧ Shift</kbd><kbd class="plus">+</kbd><kbd>⌘ Cmd</kbd><kbd class="plus">+</kbd><kbd>Arrows</kbd>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCREENSHOTS -->
+  <div class="card">
+    <div class="card-title">📸 Screen Capture</div>
+    <div class="shortcut-list">
+      <div class="item" data-keywords="snipping tool windows snip screenshot area capture onedrive">
+        <div class="desc">
+          Windows Snipping Tool (Native)
+          <small>Win+Shift+S: Autosaves to OneDrive &amp; clipboard without extra clicks</small>
+        </div>
+        <div class="keys">
+          <kbd>⇧ Shift</kbd><kbd class="plus">+</kbd><kbd>⌘ Cmd</kbd><kbd class="plus">+</kbd><kbd>S</kbd>
+        </div>
+      </div>
+      <div class="item" data-keywords="cleanshot screenshot capture annotate">
+        <div class="desc">
+          CleanShot X: Area &amp; Annotate
+          <small>Opens capture with CleanShot markup editor on Mac</small>
+        </div>
+        <div class="keys">
+          <kbd>⇧ Shift</kbd><kbd class="plus">+</kbd><kbd>⌘ Cmd</kbd><kbd class="plus">+</kbd><kbd>5</kbd>
+        </div>
+      </div>
+      <div class="item" data-keywords="cleanshot screenshot copy clipboard">
+        <div class="desc">
+          CleanShot X: Area to Clipboard
+          <small>Immediately copies area capture to Mac clipboard</small>
+        </div>
+        <div class="keys">
+          <kbd>⇧ Shift</kbd><kbd class="plus">+</kbd><kbd>⌘ Cmd</kbd><kbd class="plus">+</kbd><kbd>6</kbd>
+        </div>
+      </div>
+      <div class="item" data-keywords="cleanshot screenshot save desktop disk">
+        <div class="desc">
+          CleanShot X: Area &amp; Save
+          <small>Saves screenshot directly to Mac Xshots folder</small>
+        </div>
+        <div class="keys">
+          <kbd>⇧ Shift</kbd><kbd class="plus">+</kbd><kbd>⌘ Cmd</kbd><kbd class="plus">+</kbd><kbd>7</kbd>
+        </div>
+      </div>
+      <div class="item" data-keywords="cleanshot ocr optical character text recognize">
+        <div class="desc">
+          CleanShot X: Text OCR
+          <small>Copies extracted on-screen text to Mac clipboard</small>
+        </div>
+        <div class="keys">
+          <kbd>⇧ Shift</kbd><kbd class="plus">+</kbd><kbd>⌘ Cmd</kbd><kbd class="plus">+</kbd><kbd>0</kbd>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAC GLOBAL & PRODUCTIVITY -->
+  <div class="card">
+    <div class="card-title">🚀 Mac Global Shortcuts</div>
+    <div class="shortcut-list">
+      <div class="item" data-keywords="alfred search launcher spotlight mac">
+        <div class="desc">
+          Alfred Search / Launcher
+          <small>Passes through to macOS Alfred overlay</small>
+        </div>
+        <div class="keys">
+          <kbd>⌘ Cmd</kbd><kbd class="plus">+</kbd><kbd>Space</kbd>
+        </div>
+      </div>
+      <div class="item" data-keywords="todoist task quick add entry reminder">
+        <div class="desc">
+          Todoist Quick Add Task
+          <small>Brings up Todoist quick task entry dialog</small>
+        </div>
+        <div class="keys">
+          <kbd>⌃ Ctrl</kbd><kbd class="plus">+</kbd><kbd>Space</kbd>
+        </div>
+      </div>
+      <div class="item" data-keywords="media pause play music audio sound podcast">
+        <div class="desc">
+          Pause / Play Media (macOS)
+          <small>Toggles playback on macOS media players</small>
+        </div>
+        <div class="keys">
+          <kbd>⌃ Ctrl</kbd><kbd class="plus">+</kbd><kbd>⌥ Opt</kbd><kbd class="plus">+</kbd><kbd>⌘ Cmd</kbd><kbd class="plus">+</kbd><kbd>=</kbd>
+        </div>
+      </div>
+      <div class="item" data-keywords="cheat sheet help overlay guide shortcuts this">
+        <div class="desc">
+          Toggle This Shortcuts Cheat Sheet
+          <small>Instant overlay of all active Windows App mappings</small>
+        </div>
+        <div class="keys">
+          <kbd>⌘ Cmd</kbd><kbd class="plus">+</kbd><kbd>?</kbd>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  Tip: Press <kbd>Esc</kbd> or <kbd>⌘ Cmd</kbd> + <kbd>?</kbd> anytime to dismiss this cheat sheet.
+</div>
+
+<script>
+function closeOverlay() {
+  if (window.KeyboardMaestro) {
+    window.KeyboardMaestro.Cancel('Close');
+  } else {
+    window.close();
+  }
+}
+
+window.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape' || (e.metaKey && (e.key === '?' || e.key === '/'))) {
+    closeOverlay();
+  }
+});
+
+const searchInput = document.getElementById('searchInput');
+searchInput.addEventListener('input', function() {
+  const q = this.value.toLowerCase().trim();
+  const items = document.querySelectorAll('.item');
+  const cards = document.querySelectorAll('.card');
+
+  items.forEach(item => {
+    const text = (item.innerText + ' ' + (item.getAttribute('data-keywords') || '')).toLowerCase();
+    if (!q || text.includes(q)) {
+      item.classList.remove('hidden');
+    } else {
+      item.classList.add('hidden');
+    }
+  });
+
+  cards.forEach(card => {
+    const visibleItems = card.querySelectorAll('.item:not(.hidden)');
+    if (visibleItems.length === 0) {
+      card.classList.add('hidden');
+    } else {
+      card.classList.remove('hidden');
+    }
+  });
+});
+</script>
+
+</body>
+</html>

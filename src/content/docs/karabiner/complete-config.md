@@ -1649,7 +1649,7 @@ Save the JSON below to:
           },
           "to": [
             {
-              "shell_command": "/Users/stephenmurphy/.config/karabiner/bin/toggle_overlay.sh"
+              "shell_command": "\"$HOME/.config/karabiner/bin/toggle_overlay.sh\""
             }
           ]
         },
@@ -1682,7 +1682,7 @@ Save the JSON below to:
           },
           "to": [
             {
-              "shell_command": "/Users/stephenmurphy/.config/karabiner/bin/toggle_overlay.sh"
+              "shell_command": "\"$HOME/.config/karabiner/bin/toggle_overlay.sh\""
             }
           ]
         }

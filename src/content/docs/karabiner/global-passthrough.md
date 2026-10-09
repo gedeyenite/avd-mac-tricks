@@ -214,7 +214,7 @@ Remembering every remote remap, passthrough key, and modifier difference can tak
       },
       "to": [
         {
-          "shell_command": "/Users/stephenmurphy/.config/karabiner/bin/toggle_overlay.sh"
+          "shell_command": "\"$HOME/.config/karabiner/bin/toggle_overlay.sh\""
         }
       ]
     }

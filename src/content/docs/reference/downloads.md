@@ -3,7 +3,7 @@ title: Downloadable JSON & Recipes
 description: Grab the raw configuration files, JSON modifications, and macro recipes.
 lastMajorUpdate: "2026-10-09"
 updateBadge: "UPDATED"
-updateSummary: "Pre-packaged Keyboard Maestro bundles and Alfred workflow updater"
+updateSummary: "Added Shortcuts Cheatsheet Overlay bundle and one-line installer"
 ---
 
 Everything in this guide is available as raw, open configuration files.
@@ -31,7 +31,7 @@ You can install the config file directly from your terminal using `curl`:
 
 ```bash title="Terminal"
 mkdir -p ~/.config/karabiner/assets/complex_modifications
-curl -fsSL https://raw.githubusercontent.com/stephenmurphy/avd-mac-tricks/main/public/windows_app_mods.json -o ~/.config/karabiner/assets/complex_modifications/windows_app_mods.json
+curl -fsSL https://raw.githubusercontent.com/gedeyenite/avd-mac-tricks/master/public/windows_app_mods.json -o ~/.config/karabiner/assets/complex_modifications/windows_app_mods.json
 ```
 
 ### Alfred Workflow
@@ -56,10 +56,31 @@ The Keyboard Maestro macro suites described in this guide are pre-packaged into 
 | **`Windows/AVD: TEAMS`** | [Download .kmmacros](/avd-mac-tricks/macros/Windows-AVD-Teams.kmmacros) | Fast compose box navigation (<kbd>⌥R</kbd>) and standup templates. |
 | **`Windows/AVD: OUTLOOK`** | [Download .kmmacros](/avd-mac-tricks/macros/Windows-AVD-Outlook.kmmacros) | Email transmittal templates (`;;att`) and fast filing routines. |
 
+---
+
+## 3. Shortcuts Cheatsheet Overlay Bundle
+
+A lightweight, native WebKit floating window that appears over full-screen Windows App sessions with a quick reference of active shortcuts when you press <kbd>⌘ + ?</kbd> (<kbd>⌘ + Shift + /</kbd>).
+
+* **Direct ZIP Download:** [shortcuts-overlay.zip](/avd-mac-tricks/downloads/shortcuts-overlay.zip)
+* **Bundle Contents:**
+  * `shortcuts_overlay` (compiled native Swift WebKit binary)
+  * `toggle_overlay.sh` (process toggle launcher)
+  * `windows_app_cheatsheet.html` (customizable cheatsheet template)
+
+### One-Line Terminal Install
+
+To quickly download and install the overlay components into your local `~/.config/karabiner/` environment:
+
+```bash title="Terminal"
+curl -fsSL https://raw.githubusercontent.com/gedeyenite/avd-mac-tricks/master/public/install-overlay.sh | bash
+```
+
+Once installed, ensure your Karabiner configuration contains the overlay shortcut rule (included in the main [Karabiner Configuration](#1-karabiner-elements-configuration)).
 
 ---
 
-## 3. Recommended macOS Power User Apps
+## 4. Recommended macOS Power User Apps
 
 These are the primary apps referenced throughout our workarounds and guides, including their pricing models, tiers, and licensing (all prices listed in **US$**):
 
