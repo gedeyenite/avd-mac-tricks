@@ -1,0 +1,42 @@
+name: 🚀 Request a Custom Workflow or Macro
+description: Request a custom Karabiner or Keyboard Maestro workflow/automation for your setup.
+title: "[Workflow Request]: "
+labels: ["workflow-request", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reaching out! Use this form to request a custom workflow or macro tailored to your macOS + AVD environment.
+  - type: input
+    id: app-context
+    attributes:
+      label: Target App or Context
+      description: Which app or workflow is this for? (e.g., Teams, Excel, CleanShot X, Alfred, Outlook)
+      placeholder: "e.g., Microsoft Teams on AVD"
+    validations:
+      required: true
+  - type: dropdown
+    id: tool-preference
+    attributes:
+      label: Preferred Automation Tool
+      options:
+        - "Karabiner-Elements (DriverKit Keystroke / Scancode level)"
+        - "Keyboard Maestro (Text, Menu, Macro level)"
+        - "Alfred Workflow"
+        - "Not sure / whatever works best"
+    validations:
+      required: true
+  - type: textarea
+    id: problem-description
+    attributes:
+      label: What friction are you experiencing?
+      description: Describe what happens now vs. what you want to happen.
+      placeholder: "When I press X, Y happens. I want it to do Z instead..."
+    validations:
+      required: true
+  - type: input
+    id: contact-email
+    attributes:
+      label: Contact Email (Optional)
+      description: If you would like direct updates regarding this workflow request.
+      placeholder: "you@example.com"

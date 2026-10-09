@@ -1,0 +1,17 @@
+name: 💡 Site Update or Tutorial Suggestion
+description: Suggest an improvement, new trick, or correction for this site.
+title: "[Site Suggestion]: "
+labels: ["suggestion", "documentation"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Have a tip, workaround, or section you want added to the site? Let us know!
+  - type: textarea
+    id: suggestion
+    attributes:
+      label: Suggestion Details
+      description: Explain the topic, trick, or page update.
+      placeholder: "I'd love a tutorial on handling multiple monitors with..."
+    validations:
+      required: true

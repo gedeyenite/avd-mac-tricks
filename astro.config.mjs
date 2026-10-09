@@ -53,9 +53,10 @@ export default defineConfig({
 					],
 				},
 				{
-					label: 'Reference & Downloads',
+					label: 'Reference & Community Desk',
 					items: [
 						{ label: 'Downloadable JSON & Recipes', slug: 'reference/downloads' },
+						{ label: 'Request a Workflow & Suggest Updates', slug: 'reference/request-workflow' },
 						{ label: 'Troubleshooting & FAQ', slug: 'reference/troubleshooting' },
 					],
 				},

@@ -1,0 +1,58 @@
+---
+title: Request a Workflow & Suggest Updates
+description: Need a custom Karabiner or Keyboard Maestro workflow, or have an idea to improve the site? Submit a request.
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+Whether you are hitting a specific modifier key wall inside Windows App, want a specialized Keyboard Maestro macro crafted for your daily apps, or have a suggestion to improve this site, you can submit a request directly through our community intake desk.
+
+---
+
+## What Would You Like to Do?
+
+<CardGrid>
+  <Card title="🚀 Request a Custom Workflow / Macro" icon="pencil">
+    Describe the friction you are experiencing across macOS and Windows App. We will help design and test a tailored Karabiner rule or Keyboard Maestro macro for your workflow.
+    <p class="card-link">
+      <a href="https://github.com/gedeyenite/avd-mac-tricks/issues/new?template=custom_workflow_request.yml" target="_blank" rel="noopener">
+        Open Workflow Request Ticket →
+      </a>
+    </p>
+  </Card>
+
+  <Card title="💡 Suggest a Site Update / Guide" icon="document">
+    Found a clever workaround? Discovered an edge case in Microsoft Windows App? Submit an idea or tutorial request for the documentation.
+    <p class="card-link">
+      <a href="https://github.com/gedeyenite/avd-mac-tricks/issues/new?template=site_suggestion.yml" target="_blank" rel="noopener">
+        Submit Guide Suggestion →
+      </a>
+    </p>
+  </Card>
+
+  <Card title="💬 Ask a Question or Chat in the Forum" icon="comment">
+    Ask questions, share your current setup, or get advice from other Mac power users on GitHub Discussions.
+    <p class="card-link">
+      <a href="https://github.com/gedeyenite/avd-mac-tricks/discussions" target="_blank" rel="noopener">
+        Go to Discussions Forum →
+      </a>
+    </p>
+  </Card>
+
+  <Card title="📬 Custom Direct Intake" icon="email">
+    Prefer a direct private message or want to connect regarding enterprise AVD deployments? Reach out directly via GitHub or drop a private note.
+    <p class="card-link">
+      <a href="https://github.com/gedeyenite" target="_blank" rel="noopener">
+        Contact Maintainer →
+      </a>
+    </p>
+  </Card>
+</CardGrid>
+
+---
+
+## How Requests are Tracked & Delivered
+
+1. **Intake & Triage:** When you submit a ticket, it is automatically cataloged in our public [Project Kanban Board](https://github.com/gedeyenite/avd-mac-tricks/issues).
+2. **AI-Assisted Prototyping:** We use the Antigravity + Gemini Pro toolchain to scaffold the rule conditions, scancode maps, or macro actions quickly.
+3. **Delivery:** Approved workflows are packaged directly into our downloadable `.kmmacros` bundles or added to the official `windows_app_mods.json` config.
