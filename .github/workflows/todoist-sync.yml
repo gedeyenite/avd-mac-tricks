@@ -8,6 +8,8 @@ jobs:
   create-todoist-task:
     if: github.event.label.name == 'approved' || github.event.label.name == 'accepted'
     runs-on: ubuntu-latest
+    permissions:
+      issues: write
     steps:
       - name: Create Task in Todoist
         env:
