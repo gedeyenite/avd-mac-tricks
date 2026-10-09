@@ -1,6 +1,9 @@
 ---
 title: "Super Double Ninja Power User Extreme: Vibe-Coding Karabiner with Antigravity & AI"
 description: How to hook Google Antigravity and Gemini Pro directly into your macOS system to write, test, and deploy Karabiner modifications hands-free.
+lastMajorUpdate: "2026-10-09"
+updateBadge: "NEW"
+updateSummary: "Vibe-coding Karabiner modifications with Antigravity & Gemini Pro"
 ---
 
 import { Aside } from '@astrojs/starlight/components';

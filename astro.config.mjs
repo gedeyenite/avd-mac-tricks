@@ -20,6 +20,7 @@ export default defineConfig({
 				'./src/styles/custom.css',
 			],
 			components: {
+				Head: './src/components/CustomHead.astro',
 				Pagination: './src/components/CommentsPagination.astro',
 			},
 			sidebar: [

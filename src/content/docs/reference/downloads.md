@@ -1,6 +1,9 @@
 ---
 title: Downloadable JSON & Recipes
 description: Grab the raw configuration files, JSON modifications, and macro recipes.
+lastMajorUpdate: "2026-10-09"
+updateBadge: "UPDATED"
+updateSummary: "Pre-packaged Keyboard Maestro bundles and Alfred workflow updater"
 ---
 
 Everything in this guide is available as raw, open configuration files.

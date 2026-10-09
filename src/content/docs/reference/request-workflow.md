@@ -1,6 +1,9 @@
 ---
 title: Request a Workflow & Suggest Updates
 description: Need a custom Karabiner or Keyboard Maestro workflow, or have an idea to improve the site? Submit a request.
+lastMajorUpdate: "2026-10-08"
+updateBadge: "NEW"
+updateSummary: "Community workflow requests and ideas desk"
 ---
 
 import { Card, CardGrid } from '@astrojs/starlight/components';

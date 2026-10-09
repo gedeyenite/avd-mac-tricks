@@ -1,6 +1,9 @@
 ---
 title: macOS Hotkey Pass-Throughs (Alfred & Todoist)
 description: Ensure global macOS shortcuts like Alfred (Cmd + Space) and Todoist Quick Add (Ctrl + Space) continue to work when Windows App is frontmost.
+lastMajorUpdate: "2026-10-09"
+updateBadge: "UPDATED"
+updateSummary: "Added Windows Snipping Tool and Shortcuts Cheat Sheet Overlay rules"
 ---
 
 One of the most frustrating aspects of working inside a full-screen remote desktop session is that **your macOS launcher and quick-capture shortcuts stop working**—or worse, trigger remote Windows actions.

@@ -1,0 +1,118 @@
+---
+import Default from '@astrojs/starlight/components/Head.astro';
+import type { Props } from '@astrojs/starlight/props';
+import { getCollection } from 'astro:content';
+
+const docs = await getCollection('docs');
+const updates = docs
+  .filter((d) => Boolean(d.data.lastMajorUpdate))
+  .map((d) => ({
+    id: d.id,
+    slug: d.slug || d.id,
+    title: d.data.title,
+    lastMajorUpdate: d.data.lastMajorUpdate,
+    updateBadge: d.data.updateBadge || 'NEW',
+    updateSummary: d.data.updateSummary || '',
+  }));
+---
+
+<Default {...Astro.props}><slot /></Default>
+
+<script is:inline id="avd-updates-data" type="application/json" set:html={JSON.stringify(updates)} />
+<script is:inline>
+(function() {
+  function checkAndRenderUpdates() {
+    const dataEl = document.getElementById('avd-updates-data');
+    if (!dataEl) return;
+    let updates = [];
+    try {
+      updates = JSON.parse(dataEl.textContent || '[]');
+    } catch(e) { return; }
+    if (!updates.length) return;
+
+    const FOURTEEN_DAYS_MS = 14 * 24 * 60 * 60 * 1000;
+    const now = Date.now();
+    const storedLastVisit = localStorage.getItem('avd_last_visit_time');
+    let sessionBaseline = sessionStorage.getItem('avd_session_baseline');
+
+    if (!sessionBaseline) {
+      if (!storedLastVisit) {
+        // First-time visitor: highlight updates from the last 14 days
+        sessionBaseline = (now - FOURTEEN_DAYS_MS).toString();
+      } else {
+        // Returning visitor: baseline is their previous recorded visit
+        sessionBaseline = storedLastVisit;
+      }
+      sessionStorage.setItem('avd_session_baseline', sessionBaseline);
+      // Record new last visit timestamp
+      localStorage.setItem('avd_last_visit_time', now.toString());
+    }
+
+    const baselineNum = parseInt(sessionBaseline, 10) || 0;
+
+    // Filter items updated after the visitor's baseline
+    const freshUpdates = updates.filter(item => {
+      const itemTime = Date.parse(item.lastMajorUpdate + 'T23:59:59');
+      return !isNaN(itemTime) && itemTime > baselineNum;
+    });
+
+    if (!freshUpdates.length) return;
+
+    freshUpdates.forEach(item => {
+      const badgeText = item.updateBadge || 'NEW';
+      const badgeClass = badgeText === 'NEW' ? 'avd-badge-new' : 'avd-badge-updated';
+      const slugKey = (item.slug || item.id).replace(/^\/+|\/+$/g, '');
+
+      // 1. Sidebar Links
+      const sidebarLinks = document.querySelectorAll('nav.sidebar a, .sidebar-content a');
+      sidebarLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        if (href && href.includes(slugKey)) {
+          if (!link.querySelector('.avd-update-badge')) {
+            const badge = document.createElement('span');
+            badge.className = `avd-update-badge ${badgeClass}`;
+            badge.textContent = badgeText;
+            link.appendChild(badge);
+          }
+        }
+      });
+
+      // 2. Homepage Cards
+      const cardLinks = document.querySelectorAll('.card-grid a');
+      cardLinks.forEach(cardLink => {
+        const href = cardLink.getAttribute('href');
+        if (href && href.includes(slugKey)) {
+          const card = cardLink.closest('.card');
+          if (card && !card.querySelector('.avd-card-badge')) {
+            const title = card.querySelector('.title');
+            if (title) {
+              const cardBadge = document.createElement('span');
+              cardBadge.className = `avd-card-badge ${badgeClass}`;
+              cardBadge.textContent = badgeText;
+              title.appendChild(cardBadge);
+            }
+          }
+        }
+      });
+
+      // 3. Page Title Badge (when viewing the updated page)
+      if (window.location.pathname.includes(slugKey)) {
+        const h1 = document.querySelector('h1[data-page-title], h1#_top');
+        if (h1 && !h1.querySelector('.avd-page-badge')) {
+          const pageBadge = document.createElement('span');
+          pageBadge.className = `avd-page-badge ${badgeClass}`;
+          pageBadge.textContent = badgeText;
+          h1.appendChild(pageBadge);
+        }
+      }
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', checkAndRenderUpdates);
+  } else {
+    checkAndRenderUpdates();
+  }
+  document.addEventListener('astro:page-load', checkAndRenderUpdates);
+})();
+</script>

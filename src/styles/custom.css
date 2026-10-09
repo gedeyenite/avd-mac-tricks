@@ -83,5 +83,90 @@ kbd {
   width: 100% !important;
 }
 
+/* Dynamic New / Updated Content Badges */
+.avd-update-badge,
+.avd-card-badge,
+.avd-page-badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  line-height: 1;
+  padding: 0.22em 0.55em;
+  border-radius: 9999px;
+  vertical-align: middle;
+  pointer-events: none;
+  user-select: none;
+  animation: avd-badge-fade-in 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.avd-update-badge {
+  margin-left: auto;
+  margin-top: 0.05rem;
+  flex-shrink: 0;
+}
+
+.avd-card-badge {
+  margin-left: 0.6rem;
+  flex-shrink: 0;
+}
+
+.avd-page-badge {
+  font-size: 0.55em;
+  margin-left: 0.75rem;
+  vertical-align: middle;
+  position: relative;
+  top: -0.1em;
+}
+
+nav.sidebar a,
+.sidebar-content a {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 0.5rem;
+}
+
+/* Badge variants */
+.avd-badge-new {
+  color: #10b981;
+  background-color: rgba(16, 185, 129, 0.15);
+  border: 1px solid rgba(16, 185, 129, 0.4);
+  box-shadow: 0 0 8px rgba(16, 185, 129, 0.2);
+}
+
+[data-theme='light'] .avd-badge-new {
+  color: #047857;
+  background-color: #d1fae5;
+  border: 1px solid #10b981;
+}
+
+.avd-badge-updated {
+  color: #0ea5e9;
+  background-color: rgba(14, 165, 233, 0.15);
+  border: 1px solid rgba(14, 165, 233, 0.4);
+  box-shadow: 0 0 8px rgba(14, 165, 233, 0.2);
+}
+
+[data-theme='light'] .avd-badge-updated {
+  color: #0369a1;
+  background-color: #e0f2fe;
+  border: 1px solid #0284c7;
+}
+
+@keyframes avd-badge-fade-in {
+  from {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+
 
 
