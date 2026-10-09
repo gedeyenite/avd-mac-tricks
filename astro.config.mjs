@@ -4,13 +4,14 @@ import starlight from '@astrojs/starlight';
 
 // https://astro.build/config
 export default defineConfig({
-	site: 'https://avd-mac-tricks.pages.dev',
+	site: 'https://gedeyenite.github.io',
+	base: '/avd-mac-tricks',
 	integrations: [
 		starlight({
-			title: 'AVD Mac Tricks',
+			title: 'AVD (Windows App) on macOS',
 			description: 'The definitive guide to making Microsoft Windows App & Azure Virtual Desktop work seamlessly on macOS.',
 			social: [
-				{ icon: 'github', label: 'GitHub', href: 'https://github.com' }
+				{ icon: 'github', label: 'GitHub', href: 'https://github.com/gedeyenite/avd-mac-tricks' }
 			],
 			editLink: {
 				baseUrl: 'https://github.com',
