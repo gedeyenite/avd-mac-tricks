@@ -61,14 +61,26 @@ kbd {
   text-decoration: underline;
 }
 
-/* Allow hero title and tagline to expand to the full width of the grid */
-.hero .copy > * {
-  max-width: 100% !important;
+/* Allow hero title and tagline to expand to the full width of the container */
+.hero,
+.hero:where(.astro-2qjbuh7f) {
+  grid-template-columns: 1fr !important;
 }
 
-.hero .copy {
+@media (min-width: 50rem) {
+  .hero,
+  .hero:where(.astro-2qjbuh7f) {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+.hero .stack,
+.hero .copy,
+.hero .copy > *,
+.hero .tagline,
+.hero h1 {
   max-width: 100% !important;
-  width: 100%;
+  width: 100% !important;
 }
 
 
