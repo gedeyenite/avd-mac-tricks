@@ -11,6 +11,12 @@ It remaps modifiers, enables window snapping, fixes the app switcher, syncs clip
 Tired of manually managing JSON files and reloading rules? Check out the **[Super Double Ninja Power User Extreme Setup](/avd-mac-tricks/karabiner/ai-automated-setup/)** to see how we used the Antigravity app with Google Gemini Pro to inspect, write, and reload Karabiner modifications hands-free. *(Note: Requires an AI subscription or API tier).*
 :::
 
+:::caution[Workaround Disclaimer & Backup Notice]
+**Your Mileage May Vary (YMMV):** There are many intricate variables across macOS versions, external keyboards, and virtualization policies. **We cannot guarantee these rules will work identically in every configuration.**
+
+**Always back up your working configuration first:** Make a copy of your existing `~/.config/karabiner/` directory before overwriting rules.
+:::
+
 ---
 
 ## Installation Quick Start

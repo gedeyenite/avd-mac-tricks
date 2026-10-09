@@ -11,6 +11,10 @@ One of the most persistent annoyances of Azure Virtual Desktop is pasting text f
 
 Here is the exact **Keyboard Maestro "Paste from macOS to AVD" macro** that solves this completely.
 
+:::caution[Workaround Disclaimer & Backup Notice]
+**Your Mileage May Vary (YMMV):** Keyboard Maestro macros rely on macOS Accessibility permissions and timing thresholds that may require slight calibration depending on your network latency and environment. **Always back up your macros first** via **File > Export > Export All Macros as Archive…** in Keyboard Maestro before importing.
+:::
+
 ---
 
 ## Macro Trigger & Recipe

@@ -23,6 +23,12 @@ Together, they form a complete pair:
 └────────────────────────────────────────────────────────┘
 ```
 
+:::caution[Workaround Disclaimer & Backup Notice]
+**Your Mileage May Vary (YMMV):** There are many intricate variables across remote desktop network latency, corporate group policies, and macOS versions. **We cannot guarantee these macros will work identically in every environment.**
+
+**Always back up your macros first:** In Keyboard Maestro, go to **File > Export > Export All Macros as Archive…** before importing any new `.kmmacros` bundles so you can always restore your previous working setup.
+:::
+
 ---
 
 ## Recommended Macro Group Structure

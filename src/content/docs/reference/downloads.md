@@ -8,6 +8,14 @@ updateSummary: "Pre-packaged Keyboard Maestro bundles and Alfred workflow update
 
 Everything in this guide is available as raw, open configuration files.
 
+:::caution[Workaround Disclaimer & Backup Recommendation]
+**Your Mileage May Vary (YMMV):** There are many intricate variables across macOS releases, hardware models, external keyboard layouts, and corporate virtualization policies. **We cannot guarantee these workarounds will work out of the box in every individual environment.**
+
+**Please make sure you back up your previous working states first** before importing or replacing configurations:
+* **Karabiner-Elements:** Back up or duplicate your `~/.config/karabiner/` directory before overwriting rules.
+* **Keyboard Maestro:** Select **File > Export > Export All Macros as Archive…** in Keyboard Maestro before importing `.kmmacros` suites.
+:::
+
 ---
 
 ## 1. Karabiner-Elements Configuration

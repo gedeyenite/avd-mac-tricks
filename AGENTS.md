@@ -25,10 +25,11 @@ Consult these guides before working on related tasks:
 
 Whenever the user prompts "Update Website":
 1. Inspect the source project ("Windows App Keyboard Shortcuts Workarounds" at `~/.config/karabiner/assets/complex_modifications/windows_app_mods.json` and active Keyboard Maestro macros via AppleScript).
-2. Sync changes into `public/windows_app_mods.json`, `src/content/docs/karabiner/complete-config.md`, and any related guide pages.
-3. Export updated `.kmmacros` bundles into `public/macros/` and update `public/Update-AVD-Windows-Shortcuts.alfredworkflow`.
-4. Run `npm run build` to verify formatting and sitemaps.
-5. Commit and push changes to `origin master` so GitHub Pages deploys the updates automatically.
+2. Check community feedback & repeat questions in GitHub Discussions / Giscus (`gh api graphql` for discussion comments) to identify potential FAQ additions or troubleshooting updates.
+3. Sync changes into `public/windows_app_mods.json`, `src/content/docs/karabiner/complete-config.md`, and any related guide pages.
+4. Export updated `.kmmacros` bundles into `public/macros/` and update `public/Update-AVD-Windows-Shortcuts.alfredworkflow`.
+5. Run `npm run build` to verify formatting and sitemaps.
+6. Commit and push changes to `origin master` so GitHub Pages deploys the updates automatically.
 
 ## Project Context Verification
 
