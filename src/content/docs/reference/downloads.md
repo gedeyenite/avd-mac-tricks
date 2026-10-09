@@ -63,6 +63,7 @@ The Keyboard Maestro macro suites described in this guide are pre-packaged into 
 A lightweight, native WebKit floating window that appears over full-screen Windows App sessions with a quick reference of active shortcuts when you press <kbd>⌘ + ?</kbd> (<kbd>⌘ + Shift + /</kbd>).
 
 * **Direct ZIP Download:** [shortcuts-overlay.zip](/avd-mac-tricks/downloads/shortcuts-overlay.zip)
+* **Live Interactive Demo:** [Test Drive the In-Browser Cheatsheet](/avd-mac-tricks/karabiner/global-passthrough/#live-interactive-preview) or [Open Full-Page Cheatsheet](/avd-mac-tricks/overlay/windows_app_cheatsheet.html)
 * **Bundle Contents:**
   * `shortcuts_overlay` (compiled native Swift WebKit binary)
   * `toggle_overlay.sh` (process toggle launcher)

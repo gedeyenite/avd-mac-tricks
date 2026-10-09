@@ -1,0 +1,545 @@
+---
+// src/components/CheatsheetPreview.astro
+interface Props {
+  height?: string;
+}
+
+const { height = "600px" } = Astro.props;
+const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, "");
+const cheatsheetUrl = `${baseUrl}/overlay/windows_app_cheatsheet.html`;
+---
+
+<div class="cheatsheet-preview-container" id="cheatsheetPreviewWidget">
+  <div class="cheatsheet-window">
+    <!-- Window Titlebar -->
+    <div class="cheatsheet-titlebar">
+      <div class="traffic-lights">
+        <button class="light light-close" title="Dismiss overlay" id="btnTrafficClose" aria-label="Close window"></button>
+        <button class="light light-minimize" title="Minimize" id="btnTrafficMin" aria-label="Minimize window"></button>
+        <button class="light light-maximize" title="Expand to fullscreen modal" id="btnTrafficMax" aria-label="Maximize window"></button>
+      </div>
+
+      <div class="window-title">
+        <svg class="window-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="2" y="3" width="20" height="14" rx="2"></rect>
+          <line x1="8" y1="21" x2="16" y2="21"></line>
+          <line x1="12" y1="17" x2="12" y2="21"></line>
+        </svg>
+        <span>Windows App Shortcuts Cheat Sheet</span>
+        <span class="live-pill">Interactive Live Demo</span>
+      </div>
+
+      <div class="window-actions">
+        <a 
+          href={cheatsheetUrl} 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          class="preview-action-btn"
+          title="Open standalone cheatsheet in new tab"
+        >
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+            <polyline points="15 3 21 3 21 9"></polyline>
+            <line x1="10" y1="14" x2="21" y2="3"></line>
+          </svg>
+          <span>Open Full Tab</span>
+        </a>
+        <button type="button" class="preview-action-btn" id="btnExpandModal" title="Pop out floating overlay simulator">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="15 3 21 3 21 9"></polyline>
+            <polyline points="9 21 3 21 3 15"></polyline>
+            <line x1="21" y1="3" x2="14" y2="10"></line>
+            <line x1="3" y1="21" x2="10" y2="14"></line>
+          </svg>
+          <span>Simulate Popup</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Frame Wrapper -->
+    <div class="iframe-viewport" style={`--preview-height: ${height};`}>
+      <iframe 
+        id="cheatsheetIframe"
+        src={cheatsheetUrl} 
+        title="Windows App Shortcuts Cheat Sheet"
+        loading="lazy"
+      ></iframe>
+
+      <!-- Dismissed State Overlay -->
+      <div class="dismissed-overlay" id="dismissedOverlay" style="display: none;">
+        <div class="dismissed-card">
+          <div class="dismissed-icon">🪟</div>
+          <h3>Overlay Dismissed</h3>
+          <p>
+            In your actual setup, pressing <kbd>Esc</kbd> or <kbd>⌘ + ?</kbd> immediately dismisses this WebKit window and restores focus to your Windows session.
+          </p>
+          <button type="button" class="relaunch-btn" id="btnRelaunchOverlay">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2">
+              <path d="M1 4v6h6"></path>
+              <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+            </svg>
+            <span>Relaunch Cheat Sheet Preview</span>
+          </button>
+          <div class="hint-shortcut">
+            Tip: You can also press <kbd>⌘ + ?</kbd> on your keyboard to toggle this preview!
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer Bar -->
+    <div class="preview-footer">
+      <div class="tip-left">
+        💡 <strong>Try it:</strong> Type in the search box above to filter shortcuts live, or press <kbd>Esc</kbd> inside the window to test dismissing it.
+      </div>
+      <div class="tip-right">
+        Toggle Trigger: <kbd>⌘ Cmd</kbd> + <kbd>?</kbd>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Fullscreen Simulator Modal Backdrop -->
+<div class="overlay-fullscreen-modal" id="overlayModal" style="display: none;">
+  <div class="modal-backdrop" id="modalBackdrop"></div>
+  <div class="modal-window">
+    <div class="modal-header">
+      <div class="modal-title">
+        <span>Shortcuts Overlay Desktop Simulation</span>
+        <small>(Press Esc to close)</small>
+      </div>
+      <button type="button" class="modal-close" id="btnCloseModal" aria-label="Close modal">&times;</button>
+    </div>
+    <div class="modal-body">
+      <iframe 
+        id="modalIframe"
+        src={cheatsheetUrl} 
+        title="Windows App Shortcuts Cheat Sheet (Fullscreen Modal)"
+      ></iframe>
+    </div>
+  </div>
+</div>
+
+<style>
+.cheatsheet-preview-container {
+  margin: 2rem 0;
+  width: 100%;
+}
+
+.cheatsheet-window {
+  border-radius: 12px;
+  overflow: hidden;
+  background: #1c1c1e;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.4), 0 4px 12px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+}
+
+:root[data-theme='light'] .cheatsheet-window {
+  border-color: rgba(0, 0, 0, 0.15);
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.2), 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.cheatsheet-titlebar {
+  background: #2c2c2e;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  user-select: none;
+}
+
+.traffic-lights {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.light {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: opacity 0.15s ease;
+}
+
+.light:hover {
+  opacity: 0.8;
+}
+
+.light-close { background: #ff5f56; }
+.light-minimize { background: #ffbd2e; }
+.light-maximize { background: #27c93f; }
+
+.window-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #f4f4f5;
+  letter-spacing: -0.01em;
+}
+
+.window-icon {
+  width: 16px;
+  height: 16px;
+  color: #38bdf8;
+}
+
+.live-pill {
+  font-size: 11px;
+  font-weight: 700;
+  background: rgba(56, 189, 248, 0.18);
+  color: #38bdf8;
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  padding: 2px 8px;
+  border-radius: 9999px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.window-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.preview-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #d4d4d8;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 6px;
+  padding: 5px 10px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.preview-action-btn:hover {
+  background: rgba(255, 255, 255, 0.16);
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.iframe-viewport {
+  position: relative;
+  width: 100%;
+  height: var(--preview-height, 600px);
+  background: #18181b;
+}
+
+.iframe-viewport iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}
+
+.dismissed-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(18, 18, 20, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.dismissed-card {
+  max-width: 440px;
+  text-align: center;
+  background: rgba(39, 39, 42, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
+  padding: 30px 24px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+}
+
+.dismissed-icon {
+  font-size: 38px;
+  margin-bottom: 12px;
+}
+
+.dismissed-card h3 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #f4f4f5;
+  margin: 0 0 10px;
+}
+
+.dismissed-card p {
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: #a1a1aa;
+  margin-bottom: 20px;
+}
+
+.relaunch-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #0284c7;
+  color: #ffffff;
+  font-size: 13.5px;
+  font-weight: 600;
+  padding: 10px 18px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.1s ease;
+}
+
+.relaunch-btn:hover {
+  background: #0369a1;
+  transform: translateY(-1px);
+}
+
+.hint-shortcut {
+  margin-top: 16px;
+  font-size: 12px;
+  color: #71717a;
+}
+
+.preview-footer {
+  background: #242426;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  font-size: 12.5px;
+  color: #a1a1aa;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tip-left strong {
+  color: #e4e4e7;
+}
+
+.tip-right {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: #38bdf8;
+  font-weight: 600;
+}
+
+/* Fullscreen modal */
+.overlay-fullscreen-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.modal-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.modal-window {
+  position: relative;
+  z-index: 1;
+  width: 95vw;
+  max-width: 1100px;
+  height: 85vh;
+  background: #1c1c1e;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 14px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.modal-header {
+  background: #2c2c2e;
+  padding: 12px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.modal-title {
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.modal-title small {
+  color: #a1a1aa;
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.modal-close {
+  background: transparent;
+  border: none;
+  color: #a1a1aa;
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0 4px;
+}
+
+.modal-close:hover {
+  color: #ffffff;
+}
+
+.modal-body {
+  flex: 1;
+  width: 100%;
+  height: 100%;
+}
+
+.modal-body iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.98); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@media (max-width: 640px) {
+  .window-title span:not(.live-pill) {
+    display: none;
+  }
+  .preview-footer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+</style>
+
+<script>
+function initCheatsheetPreview() {
+  const dismissedOverlay = document.getElementById('dismissedOverlay');
+  const btnRelaunch = document.getElementById('btnRelaunchOverlay');
+  const btnClose = document.getElementById('btnTrafficClose');
+  const btnExpandModal = document.getElementById('btnExpandModal');
+  const btnTrafficMax = document.getElementById('btnTrafficMax');
+  const overlayModal = document.getElementById('overlayModal');
+  const modalBackdrop = document.getElementById('modalBackdrop');
+  const btnCloseModal = document.getElementById('btnCloseModal');
+  const cheatsheetIframe = document.getElementById('cheatsheetIframe') as HTMLIFrameElement | null;
+
+  function dismissPreview() {
+    if (dismissedOverlay) {
+      dismissedOverlay.style.display = 'flex';
+    }
+  }
+
+  function restorePreview() {
+    if (dismissedOverlay) {
+      dismissedOverlay.style.display = 'none';
+      if (cheatsheetIframe && cheatsheetIframe.contentWindow) {
+        cheatsheetIframe.contentWindow.focus();
+      }
+    }
+  }
+
+  function openModal() {
+    if (overlayModal) {
+      overlayModal.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    }
+  }
+
+  function closeModal() {
+    if (overlayModal) {
+      overlayModal.style.display = 'none';
+      document.body.style.overflow = '';
+    }
+  }
+
+  if (btnClose) {
+    btnClose.addEventListener('click', dismissPreview);
+  }
+
+  if (btnRelaunch) {
+    btnRelaunch.addEventListener('click', restorePreview);
+  }
+
+  if (btnExpandModal) {
+    btnExpandModal.addEventListener('click', openModal);
+  }
+
+  if (btnTrafficMax) {
+    btnTrafficMax.addEventListener('click', openModal);
+  }
+
+  if (modalBackdrop) {
+    modalBackdrop.addEventListener('click', closeModal);
+  }
+
+  if (btnCloseModal) {
+    btnCloseModal.addEventListener('click', closeModal);
+  }
+
+  // Handle postMessage from iframe
+  window.addEventListener('message', (event) => {
+    if (event.data && event.data.type === 'overlay-close') {
+      dismissPreview();
+      closeModal();
+    }
+  });
+
+  // Global shortcut trigger: Cmd + ? (or Cmd + Shift + /)
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && overlayModal && overlayModal.style.display === 'flex') {
+      closeModal();
+      return;
+    }
+
+    if (e.metaKey && (e.key === '?' || e.key === '/')) {
+      e.preventDefault();
+      if (dismissedOverlay && dismissedOverlay.style.display === 'flex') {
+        restorePreview();
+      } else {
+        dismissPreview();
+      }
+    }
+  });
+}
+
+// Run on initial load and Starlight page transitions
+initCheatsheetPreview();
+document.addEventListener('astro:page-load', initCheatsheetPreview);
+</script>

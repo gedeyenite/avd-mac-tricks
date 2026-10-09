@@ -445,10 +445,13 @@ kbd.plus {
 
 <script>
 function closeOverlay() {
+  if (window.parent && window.parent !== window) {
+    window.parent.postMessage({ type: 'overlay-close' }, '*');
+  }
   if (window.KeyboardMaestro) {
     window.KeyboardMaestro.Cancel('Close');
   } else {
-    window.close();
+    try { window.close(); } catch(e) {}
   }
 }
 
