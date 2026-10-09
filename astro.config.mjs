@@ -48,7 +48,7 @@ export default defineConfig({
 						{ label: 'Rock-Solid Remote Pasting (⌥⌘V)', slug: 'keyboard-maestro/paste-to-avd' },
 						{ label: 'Microsoft Teams Power Workflows', slug: 'keyboard-maestro/teams-workflows' },
 						{ label: 'Smart Split Macros (macOS vs AVD)', slug: 'keyboard-maestro/context-aware-macros' },
-						{ label: 'Anti-Idle & Routine Utilities', slug: 'keyboard-maestro/utilities' },
+						{ label: 'Productivity & Routine Utilities', slug: 'keyboard-maestro/utilities' },
 					],
 				},
 				{

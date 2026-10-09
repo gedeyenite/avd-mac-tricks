@@ -31,7 +31,7 @@ In the Keyboard Maestro editor, organizing your macros into dedicated groups mak
 
 1. **`Windows/AVD: UNIVERSAL`**  
    * **Active:** *Only when Microsoft Windows App is running and frontmost.*
-   * **Purpose:** Macros specifically created for the remote desktop environment (e.g., dedicated remote paste, anti-idle pingers).
+   * **Purpose:** Macros specifically created for the remote desktop environment (e.g., dedicated remote paste, window centering, and clipboard sanitizing).
 
 2. **`SPLIT: AVD and macOS`**  
    * **Active:** *In all applications.*

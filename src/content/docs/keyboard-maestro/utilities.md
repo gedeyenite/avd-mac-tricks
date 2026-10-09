@@ -1,23 +1,26 @@
 ---
-title: Anti-Idle & Routine Utilities
-description: Smart keep-alive anti-idle pingers, window centering, and email automation routines.
+title: Productivity & Routine Utilities
+description: Window management, clean text formatting, and email automation routines.
 ---
 
-In enterprise and government Azure Virtual Desktop environments, strict timeout policies, smart card (CAC/PIV) prompts, and repetitive communications consume significant focus.
+When working across macOS and Azure Virtual Desktop, repetitive communications, multi-monitor reorganization, and messy formatting consume significant daily focus.
 
-Here are three high-utility macros to automate these friction points.
+Here are high-utility macros to automate these friction points.
 
 ---
 
-## 1. Anti-Idle Keep-Alive (Amphetamine + KM)
+## 1. Clean Clipboard Formatter (Strip Formatting & Fix Line Breaks)
 
-Many enterprise remote sessions disconnect or lock after as little as 10–15 minutes of inactivity. While apps like **Amphetamine** keep your physical Mac awake, the remote Windows VM tracks its own separate idle timer.
+Copying text from macOS PDFs, Slack, or web pages into remote Windows Word documents, Excel cells, or web forms often carries unwanted rich text formatting, odd font sizes, or fractured hard line-breaks.
 
-### The Solution: Periodic Micro-Keystroke / Click
-In Keyboard Maestro, create a macro that triggers every 5–10 minutes:
-1. Checks if `Windows App` is running.
-2. Sends an innocuous key event (such as a simulated <kbd>F15</kbd> or a tiny 1-pixel mouse nudge and return) into the remote session.
-3. Keeps the virtual desktop unlocked during long reading sessions, video calls, or downloads without violating host screen sleep settings.
+### The Macro
+* **Trigger:** Dedicated hotkey (e.g. <kbd>⌥ + ⌘ + C</kbd> or via typed string `;;clean`)
+* **Action:**
+  1. Grabs the current macOS clipboard.
+  2. Runs Keyboard Maestro’s filter action: **Remove Styles** / **Filter Plain Text**.
+  3. Optionally normalizes line endings (`\r\n` to `\n` or joins disjointed line breaks in copied paragraphs).
+  4. Prepares sanitized plain text ready for immediate remote pasting without formatting corruption.
+
 
 ---
 
