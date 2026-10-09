@@ -12,7 +12,7 @@ Everything in this guide is available as raw, open configuration files.
 Download or copy the raw `windows_app_mods.json` file to place in your Karabiner complex modifications directory:
 
 * **File Path:** `~/.config/karabiner/assets/complex_modifications/windows_app_mods.json`
-* **Raw Content:** View the full JSON on the [Complete Karabiner Config](/karabiner/complete-config/) page.
+* **Raw Content:** View the full JSON on the [Complete Karabiner Config](/avd-mac-tricks/karabiner/complete-config/) page.
 
 ### One-Line Terminal Install
 
@@ -27,7 +27,7 @@ curl -fsSL https://raw.githubusercontent.com/stephenmurphy/avd-mac-tricks/main/p
 
 Prefer running it from Alfred? You can download and install the packaged Alfred Workflow:
 
-* **Download:** [Update-AVD-Windows-Shortcuts.alfredworkflow](/Update-AVD-Windows-Shortcuts.alfredworkflow)
+* **Download:** [Update-AVD-Windows-Shortcuts.alfredworkflow](/avd-mac-tricks/Update-AVD-Windows-Shortcuts.alfredworkflow)
 * **Keyword Trigger:** `avd-update`
 * **Action:** Automatically downloads and validates the latest rules file and sends a macOS notification when complete.
 
@@ -40,10 +40,11 @@ The Keyboard Maestro macro suites described in this guide are pre-packaged into 
 
 | Group Name | Download Link | Scope & Highlights |
 | :--- | :--- | :--- |
-| **`Windows/AVD: UNIVERSAL`** | [Download .kmmacros](/macros/Windows-AVD-Universal.kmmacros) | Active when Windows App is frontmost. Includes Safe Remote Paste (<kbd>⌥⌘V</kbd>) and Window Centering (<kbd>⌥⌘C</kbd>). |
-| **`SPLIT: AVD and macOS`** | [Download .kmmacros](/macros/SPLIT-AVD-and-macOS.kmmacros) | Active everywhere. Context-aware logic (e.g. adaptive `;;date` stamps). |
-| **`Windows/AVD: TEAMS`** | [Download .kmmacros](/macros/Windows-AVD-Teams.kmmacros) | Fast compose box navigation (<kbd>⌥R</kbd>) and standup templates. |
-| **`Windows/AVD: OUTLOOK`** | [Download .kmmacros](/macros/Windows-AVD-Outlook.kmmacros) | Email transmittal templates (`;;att`) and fast filing routines. |
+| **`Windows/AVD: UNIVERSAL`** | [Download .kmmacros](/avd-mac-tricks/macros/Windows-AVD-Universal.kmmacros) | Active when Windows App is frontmost. Includes Safe Remote Paste (<kbd>⌥⌘V</kbd>) and Window Centering (<kbd>⌥⌘C</kbd>). |
+| **`SPLIT: AVD and macOS`** | [Download .kmmacros](/avd-mac-tricks/macros/SPLIT-AVD-and-macOS.kmmacros) | Active everywhere. Context-aware logic (e.g. adaptive `;;date` stamps). |
+| **`Windows/AVD: TEAMS`** | [Download .kmmacros](/avd-mac-tricks/macros/Windows-AVD-Teams.kmmacros) | Fast compose box navigation (<kbd>⌥R</kbd>) and standup templates. |
+| **`Windows/AVD: OUTLOOK`** | [Download .kmmacros](/avd-mac-tricks/macros/Windows-AVD-Outlook.kmmacros) | Email transmittal templates (`;;att`) and fast filing routines. |
+
 
 ---
 
