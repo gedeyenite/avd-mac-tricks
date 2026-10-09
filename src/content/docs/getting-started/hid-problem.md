@@ -5,7 +5,7 @@ description: Why you cannot use Keyboard Maestro or AppleScript alone to remap C
 
 When users first notice that pressing <kbd>⌘ Cmd</kbd> sends a `Windows` key signal into their virtual desktop, their initial instinct is often to write a **Keyboard Maestro macro** or an **AppleScript** to remap <kbd>⌘</kbd> to <kbd>Ctrl</kbd>.
 
-This approach is doomed to fail. Understanding *why* will save you dozens of hours of troubleshooting.
+This approach does not work. Understanding *why* will save you hours of troubleshooting.
 
 ---
 
