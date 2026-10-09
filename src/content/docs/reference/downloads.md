@@ -53,12 +53,15 @@ The Keyboard Maestro macro suites described in this guide are pre-packaged into 
 
 ## 3. Recommended macOS Power User Apps
 
-These are the primary apps referenced throughout our workarounds and guides:
+These are the primary apps referenced throughout our workarounds and guides, including their pricing models, tiers, and licensing:
 
-* **[Karabiner-Elements](https://karabiner-elements.pqrs.org/)** — Low-level DriverKit keyboard remapping for macOS. (Free / Open Source)
-* **[Keyboard Maestro](https://www.keyboardmaestro.com/)** — Automation powerhouse for macOS workflows, context detection, and typing routines.
-* **[Alfred](https://www.alfredapp.com/)** — Productivity launcher, clipboard history manager, and workflow engine.
-* **[CleanShot X](https://cleanshot.com/)** — Screen capture, OCR text grabber, and floating overlay pin tool.
-* **[Todoist](https://todoist.com/)** — Task management with global Quick Add capability.
-* **[Microsoft Windows App](https://apps.apple.com/us/app/windows-app/id1295203466?mt=12)** — Official client for Azure Virtual Desktop and Windows 365.
+| Application | Cost & Model | License / Tier Breakdown | Role in Workaround Suite |
+| :--- | :--- | :--- | :--- |
+| **[Karabiner-Elements](https://karabiner-elements.pqrs.org/)** | **Free**<br>*(Open Source)* | **100% Free** & open-source. Donation-supported; no license fee or account required. | Foundation DriverKit engine for physical modifier separation and low-level key remapping. |
+| **[Keyboard Maestro](https://www.keyboardmaestro.com/)** | **$36**<br>*(One-Time)* | **$36 one-time purchase** for single-user license (includes free minor updates; no subscription required). Generous fully-featured free trial available. | Automation powerhouse for rock-solid remote pasting (<kbd>⌥⌘V</kbd>), window centering, and context-aware typing. |
+| **[Alfred](https://www.alfredapp.com/)** | **Free core**<br>*(or ~£34–£59 Powerpack)* | **Core launcher is Free**.<br>The **Powerpack** (required for Workflows and Clipboard History) is a one-time purchase: **Single License (~£34 / ~$44)** or **Mega Supporter (~£59 / ~$77)** with lifetime free upgrades. | Fast productivity launcher, clipboard history manager, and workflow execution engine. |
+| **[CleanShot X](https://cleanshot.com/)** | **$29** *(One-Time)*<br>or **$8/mo** *(Subscription)* | **One-time:** **$29** perpetual license (includes 1 year of app updates and 1 GB cloud storage; renewal is optional at $19/yr).<br>**Cloud Pro:** **$8/mo** (billed annually) for unlimited cloud storage and ongoing updates.<br>*(Also available via Setapp at $9.99/mo).* | Screen capture, OCR text grabber, and floating pinned reference overlays above full-screen RDP. |
+| **[Todoist](https://todoist.com/)** | **Free tier**<br>or **$4–$5/mo** *(Subscription)* | **Beginner Tier:** **Free** (includes global Quick Add and up to 5 projects).<br>**Pro Tier:** **$4/mo** billed annually ($48/yr) or $5/mo monthly for reminders and power filters.<br>**Business:** $6/user/mo billed annually. | Global task capture and task management via <kbd>Ctrl + Space</kbd> pass-through. |
+| **[Microsoft Windows App](https://apps.apple.com/us/app/windows-app/id1295203466?mt=12)** | **Free App**<br>*(Cloud backend required)* | **Free to download** from the Mac App Store. Connecting to a remote virtual desktop requires an active corporate or organization Azure Virtual Desktop, Windows 365, or Remote Desktop Services environment. | Official client connecting macOS to Azure Virtual Desktop and Windows 365. |
+
 
