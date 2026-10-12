@@ -73,3 +73,12 @@ Before applying any custom configurations, ensure the built-in Microsoft keyboar
 > In **Windows App > Settings > Keyboard**:  
 > Turn **OFF** toggles for *Redirect macOS shortcuts* (such as Undo, Cut, Copy, Paste).  
 > Leaving them enabled creates race conditions with Karabiner's DriverKit mappings.
+
+---
+
+## Display & Multi-Monitor Settings
+
+> [!TIP] **Retina Resolution & Multi-Monitor Setup (Community Tip)**  
+> If you connect to high-resolution Mac displays or multiple monitors, you can optimize your display settings per server. Hover over your remote desktop icon on the Windows App launch window, click the ellipses (**`...`**), select **Configure**, check **"Use custom settings"**, and configure **Multiple Monitors** and **Optimize for Retina displays**.  
+> *(Contributed by **[u/RudeTorpedo](https://www.reddit.com/user/RudeTorpedo/)** — see the complete guide on the [Community Tips & Contributors](/avd-mac-tricks/reference/community-tips/) page).*
+

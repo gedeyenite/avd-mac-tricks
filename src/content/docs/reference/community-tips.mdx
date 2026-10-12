@@ -1,0 +1,80 @@
+---
+title: Community Tips & Contributors
+description: User-submitted tips, hardware tricks, and AVD client optimizations for Microsoft Windows App on macOS.
+lastMajorUpdate: "2026-10-12"
+updateBadge: "NEW"
+updateSummary: "Added Community Tips page and initial AVD client display configuration tip from Reddit"
+---
+
+import { Card, CardGrid, Badge } from '@astrojs/starlight/components';
+
+This guide is built for and powered by the community of Mac power users navigating Azure Virtual Desktop (AVD), Windows 365, and DoD/Enterprise remote environments every day. 
+
+If you discover an undocumented setting, a handy client toggle, or an external hardware trick that makes remote work smoother on macOS, we want to feature it here with full credit to you.
+
+:::tip[Have a Tip or Trick to Share?]
+Found a clever workaround or client toggle that helped your workflow? 
+* Drop a comment in the **Giscus Discussion** at the bottom of any page.
+* Share your feedback on our [Reddit announcement thread](https://www.reddit.com/r/army/comments/1wygtl0/welcome_to_windows_on_mac_for_armydod_remote_work/).
+* Submit a formal request or suggestion via the **[Request a Workflow](/avd-mac-tricks/reference/request-workflow/)** page.
+:::
+
+---
+
+## 🖥️ AVD Setup & Display Settings
+
+Practical tips for configuring the Microsoft Windows App client, multi-monitor workspaces, and macOS display resolution scaling.
+
+### Multi-Monitor Support & Retina Display Optimization
+
+> "On the launch window, if you hover over whichever server you are using, click the ellipses and go into configure, check the block for 'Use custom settings' and you can setup multiple monitor support and retina display."
+> 
+> — **[u/RudeTorpedo](https://www.reddit.com/user/RudeTorpedo/)** via [r/army on Reddit](https://www.reddit.com/r/army/comments/1wygtl0/comment/pfb7hkr/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button)
+
+#### Why This Matters
+
+By default, Microsoft Windows App often launches remote desktop sessions constrained to a single monitor and at default, non-Retina scaling. On high-DPI Mac displays (MacBook Liquid Retina screens or 4K/5K external monitors), default scaling can result in blurry fonts, fuzzy UI elements, or unexpected monitor arrangement.
+
+Enabling **Custom Settings** per workspace gives you granular control over how the remote session renders on your Mac.
+
+#### Step-by-Step Instructions
+
+1. **Open Windows App Launch Window**: Open the **Windows App** (formerly Microsoft Remote Desktop) client to your main Workspaces dashboard.
+2. **Hover Over the Desktop Card**: Find the remote PC / host pool icon you connect to. Hover your mouse over the card to reveal the three dots (**`...`**) in the top-right corner.
+3. **Select Configure**: Click the ellipses (**`...`**) and select **Configure** (or **Settings**).
+4. **Enable Custom Settings**: In the configuration dialog, check the box for **"Use custom settings"** (overriding global defaults for this specific connection).
+5. **Adjust Display Preferences**:
+   * **Multiple Monitor Support**: Check **"Use all monitors"** if you want your remote Windows session to span across all connected Mac screens in full screen.
+   * **Optimize for Retina Displays**: Toggle **"Optimize for Retina displays"** (or enable high-DPI scaling) to render Windows text and UI elements with native, sharp crispness instead of stretched bitmap interpolation.
+6. **Save & Reconnect**: Click **Save**. Your next connection will launch across your full multi-monitor layout with razor-sharp Retina resolution.
+
+---
+
+## 🏆 Hall of Contributors
+
+Special thanks to the following power users who have shared valuable fixes, configuration insights, and community feedback:
+
+| Contributor | Platform / Profile | Contribution Area | Summary of Contribution |
+| :--- | :--- | :--- | :--- |
+| **u/RudeTorpedo** | [u/RudeTorpedo on Reddit](https://www.reddit.com/user/RudeTorpedo/) | AVD Setup & Settings | Provided the tip on overriding custom connection settings in the Windows App launch window for multi-monitor support and native Retina display scaling ([View Post](https://www.reddit.com/r/army/comments/1wygtl0/comment/pfb7hkr/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button)). |
+
+---
+
+## Suggest a Future Category
+
+As community submissions grow, this section will expand across dedicated categories:
+
+<CardGrid>
+  <Card title="AVD Setup & Display Settings" icon="laptop">
+    Connection properties, RDP resolution parameters, multi-display configurations, and client toggles.
+  </Card>
+  <Card title="Keyboard & Peripheral Tricks" icon="pencil">
+    External mechanical keyboards, trackball/mouse scroll fixes, audio headsets, and smart card / CAC readers.
+  </Card>
+  <Card title="Network & Session Resilience" icon="random">
+    VPN routing, gateway reconnects, bandwidth compression tweaks, and latency reduction tips.
+  </Card>
+  <Card title="App-Specific Remote Workflows" icon="document">
+    Microsoft 365, Teams, Outlook, Excel, and DoD-specific browser or certificate workarounds.
+  </Card>
+</CardGrid>
