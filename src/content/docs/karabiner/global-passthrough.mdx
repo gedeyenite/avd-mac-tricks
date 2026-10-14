@@ -1,9 +1,9 @@
 ---
 title: macOS Hotkey Pass-Throughs (Alfred & Todoist)
 description: Ensure global macOS shortcuts like Alfred (Cmd + Space) and Todoist Quick Add (Ctrl + Space) continue to work when Windows App is frontmost.
-lastMajorUpdate: "2026-10-09"
+lastMajorUpdate: "2026-10-14"
 updateBadge: "UPDATED"
-updateSummary: "Added interactive in-browser cheatsheet preview and shortcut overlay trigger"
+updateSummary: "Added Alfred 6 Autumn 2026 Sneak Peek, native UI roadmap, and upgrade terms"
 ---
 
 import CheatsheetPreview from '../../../components/CheatsheetPreview.astro';
@@ -63,6 +63,27 @@ We want pressing physical <kbd>Left ⌘ + Space</kbd> inside Windows App to:
 ```
 
 The `to_after_key_up` cleanly resets modifier state so no trailing `Windows Key Up` event is ever delivered to the remote desktop.
+
+### 🚀 What's Coming: Alfred 6 "Unlimited Possibilities" (Autumn 2026)
+
+Running with Crayons has officially announced the upcoming release of **[Alfred 6: Unlimited Possibilities](https://www.alfredapp.com/v6/)**, scheduled to launch in Autumn 2026.
+
+#### Key Features & Architecture Highlights
+
+* **Native "Alfred UI" Framework:** Workflows are gaining a brand-new, macOS-native UI toolkit. Instead of relying on heavy embedded web engines or plain lists, workflow authors can craft lightweight, rich visual experiences built directly into Alfred's interface.
+* **First Sneak Peek Workflows ([Source: alfredapp.com/v6](https://www.alfredapp.com/v6/)):**
+  * **Launchpad:** Modernized app searching, grid arranging, and quick launching.
+  * **Brain Outsourcing (AI Integration):** Fully optional, privacy-respecting LLM integration. Unlike tools that force monthly subscriptions or route prompts through proprietary middlemen, Alfred 6 allows you to choose your LLM provider and bring your own API key.
+  * **Text Transform:** Instant, multi-stage text manipulation and case conversion directly in the palette.
+  * **SF Symbols Browser:** Native browsing and search of Apple's system glyph library.
+* **"Bored of the Bloat?" Philosophy:** While many modern utilities balloon into multi-hundred-megabyte Electron apps, Alfred 6 remains handcrafted 100% native macOS code. The `.dmg` download package is **under 6MB**, runs fully private and local on your Mac, and operates with zero latency.
+* **Why This Matters for Windows App Users:** Because our Karabiner setup cleanly passes <kbd>⌘ + Space</kbd> to macOS without triggering the remote Windows Start Menu, Alfred 6's new native UI widgets will float smoothly over full-screen remote desktop sessions—letting you interact with AI models, transform clipboard text, or control local media without leaving your virtual desktop.
+
+#### Licensing, Upgrades & Grace Period
+
+* **Free Upgrade for 2026 Buyers:** Anyone who purchased an Alfred Powerpack license in **2026**, as well as all **Mega Supporter** and **Legendary Supporter** lifetime license holders, will receive a **100% free upgrade to Alfred 6** ([Upgrade Details](https://www.alfredapp.com/blog/announcements/alfred-6-coming-soon/)).
+* **Buy Now Advantage:** Purchasing any [Alfred 5 Powerpack license today](https://www.alfredapp.com/shop/) includes an immediate Alfred 5 license plus an automatic free upgrade to Alfred 6 when it launches.
+* **Seamless Migration:** Upgrading will automatically migrate all existing preferences, snippets, hotkeys, and workflows from Alfred 5 to Alfred 6.
 
 ---
 
