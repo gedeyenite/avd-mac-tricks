@@ -1,6 +1,9 @@
 ---
 title: Troubleshooting & FAQ
 description: Common setup gotchas, macOS accessibility permissions, and frequently asked questions for Windows App power users.
+lastMajorUpdate: "2026-10-14"
+updateBadge: "UPDATED"
+updateSummary: "Added AirPods audio passthrough troubleshooting section and SoundSource guide link"
 ---
 
 :::caution[Workaround Disclaimer & Backup Recommendation]
@@ -52,6 +55,15 @@ These are the most common tripwires encountered when configuring Karabiner-Eleme
 1. **Accessibility Permissions:** On macOS, open **System Settings > Privacy & Security > Accessibility** and ensure both **Keyboard Maestro** and **Keyboard Maestro Engine** are checked and enabled.
 2. **Input Monitoring Permissions:** Open **System Settings > Privacy & Security > Input Monitoring** and verify that **Keyboard Maestro Engine** is enabled.
 3. **Macro Group Application Scoping:** In the Keyboard Maestro editor, inspect the parent Macro Group (e.g. `Windows/AVD: UNIVERSAL`). Ensure *Available in these applications* includes **Windows App** (or is set to *Available in all applications*).
+
+---
+
+### 5. AirPods Audio Fails to Route to Remote Teams / Windows App
+
+* **Symptom:** Connecting your AirPods after launching Windows App leaves audio blasting through MacBook speakers or silent in remote Teams meetings.
+* **Why it happens:** Windows App captures macOS CoreAudio sinks at launch and does not dynamically bind to newly connected Bluetooth devices mid-session.
+* **The Solution:** Use **SoundSource** to force per-app redirection (`Windows App` -> `AirPods`).
+* **Complete Guide:** See our full troubleshooting breakdown, buffer latency recommendations, and Friendly Streaming workaround in the **[AirPods Routing with SoundSource](/avd-mac-tricks/reference/community-tips/#-audio--peripheral-passthrough-airpods-routing-with-soundsource)** guide.
 
 ---
 
