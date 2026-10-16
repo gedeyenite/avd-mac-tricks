@@ -1,9 +1,9 @@
 ---
 title: macOS Hotkey Pass-Throughs (Alfred & Todoist)
 description: Ensure global macOS shortcuts like Alfred (Cmd + Space) and Todoist Quick Add (Ctrl + Space) continue to work when Windows App is frontmost.
-lastMajorUpdate: "2026-10-14"
+lastMajorUpdate: "2026-10-16"
 updateBadge: "UPDATED"
-updateSummary: "Added Alfred 6 Autumn 2026 Sneak Peek, native UI roadmap, and upgrade terms"
+updateSummary: "Expanded Apple Music Ctrl+Opt+Cmd hotkey suite and CleanShot X OCR copy-back workflows"
 ---
 
 import CheatsheetPreview from '../../../components/CheatsheetPreview.astro';
@@ -12,7 +12,7 @@ One of the most frustrating aspects of working inside a full-screen remote deskt
 
 * When you pressed <kbd>⌘ + Space</kbd> to open **Alfred**, the remap to `Control` turned it into `Ctrl + Space` (which inside Windows is Chinese input method toggle, or triggered Todoist in the wrong context), while releasing it triggered the **Windows Start Menu**.
 * When you pressed <kbd>Ctrl + Space</kbd> to quick-add a task to **Todoist**, it failed to reach macOS.
-* Media pause/play hotkeys (<kbd>Ctrl + Opt + Cmd + =</kbd>) got swallowed by the remote stream.
+* Global media hotkeys (<kbd>Ctrl + Opt + Cmd</kbd> for Apple Music controls) had their `Command` modifier silently stripped by the Command-to-Control remap, getting swallowed or leaking into the remote session.
 
 Here is how we configure clean pass-throughs.
 
@@ -124,13 +124,42 @@ Because Windows App intercepts keystrokes before Electron's `globalShortcut` lis
 
 ---
 
-## 3. Media / System Pause-Play (<kbd>Ctrl + Opt + Cmd + =</kbd>)
+## 3. Apple Music & Media Controls (<kbd>Ctrl + Opt + Cmd</kbd> Suite)
 
-For custom system global hotkeys (like a pause/play macro or stream controller), we pass all 3 modifiers through with an equal sign:
+When managing background audio (such as Apple Music, Spotify, or podcast playback) while working inside Windows App, power users often rely on global hotkey suites like Alfred's built-in iTunes/Music workflows or Keyboard Maestro media macros.
 
-```json title="Excerpt from windows_app_mods.json"
+### The "Why": Why Triple-Modifier Shortcuts Break
+
+Without dedicated pass-through rules, pressing <kbd>Ctrl + Opt + Cmd</kbd> hotkeys inside Windows App fails completely:
+
+1. **Modifier Stripping:** Karabiner's foundational rule remaps physical **Left Command** to **Control** inside `com.microsoft.rdc.macos`.
+2. When you press <kbd>Ctrl + Opt + Cmd + [Key]</kbd>, Karabiner intercepts the `Command` keystroke and turns it into `Control`.
+3. macOS receives `Control + Option + Control + [Key]` (effectively stripping `Command` and leaving only `Ctrl + Opt`).
+4. As a result, macOS media listeners never see the required triple-modifier shortcut, while Windows App either absorbs the keystroke as a remote `Ctrl + Alt + [Key]` or drops it.
+
+### The Solution: Karabiner Explicit Triple-Modifier Pass-Through
+
+Rule 9 (`Windows App: Pass-Through Global Shortcuts (Ctrl + Opt + Cmd + Apple Music / Hotkeys)`) solves this by explicitly intercepting `key_code` combinations with mandatory `control` and `option` modifiers, and forcefully emitting all three modifiers simultaneously: `["left_control", "left_option", "left_command"]`. A clean `to_after_key_up` resets `left_control` to prevent sticky modifier leaks.
+
+### Supported Apple Music Hotkeys Suite
+
+The following full suite of background media shortcuts is enabled across both full-screen and windowed remote sessions:
+
+| Function | Hotkey Trigger | Karabiner `key_code` | Action & Alfred Workflow Integration |
+| :--- | :--- | :--- | :--- |
+| **Play / Pause** | <kbd>⌃</kbd><kbd>⌥</kbd><kbd>⌘</kbd><kbd>=</kbd> | `equal_sign` | Toggle playback in Apple Music or Spotify without leaving Windows App. |
+| **Previous Track** | <kbd>⌃</kbd><kbd>⌥</kbd><kbd>⌘</kbd><kbd>[</kbd> | `open_bracket` | Restart current song or jump back to the previous track. |
+| **Next Track** | <kbd>⌃</kbd><kbd>⌥</kbd><kbd>⌘</kbd><kbd>]</kbd> | `close_bracket` | Skip immediately to the next queued song. |
+| **Volume Up** | <kbd>⌃</kbd><kbd>⌥</kbd><kbd>⌘</kbd><kbd>↑</kbd> | `up_arrow` | Step macOS music volume up by 5% in the background. |
+| **Volume Down** | <kbd>⌃</kbd><kbd>⌥</kbd><kbd>⌘</kbd><kbd>↓</kbd> | `down_arrow` | Step macOS music volume down by 5% in the background. |
+| **Current Track Info** | <kbd>⌃</kbd><kbd>⌥</kbd><kbd>⌘</kbd><kbd>C</kbd> | `c` | Trigger Alfred / notification HUD showing track name, artist, and album artwork. |
+| **Up Next Queue** | <kbd>⌃</kbd><kbd>⌥</kbd><kbd>⌘</kbd><kbd>U</kbd> | `u` | Display Alfred's Up Next track queue popup. |
+| **Mini Player Search** | <kbd>⌃</kbd><kbd>⌥</kbd><kbd>⌘</kbd><kbd>F</kbd> | `f` | Quick-search your Apple Music library or playlists via Alfred Mini Player. |
+| **Star Rating (1–5★)** | <kbd>⌃</kbd><kbd>⌥</kbd><kbd>⌘</kbd><kbd>1</kbd>–<kbd>5</kbd> | `1`, `2`, `3`, `4`, `5` | Instantly rate the currently playing song from 1 to 5 stars. |
+
+```json title="Excerpt from windows_app_mods.json (Rule 9)"
 {
-  "description": "Windows App: Pass-Through Global Shortcut (Ctrl + Opt + Cmd + =)",
+  "description": "Windows App: Pass-Through Global Shortcuts (Ctrl + Opt + Cmd + Apple Music / Hotkeys)",
   "manipulators": [
     {
       "type": "basic",
@@ -154,13 +183,14 @@ For custom system global hotkeys (like a pause/play macro or stream controller),
         { "key_code": "left_control" }
       ]
     }
+    // Repeated for [, ], u, c, f, 1-5, up_arrow, down_arrow
   ]
 }
 ```
 
 ---
 
-## 4. CleanShot X Screenshot Overlay (<kbd>⇧ + ⌘ + 4</kbd> / <kbd>⇧ + ⌘ + 5</kbd>)
+## 4. CleanShot X Screenshot Overlay (<kbd>⇧ + ⌘ + 3, 4, 5, 6, 7, 0</kbd>)
 
 By default, when Windows App has focus in full-screen or multiple monitors, pressing native macOS screenshot keys can be swallowed by the remote session or trigger Windows snipping tools.
 
@@ -169,7 +199,11 @@ By default, when Windows App has focus in full-screen or multiple monitors, pres
 * Windows App captures the modifier stream unless explicit pass-through directives are defined.
 
 ### The Workaround
-Pass CleanShot's native capture hotkeys (<kbd>⇧ + ⌘ + 4</kbd> for Area Capture, <kbd>⇧ + ⌘ + 3</kbd> for Fullscreen) through Karabiner, or configure CleanShot's **"Pin to Screen"** overlay floating window to maintain macOS Window Level `NSFloatingWindowLevel` above fullscreen RDP sessions.
+Pass CleanShot's native capture hotkeys (<kbd>⇧ + ⌘ + 4</kbd> for Area Capture, <kbd>⇧ + ⌘ + 3</kbd> for Fullscreen, <kbd>⇧ + ⌘ + 5</kbd> for Capture & Annotate, <kbd>⇧ + ⌘ + 6</kbd> for Area to Clipboard, <kbd>⇧ + ⌘ + 7</kbd> for Area to Disk, and <kbd>⇧ + ⌘ + 0</kbd> for OCR) through Karabiner.
+
+:::tip[Copying from Windows App to macOS (CleanShot X OCR)]
+Due to corporate clipboard isolation policies, network lag, or format stripping, copying text from Windows App back to macOS can sometimes feel sluggish or fail. The fastest power-user workaround is **CleanShot X OCR (<kbd>⇧⌘0</kbd>)**: drag a quick selection box over any text on screen in your remote session to instantly OCR and place the plain text directly onto your macOS clipboard!
+:::
 
 ---
 
