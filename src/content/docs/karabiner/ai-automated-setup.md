@@ -24,26 +24,67 @@ Instead of doing that manual dance, **we automated the entire process using Anti
 
 ## The Workflow
 
-```text
-┌──────────────────────────────┐
-│  You (Natural Language)      │
-│  "Make Cmd+Tab switch apps   │
-│   inside Windows App without │
-│   breaking Ctrl+Tab tabs"    │
-└──────────────┬───────────────┘
-               │
-┌──────────────▼───────────────┐
-│  Antigravity Agent (macOS)   │
-│  Coupled with Gemini Pro     │
-└──────────────┬───────────────┘
-               │ (Direct local file edits & CLI commands)
-┌──────────────▼────────────────────────────────────────┐
-│  ~/.config/karabiner/assets/complex_modifications/    │
-│  • Writes JSON directly to disk                       │
-│  • Validates syntax against Karabiner specs           │
-│  • Reloads configuration immediately                  │
-└───────────────────────────────────────────────────────┘
-```
+<div class="diagram-container">
+  <div class="diagram-header">
+    <div class="badge-pill">AUTOMATION PIPELINE</div>
+    <div class="diagram-title">From Plain English to DriverKit JSON</div>
+    <div class="diagram-subtitle">How Antigravity and Gemini Pro inspect, write, validate, and hot-reload rules in real time.</div>
+  </div>
+
+  <!-- Stage 1: Natural Language -->
+  <div class="diagram-layer theme-purple">
+    <div class="layer-top">
+      <h4 class="layer-title">1. You (Natural Language Prompt)</h4>
+      <span class="layer-tag tag-purple">User Input</span>
+    </div>
+    <ul class="layer-bullets">
+      <li><em>"Make Cmd+Tab switch apps inside Windows App without breaking Ctrl+Tab tabs"</em></li>
+      <li>No need to research Karabiner's internal scancodes or JSON schema manually</li>
+    </ul>
+  </div>
+
+  <div class="diagram-connector">
+    <span class="connector-label">Transmitted to local agent session</span>
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="12" y1="5" x2="12" y2="19"></line>
+      <polyline points="19 12 12 19 5 12"></polyline>
+    </svg>
+  </div>
+
+  <!-- Stage 2: AI Agent -->
+  <div class="diagram-layer theme-blue">
+    <div class="layer-top">
+      <h4 class="layer-title">2. Antigravity Agent + Gemini Pro</h4>
+      <span class="layer-tag tag-blue">Analysis & Reasoning</span>
+    </div>
+    <ul class="layer-bullets">
+      <li>Reads active <code>~/.config/karabiner/karabiner.json</code> structure</li>
+      <li>Identifies bundle identifier filters and modifier mask race conditions</li>
+      <li>Synthesizes exact manipulator definitions with conditions and variables</li>
+    </ul>
+  </div>
+
+  <div class="diagram-connector">
+    <span class="connector-label">Direct local file writing & CLI execution</span>
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="12" y1="5" x2="12" y2="19"></line>
+      <polyline points="19 12 12 19 5 12"></polyline>
+    </svg>
+  </div>
+
+  <!-- Stage 3: Instant Deployment -->
+  <div class="diagram-layer theme-emerald">
+    <div class="layer-top">
+      <h4 class="layer-title">3. Live DriverKit Hot-Reload</h4>
+      <span class="layer-tag tag-emerald">Instant Validation</span>
+    </div>
+    <ul class="layer-bullets">
+      <li>Writes directly to <code>~/.config/karabiner/assets/complex_modifications/</code></li>
+      <li>Validates schema syntax; automatically repairs errors if logs complain</li>
+      <li>Karabiner daemon detects filesystem change and hot-reloads in under 1 second</li>
+    </ul>
+  </div>
+</div>
 
 1. **Prompt the Agent:** You describe what shortcut behavior you want in plain English.
 2. **AI Inspects System State:** The Antigravity agent inspects your active `karabiner.json` and existing complex modifications.

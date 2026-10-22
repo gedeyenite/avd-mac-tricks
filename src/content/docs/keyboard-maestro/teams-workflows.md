@@ -34,12 +34,41 @@ During meetings, Teams often pops a sticky banner: *"You're muted. Speak up or u
 
 ## 3. Automated Morning Standup Greeting
 
-```text title="Morning Standup Macro Recipe"
-1. Focus Teams window
-2. Trigger "Open Compose Box"
-3. Insert Text by Typing: "Good morning team! Starting on today's tasks..."
-4. Position cursor at the end of the text
-```
+<div class="diagram-container">
+  <div class="diagram-header">
+    <div class="badge-pill">AUTOMATION ROUTINE</div>
+    <div class="diagram-title">Morning Standup Macro Recipe</div>
+  </div>
+
+  <div class="diagram-layer theme-purple">
+    <div class="layer-top">
+      <h4 class="layer-title">Step 1 & 2: Focus & Compose</h4>
+      <span class="layer-tag tag-purple">Window Focus</span>
+    </div>
+    <ul class="layer-bullets">
+      <li><strong>Focus Teams Window:</strong> Brings Microsoft Teams to the foreground</li>
+      <li><strong>Trigger Compose Box:</strong> Sends remote shortcut to activate the chat input box</li>
+    </ul>
+  </div>
+
+  <div class="diagram-connector">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="12" y1="5" x2="12" y2="19"></line>
+      <polyline points="19 12 12 19 5 12"></polyline>
+    </svg>
+  </div>
+
+  <div class="diagram-layer theme-emerald">
+    <div class="layer-top">
+      <h4 class="layer-title">Step 3 & 4: Text Injection</h4>
+      <span class="layer-tag tag-emerald">Automated Typing</span>
+    </div>
+    <ul class="layer-bullets">
+      <li><strong>Insert Text by Typing:</strong> <code>"Good morning team! Starting on today's tasks..."</code></li>
+      <li><strong>Position Cursor:</strong> Lands at the end of the line ready for additions or immediate Enter</li>
+    </ul>
+  </div>
+</div>
 
 ---
 

@@ -80,26 +80,69 @@ The permanent fix is to bypass Windows App's internal audio device selector enti
 
 SoundSource operates at the system-level CoreAudio application layer. Instead of waiting for Windows App to detect hardware hot-plug events, SoundSource forcibly intercepts the audio output stream of `com.microsoft.rdc.macos` and directs it to whichever destination you choose.
 
-```text
-+-------------------------------------------------------------+
-|               Windows App Remote Session (AVD)              |
-|        (Outputs audio blindly to default system sink)       |
-+-------------------------------------------------------------+
-                               |
-                               v
-+-------------------------------------------------------------+
-|             SoundSource CoreAudio Interception Layer        |
-|                                                             |
-|   • Detects Windows App process stream                      |
-|   • Overrides system output route in real time              |
-|   • Applies per-app volume boost & EQ                       |
-+-------------------------------------------------------------+
-              |                                 |
-              v                                 v
-   [ Redirect Audio To ]               [ Mac System Audio ]
-     Apple AirPods Pro                  MacBook Speakers
-  (Teams, Chimes, Remote VoIP)        (Music, Browsers, Alerts)
-```
+<div class="diagram-container">
+  <div class="diagram-header">
+    <div class="badge-pill">COREAUDIO REDIRECTION</div>
+    <div class="diagram-title">SoundSource Per-App Stream Interception</div>
+    <div class="diagram-subtitle">Forcibly reroutes Windows App remote audio to AirPods without reconnecting the AVD session.</div>
+  </div>
+
+  <div class="diagram-layer theme-blue">
+    <div class="layer-top">
+      <h4 class="layer-title">Windows App Remote Session (AVD)</h4>
+      <span class="layer-tag tag-blue">Audio Source</span>
+    </div>
+    <ul class="layer-bullets">
+      <li>Process: <code>com.microsoft.rdc.macos</code></li>
+      <li>Outputs remote audio stream to the system default audio sink</li>
+    </ul>
+  </div>
+
+  <div class="diagram-connector">
+    <span class="connector-label">Audio stream captured at CoreAudio layer</span>
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="12" y1="5" x2="12" y2="19"></line>
+      <polyline points="19 12 12 19 5 12"></polyline>
+    </svg>
+  </div>
+
+  <div class="diagram-layer theme-sky">
+    <div class="layer-top">
+      <h4 class="layer-title">SoundSource CoreAudio Interception Layer</h4>
+      <span class="layer-tag tag-sky">Audio Engine</span>
+    </div>
+    <ul class="layer-bullets">
+      <li>Detects Windows App process stream independently of RDP hot-plug events</li>
+      <li>Dynamically overrides hardware output route in real time</li>
+      <li>Applies per-app volume boost & voice frequency equalization</li>
+    </ul>
+  </div>
+
+  <div class="diagram-connector">
+    <span class="connector-label">Dual-channel routing separation</span>
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="12" y1="5" x2="12" y2="19"></line>
+      <polyline points="19 12 12 19 5 12"></polyline>
+    </svg>
+  </div>
+
+  <div class="diagram-split">
+    <div class="split-card success-card">
+      <div class="split-card-header">
+        <span>🎧 Redirect Audio To</span>
+      </div>
+      <p style="margin: 0 0 0.4rem 0; font-weight: 700; color: #4ade80;">Apple AirPods Pro</p>
+      <p style="margin: 0; font-size: 0.8rem; color: var(--sl-color-gray-3);">Microsoft Teams meetings, notification chimes, and remote VoIP calls.</p>
+    </div>
+    <div class="split-card tip-card">
+      <div class="split-card-header">
+        <span>🔊 Mac System Audio</span>
+      </div>
+      <p style="margin: 0 0 0.4rem 0; font-weight: 700; color: #38bdf8;">MacBook Speakers</p>
+      <p style="margin: 0; font-size: 0.8rem; color: var(--sl-color-gray-3);">Local music, Safari videos, and macOS system alerts remain undisturbed.</p>
+    </div>
+  </div>
+</div>
 
 #### Step-by-Step Configuration
 
@@ -139,10 +182,19 @@ Recent updates across modern macOS and SoundSource (v6.1+) have resolved the vas
 #### Tuning the Latency Buffer
 In **SoundSource > Settings > Audio**, you will find an **Audio Processing Latency** slider:
 
-```text
-Lower Latency <-----------------[  •  ]-----------------> More Reliable
-(Reduces mic echo)                                (Prevents audio skips)
-```
+<div class="visual-slider-wrap">
+  <div class="slider-labels">
+    <span>🎙️ Lower Latency</span>
+    <span>🛡️ More Reliable</span>
+  </div>
+  <div class="slider-track">
+    <div class="slider-thumb"></div>
+  </div>
+  <div class="slider-subtexts">
+    <span>(Reduces mic echo during live calls)</span>
+    <span>(Prevents audio skips over Wi-Fi)</span>
+  </div>
+</div>
 
 > [!TIP] **Optimal Buffer Setting**  
 > Keep the slider centered. Setting it too far toward *Lower Latency* reduces echo during active calls but can introduce skips over lossy Wi-Fi. The center position gives rock-solid stability for both remote Teams meetings and local listening.
@@ -161,21 +213,41 @@ Fortunately, there is a simple 10-second fix using SoundSource's native exclusio
 4. Click the **`+ Add Exclusion`** button.
 5. Select **Friendly Streaming** from your Applications folder (you can also exclude macOS accessibility utilities like **VoiceOver** if desired).
 
-```text
-+--------------------------------------------------------------+
-|                    SoundSource Settings                      |
-|  [ General ]         [ Appearance ]         [ Audio (Selected) ] |
-+--------------------------------------------------------------+
-| Audio Processing:                                            |
-|   Latency:  [--------- • ---------]                          |
-|                                                              |
-| Excluded Applications:                                       |
-|   • Friendly Streaming                                       |
-|   • VoiceOver                                                |
-|                                                              |
-|   [ + Add Exclusion ]                           [ - Remove ] |
-+--------------------------------------------------------------+
-```
+<div class="mock-mac-window">
+  <div class="mock-window-header">
+    <div class="mock-window-dots">
+      <span class="mock-dot red"></span>
+      <span class="mock-dot yellow"></span>
+      <span class="mock-dot green"></span>
+    </div>
+    <div class="mock-window-title">SoundSource — Settings</div>
+    <div style="width: 40px;"></div>
+  </div>
+  <div class="mock-window-body">
+    <div class="mock-tabs">
+      <div class="mock-tab">General</div>
+      <div class="mock-tab">Appearance</div>
+      <div class="mock-tab active">Audio (Selected)</div>
+    </div>
+    
+    <div style="margin-bottom: 1.25rem;">
+      <div style="font-size: 0.85rem; font-weight: 700; margin-bottom: 0.5rem;">Audio Processing Latency:</div>
+      <div class="slider-track" style="margin-bottom: 0.35rem;">
+        <div class="slider-thumb"></div>
+      </div>
+    </div>
+
+    <div style="font-size: 0.85rem; font-weight: 700; margin-bottom: 0.5rem;">Excluded Applications:</div>
+    <div class="mock-list-item">
+      <span>🎬 Friendly Streaming</span>
+      <span style="font-size: 0.72rem; color: #34d399; font-weight: 700;">EXCLUDED</span>
+    </div>
+    <div class="mock-list-item">
+      <span>🗣️ VoiceOver</span>
+      <span style="font-size: 0.72rem; color: #34d399; font-weight: 700;">EXCLUDED</span>
+    </div>
+  </div>
+</div>
 
 By adding Friendly Streaming to the Excluded Applications list, SoundSource completely ignores its playback engine. Video streams play with 100% fluid frame rates and zero desync, while your Windows App audio remains securely and conveniently routed to your AirPods!
 
@@ -189,18 +261,34 @@ The modern power-user setup utilizes a hardware security key—such as a **FIPS-
 
 However, managing and provisioning YubiKeys inside a virtual AVD session introduces two notorious tripwires:
 
-```text
-+-----------------------------------------------------------------------------+
-|                               DISA Purebred                                 |
-|                Derived Credential Enrollment & Lifecycle                    |
-+-----------------------------------------------------------------------------+
-                 |                                             |
-                 v                                             v
-     [ Enrolling a New Key ]                       [ Renewed / New CAC ]
-  ⚠️ DO NOT log in via YubiKey!                 💡 No AESD helpdesk ticket!
-  Must authenticate AVD with CAC                💡 No factory reset needed!
-  to avoid session token lock.                  Use Purebred Self-Service OTP.
-```
+<div class="diagram-container">
+  <div class="diagram-header">
+    <div class="badge-pill">DISA PUREBRED LIFECYCLE</div>
+    <div class="diagram-title">Derived Credential Enrollment & Renewal</div>
+    <div class="diagram-subtitle">Distinguishing initial hardware setup from routine CAC renewal.</div>
+  </div>
+
+  <div class="diagram-split">
+    <div class="split-card alert-card">
+      <div class="split-card-header">
+        <span>⚠️ Enrolling a New Key</span>
+      </div>
+      <p style="margin: 0 0 0.4rem 0; font-weight: 700; color: #f87171;">DO NOT log in via YubiKey!</p>
+      <p style="margin: 0; font-size: 0.82rem; color: var(--sl-color-gray-3);">
+        You must authenticate to AVD using your <strong>physical CAC</strong> so the session token doesn't lock your active key.
+      </p>
+    </div>
+    <div class="split-card success-card">
+      <div class="split-card-header">
+        <span>💡 Renewed / New CAC</span>
+      </div>
+      <p style="margin: 0 0 0.4rem 0; font-weight: 700; color: #4ade80;">No AESD Ticket or Reset!</p>
+      <p style="margin: 0; font-size: 0.82rem; color: var(--sl-color-gray-3);">
+        Log in with your new CAC, generate an OTP in Purebred self-service, and paste into the desktop app in &lt;60s.
+      </p>
+    </div>
+  </div>
+</div>
 
 ---
 
@@ -214,15 +302,33 @@ When connecting to AVD, you might naturally authenticate into Windows using your
 
 **What happens?** The Purebred Registration app will **target your existing, logged-in YubiKey** instead of the newly inserted one!
 
-```text
-Mac Host (macOS)                         AVD Remote Windows Session
-+----------------------------+           +----------------------------------+
-| [Existing YubiKey] (USB-C) | --------> | 🔒 Windows Logon Session Owner   |
-| [New Blank YubiKey](USB-A) | --------> | Purebred Registration App:       |
-+----------------------------+           | ❌ Latching onto Session Token!  |
-                                         |    (Refuses to provision new key)|
-                                         +----------------------------------+
-```
+<div class="diagram-container">
+  <div class="diagram-header">
+    <div class="badge-pill">SESSION IDENTITY COLLISION</div>
+    <div class="diagram-title">Why Multi-Key Enrollment Fails When Logged in via YubiKey</div>
+  </div>
+
+  <div class="diagram-split">
+    <div class="split-card tip-card">
+      <div class="split-card-header">
+        <span>💻 Mac Host (macOS)</span>
+      </div>
+      <ul class="layer-bullets" style="margin-top: 0.25rem;">
+        <li><code>Port 1 (USB-C)</code>: Active YubiKey</li>
+        <li><code>Port 2 (USB-A)</code>: New Blank YubiKey</li>
+      </ul>
+    </div>
+    <div class="split-card alert-card">
+      <div class="split-card-header">
+        <span>🔒 AVD Windows Session</span>
+      </div>
+      <ul class="layer-bullets" style="margin-top: 0.25rem;">
+        <li><strong>Windows Logon:</strong> Bound to Active YubiKey</li>
+        <li><strong>Purebred Client:</strong> ❌ Latches onto session token instead of blank key</li>
+      </ul>
+    </div>
+  </div>
+</div>
 
 Because Windows App maps both CCID devices into the VM, the operating system locks the existing key as the active session authentication token. Purebred interrogates the active session identity and focuses on re-provisioning or overwriting the key you are currently using, leaving the new key untouched.
 

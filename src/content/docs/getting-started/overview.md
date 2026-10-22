@@ -31,35 +31,70 @@ If you are an absolute beginner looking for basic hardware requirements (CAC rea
 
 To make macOS and Windows App cooperate, you must use the right tool for the right layer:
 
-```text
-+-------------------------------------------------------------+
-|                     macOS User Space                        |
-|                                                             |
-|  [ Keyboard Maestro ]                                       |
-|    • Complex text expansion & macros                        |
-|    • App-aware logic (detect Mac vs AVD)                    |
-|    • Clean clipboard pasting (stripping newlines & formats) |
-+-------------------------------------------------------------+
-                              |
-+-------------------------------------------------------------+
-|             macOS Application Layer (Windows App)           |
-|                                                             |
-|  [ Microsoft Windows App (com.microsoft.rdc.macos) ]        |
-|    • Streams raw scancodes to remote Windows VM             |
-|    • Maps physical Command directly to Windows key          |
-+-------------------------------------------------------------+
-                              |
-+-------------------------------------------------------------+
-|            macOS Low-Level DriverKit / HID Layer            |
-|                                                             |
-|  [ Karabiner-Elements DriverKit Virtual HID Device ]        |
-|    • Intercepts physical keydown / keyup BEFORE Windows App |
-|    • Maps Left ⌘ -> Ctrl (with lazy modifiers)              |
-|    • Preserves Right ⌘ as true Windows key                  |
-|    • Maps ⌘+Tab -> Alt+Tab, ⌘+Arrows -> Win+Arrows          |
-|    • Passes ⌘+Space through to Alfred without Start Menu    |
-+-------------------------------------------------------------+
-```
+<div class="diagram-container">
+  <div class="diagram-header">
+    <div class="badge-pill">SYSTEM ARCHITECTURE</div>
+    <div class="diagram-title">The Three Interception Layers</div>
+    <div class="diagram-subtitle">Where keystrokes, shortcuts, and automations live between macOS and Windows App.</div>
+  </div>
+
+  <!-- Layer 1: User Space -->
+  <div class="diagram-layer theme-purple">
+    <div class="layer-top">
+      <h4 class="layer-title">Keyboard Maestro</h4>
+      <span class="layer-tag tag-purple">macOS User Space</span>
+    </div>
+    <ul class="layer-bullets">
+      <li>Complex text expansion, automated typing & Teams routines</li>
+      <li>Application-aware logic (detecting macOS vs. active AVD session)</li>
+      <li>Clean remote pasting (sanitizing newlines & formatting across latency)</li>
+    </ul>
+  </div>
+
+  <div class="diagram-connector">
+    <span class="connector-label">Automations & clipboard triggers</span>
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="12" y1="5" x2="12" y2="19"></line>
+      <polyline points="19 12 12 19 5 12"></polyline>
+    </svg>
+  </div>
+
+  <!-- Layer 2: Application Layer -->
+  <div class="diagram-layer theme-blue">
+    <div class="layer-top">
+      <h4 class="layer-title">Microsoft Windows App</h4>
+      <span class="layer-tag tag-blue">macOS Application Layer</span>
+    </div>
+    <ul class="layer-bullets">
+      <li>Client bundle: <code>com.microsoft.rdc.macos</code></li>
+      <li>Streams raw USB HID scancodes straight to the remote Windows VM</li>
+      <li>Default behavior: blindly maps physical Command to Windows Start key</li>
+    </ul>
+  </div>
+
+  <div class="diagram-connector">
+    <span class="connector-label">DriverKit intercepts physical keypresses BEFORE app</span>
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="12" y1="5" x2="12" y2="19"></line>
+      <polyline points="19 12 12 19 5 12"></polyline>
+    </svg>
+  </div>
+
+  <!-- Layer 3: DriverKit -->
+  <div class="diagram-layer theme-sky">
+    <div class="layer-top">
+      <h4 class="layer-title">Karabiner-Elements (DriverKit)</h4>
+      <span class="layer-tag tag-sky">Low-Level Virtual HID Layer</span>
+    </div>
+    <ul class="layer-bullets">
+      <li>Rewrites physical keydown/keyup events before Windows App can capture them</li>
+      <li>Maps <strong>Left ⌘ → Control</strong> with lazy modifier release</li>
+      <li>Preserves <strong>Right ⌘</strong> as the true physical Windows key</li>
+      <li>Maps <strong>⌘+Tab → Alt+Tab</strong> and <strong>⌘+Arrows → Win+Arrows</strong></li>
+      <li>Passes <strong>⌘+Space</strong> directly to Alfred without popping the Start Menu</li>
+    </ul>
+  </div>
+</div>
 
 ### Layer 1: Hardware Scancodes (Karabiner-Elements)
 When you press <kbd>⌘ Cmd</kbd> or <kbd>⌘+Tab</kbd>, Windows App captures the key before standard macOS accessibility apps can touch it. Only a low-level DriverKit driver like **Karabiner-Elements** can rewrite scancodes before the client application captures them.

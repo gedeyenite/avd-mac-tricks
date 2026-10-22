@@ -22,16 +22,61 @@ Here is the exact **Keyboard Maestro "Paste from macOS to AVD" macro** that solv
 * **Trigger:** <kbd>⌥ Option</kbd> + <kbd>⌘ Command</kbd> + <kbd>V</kbd>
 * **Group:** `Windows/AVD: UNIVERSAL` (Active only when Windows App is frontmost)
 
-```text title="Keyboard Maestro Action Sequence"
-1. Filter Clipboard: Unwrap
-2. Filter Clipboard: WindowsLineEndings
-3. Pause Until: All physical modifiers (Ctrl, Shift, Command, Option) are UP
-4. Execute AppleScript:
-   • Release any stuck modifier keys
-   • Normalize line breaks to LF
-   • Type normal characters directly with small pauses
-   • Inject Alt-codes (via Option key) for shifted/special characters (!@#$%^&*()_+{}:"<>?|~`)
-```
+<div class="diagram-container">
+  <div class="diagram-header">
+    <div class="badge-pill">KEYBOARD MAESTRO RECIPE</div>
+    <div class="diagram-title">⌥⌘V Action Execution Pipeline</div>
+  </div>
+
+  <div class="diagram-layer theme-purple">
+    <div class="layer-top">
+      <h4 class="layer-title">Step 1 & 2: Clipboard Filtering</h4>
+      <span class="layer-tag tag-purple">Sanitization</span>
+    </div>
+    <ul class="layer-bullets">
+      <li><strong>Filter Clipboard (Unwrap):</strong> Strips hard carriage returns and line breaks from wrapped text</li>
+      <li><strong>Filter Clipboard (WindowsLineEndings):</strong> Harmonizes CRLF line termination</li>
+    </ul>
+  </div>
+
+  <div class="diagram-connector">
+    <span class="connector-label">Wait for key release</span>
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="12" y1="5" x2="12" y2="19"></line>
+      <polyline points="19 12 12 19 5 12"></polyline>
+    </svg>
+  </div>
+
+  <div class="diagram-layer theme-sky">
+    <div class="layer-top">
+      <h4 class="layer-title">Step 3: Pause Until Modifiers Are UP</h4>
+      <span class="layer-tag tag-sky">Race Condition Guard</span>
+    </div>
+    <ul class="layer-bullets">
+      <li>Pauses execution until physical <code>Ctrl</code>, <code>Shift</code>, <code>Command</code>, and <code>Option</code> are fully released</li>
+    </ul>
+  </div>
+
+  <div class="diagram-connector">
+    <span class="connector-label">Execute low-latency keystroke injection</span>
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="12" y1="5" x2="12" y2="19"></line>
+      <polyline points="19 12 12 19 5 12"></polyline>
+    </svg>
+  </div>
+
+  <div class="diagram-layer theme-emerald">
+    <div class="layer-top">
+      <h4 class="layer-title">Step 4: Execute AppleScript Automation</h4>
+      <span class="layer-tag tag-emerald">Keystroke Injection</span>
+    </div>
+    <ul class="layer-bullets">
+      <li>Releases any stuck modifier states in the remote session</li>
+      <li>Normalizes line breaks to LF and types characters with micro-delays</li>
+      <li>Injects Windows Alt-codes via <kbd>⌥ Option</kbd> for shifted symbols (<code>!@#$%^&*()_+{}:"&lt;&gt;?|~`</code>)</li>
+    </ul>
+  </div>
+</div>
 
 ---
 
