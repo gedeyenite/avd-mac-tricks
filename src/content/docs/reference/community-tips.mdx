@@ -262,25 +262,13 @@ Plug your physical CAC reader into your Mac, insert your **new CAC**, and connec
 #### Step 2: Plug in Your YubiKey & Launch Purebred
 With your remote session running, plug your YubiKey into an available Mac USB port. Inside the Windows AVD desktop, launch the **User Key Management - Purebred Registration** application.
 
-```text
-+-----------------------------------------------------------------------+
-| User Key Management - Purebred Registration                           |
-+-----------------------------------------------------------------------+
-| • Use your common access card (CAC) to access the URL below from a PC |
-| • Find this device in your My Devices list and click Generate OTP     |
-| • Enter the OTP below then click Complete Enrollment/Re-Enrollment    |
-|                                                                       |
-| OTP URL:                                                              |
-| [ https://purebred.csd.disa.mil/pb/                                 ] |
-|                                                                       |
-| OTP Value:                                                            |
-| [                                                                   ] |
-|                                                                       |
-| [ Complete Enrollment/Re-Enrollment ]  [ Recover Old Encryption Keys] |
-|                                                                       |
-| Purebred Registration v1.4.193 (Production)                           |
-+-----------------------------------------------------------------------+
-```
+<div style="margin: 1.5rem 0; border-radius: 12px; overflow: hidden; border: 1px solid rgba(56, 189, 248, 0.25); box-shadow: 0 8px 24px rgba(0,0,0,0.3);">
+  <img 
+    src="/avd-mac-tricks/images/purebred-registration-dialog.png" 
+    alt="User Key Management - Purebred Registration Dialog" 
+    style="width: 100%; height: auto; display: block;" 
+  />
+</div>
 
 #### Step 3: Open the Purebred Portal via CAC
 Inside the AVD session (or locally in macOS Edge/Safari using your CAC), navigate to the official DISA Purebred self-service portal:
@@ -295,17 +283,13 @@ When prompted, select your new CAC authentication certificate and enter your CAC
    * **Serial Number**: Matches the physical serial number laser-engraved on your key.
 3. In the left-hand **actions** column next to your YubiKey, click **Generate OTP**.
 
-```text
-+-----------------------------------------------------------------------------------+
-| Purebred > My Devices                                                             |
-+-----------------------------------------------------------------------------------+
-| actions        | Serial Number | Type                         | Operating System  |
-+----------------+---------------+------------------------------+-------------------+
-| [Generate OTP] | 3801XXXX      | Yubico YubiKey OTP+FIDO+CCID | 5.4.3             |
-| [Generate OTP] | HYP-XXXX      | Hypori Phone                 | 15                |
-| [Generate OTP] | 2309XXXX      | Yubico YubiKey OTP+FIDO+CCID | 5.4.3             |
-+-----------------------------------------------------------------------------------+
-```
+<div style="margin: 1.5rem 0; border-radius: 12px; overflow: hidden; border: 1px solid rgba(56, 189, 248, 0.25); box-shadow: 0 8px 24px rgba(0,0,0,0.3);">
+  <img 
+    src="/avd-mac-tricks/images/purebred-my-devices.png" 
+    alt="DISA Purebred My Devices Portal - Generate OTP Action" 
+    style="width: 100%; height: auto; display: block;" 
+  />
+</div>
 
 4. Purebred will generate a temporary one-time password (OTP) alphanumeric string. Copy this value to your clipboard.
 
