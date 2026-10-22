@@ -7,6 +7,7 @@ updateSummary: "The zero-to-hero onboarding guide for government and enterprise 
 ---
 
 import { Card, CardGrid, Badge } from '@astrojs/starlight/components';
+import WeakKneedRoadmap from '../../../components/WeakKneedRoadmap.astro';
 
 You love your Mac. The hardware is gorgeous, battery life lasts all day, and macOS is your happy place. 
 
@@ -19,16 +20,15 @@ If you landed on this site, saw pages discussing low-level scancodes, DriverKit 
 
 This guide is your plain-English, zero-to-hero roadmap. Follow these five checkpoints to get your Mac connected to your government desktop securely, cleanly, and without tearing your hair out.
 
-```text
-[ 1. Hardware Essentials ] ──> [ 2. Software Triage ] ──> [ 3. Workspace Feed ]
-  • Reliable CAC reader          • "Windows App" client      • @army.mil / GovCloud
-  • Solid USB-C adapter           (NOT the web browser!)     • Certificate selection
-                                                                    │
-                                                                    ▼
-[ 5. Make It Feel Like a Mac ] <── [ 4. The First Logon & Day-One Fixes ]
-  • Karabiner copy/paste fixes       • Crisp Retina display resolution
-  • SoundSource AirPods routing      • Audio routing & PIN prompts
-```
+<div style="margin: 2rem 0;">
+  <img 
+    src="/avd-mac-tricks/images/weak-kneed-roadmap.jpg" 
+    alt="The Weak-Kneed Guide: Zero to Remote Work on macOS Infographic" 
+    style="width: 100%; height: auto; border-radius: 14px; box-shadow: 0 12px 36px rgba(0, 0, 0, 0.35); border: 1px solid rgba(56, 189, 248, 0.25);"
+  />
+</div>
+
+<WeakKneedRoadmap />
 
 ---
 
