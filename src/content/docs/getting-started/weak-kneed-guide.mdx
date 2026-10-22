@@ -88,24 +88,30 @@ When you receive your onboarding instructions, they might give you a web link (e
 * ❌ **Clipboard Conflicts**: Copying and pasting large files or formatted text is severely crippled.
 
 ### The Real Client: Microsoft Windows App
-Instead, install Microsoft's native macOS desktop client:
+Instead, install Microsoft's native macOS desktop client directly from Apple:
 
-1. Open the **App Store** on your Mac.
+1. Open the **App Store** on your Mac (or click the direct link below).
 2. Search for **Windows App** (published by *Microsoft Corporation*).  
    *(Historical Note: This application was formerly named "Microsoft Remote Desktop". The new Windows App is its official, modernized replacement).*
 3. Click **Get** and install it.
 
-```text
-+-------------------------------------------------------------+
-| Mac App Store                                               |
-|                                                             |
-|   [ Windows App ]   ★★★★☆                                   |
-|   Microsoft Corporation                                     |
-|   Productivity                                              |
-|                                                             |
-|   [  GET / OPEN  ]                                          |
-+-------------------------------------------------------------+
-```
+<div class="app-store-card">
+  <div class="app-store-info">
+    <div class="app-store-icon">
+      <svg width="34" height="34" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801"/>
+      </svg>
+    </div>
+    <div class="app-store-details">
+      <h4>Windows App</h4>
+      <div class="app-store-meta">Microsoft Corporation • Productivity</div>
+      <div class="app-store-rating">★★★★☆ (4.5) • Free</div>
+    </div>
+  </div>
+  <a href="https://apps.apple.com/us/app/windows-app/id1295203466" target="_blank" rel="noopener" class="app-store-btn">
+    View in Mac App Store ↗
+  </a>
+</div>
 
 ---
 
@@ -113,17 +119,26 @@ Instead, install Microsoft's native macOS desktop client:
 
 Once Windows App is open, you need to connect it to your organization's Azure Virtual Desktop (AVD) host pool.
 
-```text
-+-------------------------------------------------------------+
-| Windows App                                     [ + ] [ ⚙ ] |
-|                                                 Add PC      |
-|  Workspaces                                   > Add Workspace
-|                                                             |
-|  You have not subscribed to any workspaces yet.             |
-|                                                             |
-|  [ Add Workspace ]                                          |
-+-------------------------------------------------------------+
-```
+<div class="mock-mac-window">
+  <div class="mock-window-header">
+    <div class="mock-window-dots">
+      <span class="mock-dot red"></span>
+      <span class="mock-dot yellow"></span>
+      <span class="mock-dot green"></span>
+    </div>
+    <div class="mock-window-title">Windows App — Workspaces</div>
+    <div style="width: 40px;"></div>
+  </div>
+  <div class="mock-window-body">
+    <div class="mock-workspace-empty">
+      <p style="margin: 0 0 0.5rem 0; font-weight: 600;">You have not subscribed to any workspaces yet.</p>
+      <p style="margin: 0; font-size: 0.85rem; color: var(--sl-color-gray-3);">Click the <strong>+</strong> icon in the toolbar or click below to connect your DoD account.</p>
+      <div class="mock-action-highlight">
+        <span>👉 Click: [ + ] > Add Workspace</span>
+      </div>
+    </div>
+  </div>
+</div>
 
 ### Step-by-Step Subscription
 
@@ -138,7 +153,7 @@ Once Windows App is open, you need to connect it to your organization's Azure Vi
    * Select **Sign in with a smart card / certificate**.
    * Pick your **Authentication (PIV)** certificate (usually contains your name and EDIPI number).
    * Enter your 6-digit CAC PIN.
-   * Approve any phone 2FA push notifications (via **Microsoft Authenticator**) if required by your command.
+   * Approve any phone 2FA push notifications (via **[Microsoft Authenticator on iOS](https://apps.apple.com/us/app/microsoft-authenticator/id983156458)**) if required by your command.
 
 Once verified, your remote desktop icon (e.g., *Army EITAAS AVD*, *Navy Desktop*, or *Virtual Workspace*) will populate cleanly on your dashboard!
 
