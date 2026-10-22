@@ -9,6 +9,10 @@ Your physical keyboard sends macOS modifier signals, but the remote session expe
 
 This guide provides the **exact architecture** to eliminate that friction completely.
 
+:::tip[New to Government Telework or AVD?]
+If you are an absolute beginner looking for basic hardware requirements (CAC readers, adapters) and step-by-step setup instructions without the low-level code, start with **[The "Weak-Kneed" Guide: Zero to Remote Work on macOS](/avd-mac-tricks/getting-started/weak-kneed-guide/)**!
+:::
+
 ---
 
 ## The Target Setup

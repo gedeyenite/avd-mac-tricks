@@ -27,6 +27,7 @@ export default defineConfig({
 				{
 					label: 'Start Here',
 					items: [
+						{ label: '🐣 The "Weak-Kneed" Guide: Zero to Remote Work', slug: 'getting-started/weak-kneed-guide' },
 						{ label: 'Introduction & Architecture', slug: 'getting-started/overview' },
 						{ label: 'Why Keyboard Maestro Fails for Modifiers', slug: 'getting-started/hid-problem' },
 					],
