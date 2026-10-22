@@ -108,11 +108,50 @@ const updates = docs
     });
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', checkAndRenderUpdates);
-  } else {
-    checkAndRenderUpdates();
+  function openExternalLinksInNewTab() {
+    const currentHost = window.location.hostname;
+    const links = document.querySelectorAll('a[href]');
+    links.forEach(link => {
+      const href = link.getAttribute('href');
+      if (!href) return;
+      if (href.startsWith('http://') || href.startsWith('https://')) {
+        try {
+          const url = new URL(href, window.location.href);
+          // If the link points to an external domain
+          if (url.hostname && url.hostname !== currentHost && !url.hostname.includes('localhost')) {
+            link.setAttribute('target', '_blank');
+            link.setAttribute('rel', 'noopener noreferrer');
+          }
+        } catch(e) {}
+      }
+    });
   }
-  document.addEventListener('astro:page-load', checkAndRenderUpdates);
+
+  // Delegated click handler to guarantee all external links open in a new tab immediately
+  document.addEventListener('click', function(e) {
+    const link = e.target && e.target.closest ? e.target.closest('a[href]') : null;
+    if (!link) return;
+    const href = link.getAttribute('href');
+    if (!href || !href.startsWith('http')) return;
+    try {
+      const url = new URL(href, window.location.href);
+      if (url.hostname && url.hostname !== window.location.hostname) {
+        link.target = '_blank';
+        link.rel = 'noopener noreferrer';
+      }
+    } catch(err) {}
+  }, { capture: true });
+
+  function initPage() {
+    checkAndRenderUpdates();
+    openExternalLinksInNewTab();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initPage);
+  } else {
+    initPage();
+  }
+  document.addEventListener('astro:page-load', initPage);
 })();
 </script>
