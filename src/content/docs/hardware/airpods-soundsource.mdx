@@ -6,6 +6,8 @@ updateBadge: "UPDATED"
 updateSummary: "Enhanced with responsive CoreAudio redirection diagram and latency tuning guide"
 ---
 
+import GraduationGuide from '../../../components/GraduationGuide.astro';
+
 Connecting external Bluetooth audio gear—especially **Apple AirPods**—to macOS while operating inside **Azure Virtual Desktop (AVD)** or the **Microsoft Windows App** has historically been one of the most frustrating aspects of the remote desktop experience.
 
 Here is the definitive guide to why this happens, how to force seamless passthrough on the fly, and the historical troubleshooting lessons learned over years of audio routing research.
@@ -205,3 +207,38 @@ Fortunately, there is a simple 10-second fix using SoundSource's native exclusio
 </div>
 
 By adding Friendly Streaming to the Excluded Applications list, SoundSource completely ignores its playback engine. Video streams play with 100% fluid frame rates and zero desync, while your Windows App audio remains securely and conveniently routed to your AirPods!
+
+<GraduationGuide
+  eyebrow="Audio Pipeline Configured"
+  title="🎧 SoundSource Ready! Where Should You Go Next?"
+  subtitle="Your AirPods and remote audio routing are dialed in. Choose your next upgrade:"
+  steps={[
+    {
+      badge: "TEAMS AUTOMATION",
+      badgeType: "primary",
+      title: "Teams Power Workflows",
+      description: "Automate Teams meetings with one-key microphone mute, status toggles, and chat shortcuts.",
+      href: "/avd-mac-tricks/keyboard-maestro/teams-workflows/",
+      ctaText: "Teams Macros Guide →",
+      icon: "👥"
+    },
+    {
+      badge: "BEGINNER ROADMAP",
+      badgeType: "purple",
+      title: 'The "Weak-Kneed" Guide',
+      description: "Review the full 5-step checklist from hardware adapters to workspace feed enrollment.",
+      href: "/avd-mac-tricks/getting-started/weak-kneed-guide/",
+      ctaText: "Review Roadmap →",
+      icon: "🐣"
+    },
+    {
+      badge: "HARDWARE TOKENS",
+      badgeType: "success",
+      title: "YubiKey PKI & Purebred",
+      description: "Enroll a hardware security key with DoD derived credentials to replace physical CAC cards.",
+      href: "/avd-mac-tricks/hardware/yubikey-purebred/",
+      ctaText: "YubiKey Guide →",
+      icon: "🔑"
+    }
+  ]}
+/>

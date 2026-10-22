@@ -2191,3 +2191,54 @@ Save the JSON below to:
   ]
 }
 ```
+
+<div class="graduation-guide-container">
+  <div class="graduation-header">
+    <div class="graduation-eyebrow">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+      </svg>
+      <span>Next Step in Your Setup</span>
+    </div>
+    <h3 class="graduation-title">🚀 Karabiner Installed! Where Should You Go Next?</h3>
+    <p class="graduation-subtitle">Now that your DriverKit kernel mappings are live, test them out or supercharge your daily routine:</p>
+  </div>
+
+  <div class="graduation-grid">
+    <div class="graduation-card">
+      <span class="graduation-card-badge">INTERACTIVE HUD</span>
+      <h4 class="graduation-card-title">
+        <span class="card-icon">⌨️</span>
+        <span>Shortcuts Cheat Sheet</span>
+      </h4>
+      <p class="graduation-card-desc">Review and test all 30+ shortcut translations in our live simulator or install the Cmd + ? floating HUD.</p>
+      <a href="/avd-mac-tricks/reference/cheat-sheet/" class="graduation-card-btn">
+        <span>Launch Cheat Sheet →</span>
+      </a>
+    </div>
+
+    <div class="graduation-card">
+      <span class="graduation-card-badge badge-purple">MACRO POWER SUITE</span>
+      <h4 class="graduation-card-title">
+        <span class="card-icon">🧩</span>
+        <span>Keyboard Maestro Overview</span>
+      </h4>
+      <p class="graduation-card-desc">Add bulletproof remote clipboard pasting (⌥⌘V), Teams status automation, and context-aware dual-OS macros.</p>
+      <a href="/avd-mac-tricks/keyboard-maestro/overview/" class="graduation-card-btn">
+        <span>Explore Automations →</span>
+      </a>
+    </div>
+
+    <div class="graduation-card">
+      <span class="graduation-card-badge badge-success">PERIPHERAL TUNING</span>
+      <h4 class="graduation-card-title">
+        <span class="card-icon">🔑</span>
+        <span>YubiKey & Hardware Setup</span>
+      </h4>
+      <p class="graduation-card-desc">Ditch the fragile physical CAC card for a YubiKey 5 Series and configure multi-monitor Retina displays.</p>
+      <a href="/avd-mac-tricks/hardware/yubikey-purebred/" class="graduation-card-btn btn-success">
+        <span>View Hardware Guides →</span>
+      </a>
+    </div>
+  </div>
+</div>

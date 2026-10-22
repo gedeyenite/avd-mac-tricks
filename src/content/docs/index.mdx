@@ -46,6 +46,24 @@ import { Card, CardGrid } from '@astrojs/starlight/components';
   </div>
 </div>
 
+<div class="diagram-container" style="margin: 0 0 2.5rem; padding: 1.5rem 1.75rem; background: linear-gradient(135deg, rgba(30, 41, 59, 0.75) 0%, rgba(15, 23, 42, 0.95) 100%); border: 1px solid rgba(168, 85, 247, 0.35); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.25rem;">
+  <div style="flex: 1 1 340px;">
+    <div style="display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.35rem;">
+      <span class="live-pill" style="background: rgba(168, 85, 247, 0.2); color: #c084fc; border-color: rgba(168, 85, 247, 0.4);">LIVE INTERACTIVE SIMULATOR</span>
+      <span style="font-size: 0.75rem; color: var(--sl-color-gray-3);"><kbd>⌘ + ?</kbd></span>
+    </div>
+    <h3 style="margin: 0 0 0.35rem 0; font-size: 1.2rem; font-weight: 800; color: var(--sl-color-white);">Interactive Shortcuts HUD Overlay</h3>
+    <p style="margin: 0; font-size: 0.88rem; color: var(--sl-color-gray-2); line-height: 1.5;">
+      Test drive all macOS-to-Windows keyboard translations directly in your browser. Search combinations in real-time or simulate the floating Heads-Up Display before touching any configs.
+    </p>
+  </div>
+  <div style="flex-shrink: 0;">
+    <a href="/avd-mac-tricks/reference/cheat-sheet/" class="graduation-card-btn" style="background: rgba(168, 85, 247, 0.25); color: #c084fc !important; border-color: rgba(168, 85, 247, 0.5); padding: 0.75rem 1.25rem; font-size: 0.92rem;">
+      Launch Cheat Sheet Simulator →
+    </a>
+  </div>
+</div>
+
 :::note[Admin Disclaimer & Acknowledgement]
 The admin for this site is **NOT a developer**. I am using the **Antigravity app**, coupled with a **Pro Gemini subscription**, to vibe-code most of the Karabiner-Elements modifications that require system-level DriverKit tweaking. While I am well-versed in creating complex workarounds using **Keyboard Maestro**, I leverage Gemini to brainstorm and generate the cleanest, most efficient macros possible.
 :::

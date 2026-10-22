@@ -1,0 +1,61 @@
+---
+// src/components/GraduationGuide.astro
+interface StepItem {
+  badge?: string;
+  badgeType?: 'primary' | 'success' | 'warning' | 'purple' | 'amber';
+  title: string;
+  description: string;
+  href: string;
+  ctaText?: string;
+  icon?: string;
+}
+
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  subtitle?: string;
+  steps: StepItem[];
+}
+
+const {
+  eyebrow = "Next Step in Your Journey",
+  title = "Where Should You Go Next?",
+  subtitle = "You've completed this section! Choose your next upgrade based on your setup needs:",
+  steps = []
+} = Astro.props;
+---
+
+<div class="graduation-guide-container">
+  <div class="graduation-header">
+    <div class="graduation-eyebrow">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+      </svg>
+      <span>{eyebrow}</span>
+    </div>
+    <h3 class="graduation-title">{title}</h3>
+    <p class="graduation-subtitle">{subtitle}</p>
+  </div>
+
+  <div class="graduation-grid">
+    {steps.map((step) => {
+      const badgeClass = step.badgeType ? `badge-${step.badgeType}` : '';
+      const btnClass = step.badgeType === 'success' ? 'btn-success' : '';
+      return (
+        <div class="graduation-card">
+          {step.badge && (
+            <span class={`graduation-card-badge ${badgeClass}`}>{step.badge}</span>
+          )}
+          <h4 class="graduation-card-title">
+            {step.icon && <span class="card-icon">{step.icon}</span>}
+            <span>{step.title}</span>
+          </h4>
+          <p class="graduation-card-desc">{step.description}</p>
+          <a href={step.href} class={`graduation-card-btn ${btnClass}`}>
+            <span>{step.ctaText || "Continue →"}</span>
+          </a>
+        </div>
+      );
+    })}
+  </div>
+</div>

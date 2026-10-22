@@ -65,6 +65,7 @@ export default defineConfig({
 				{
 					label: 'Reference & Community Desk',
 					items: [
+						{ label: '⌨️ Interactive Shortcuts Cheat Sheet', slug: 'reference/cheat-sheet' },
 						{ label: 'Downloadable JSON & Recipes', slug: 'reference/downloads' },
 						{ label: 'Community Tips & Contributors', slug: 'reference/community-tips' },
 						{ label: 'Request a Workflow & Suggest Updates', slug: 'reference/request-workflow' },

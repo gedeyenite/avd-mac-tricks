@@ -1,0 +1,108 @@
+---
+title: "Interactive Shortcuts Cheat Sheet"
+description: "A live heads-up display (HUD) simulator and complete quick-reference guide for all AVD macOS keyboard shortcuts."
+---
+
+import CheatsheetPreview from '../../../components/CheatsheetPreview.astro';
+import GraduationGuide from '../../../components/GraduationGuide.astro';
+
+When you spend your day switching between macOS and a remote Windows Azure Virtual Desktop session, remembering whether to press <kbd>⌘</kbd>, <kbd>Ctrl</kbd>, or <kbd>⌥</kbd> can feel like mental gymnastics.
+
+To solve this, we created a **lightweight Heads-Up Display (HUD)** that floats directly over your full-screen Windows App session whenever you press <kbd>⌘ + ?</kbd> (or summon it via Alfred).
+
+---
+
+## ⚡ Live Interactive HUD Simulator
+
+Test drive the floating cheat sheet directly in your browser below. You can search shortcuts in real-time, click **"Simulate Popup"** to test the floating desktop modal, or click **"Open Full Tab"** to pop it into a dedicated browser window:
+
+<CheatsheetPreview height="740px" />
+
+:::tip[How the Real Desktop Overlay Works]
+In actual day-to-day use on macOS, pressing <kbd>⌘ + ?</kbd> triggers a native Swift/WebKit micro-window compiled as a single binary (`shortcuts_overlay`). It loads in milliseconds, floats above all full-screen spaces without stealing cursor focus, and instantly vanishes when you release the keys or press <kbd>Esc</kbd>.
+:::
+
+---
+
+## 📋 Essential Shortcuts at a Glance
+
+If you just need a quick static reference while working, keep these primary muscle-memory remappings handy:
+
+### 1. General Editing & Clipboard
+
+| Mac Shortcut | What You Press on Mac | What Windows App Receives | Result in Windows |
+| :--- | :--- | :--- | :--- |
+| **Copy** | <kbd>⌘ + C</kbd> | <kbd>Ctrl + C</kbd> | Copies selected text |
+| **Paste** | <kbd>⌘ + V</kbd> | <kbd>Ctrl + V</kbd> | Pastes clipboard content |
+| **Cut** | <kbd>⌘ + X</kbd> | <kbd>Ctrl + X</kbd> | Cuts selected text |
+| **Undo** | <kbd>⌘ + Z</kbd> | <kbd>Ctrl + Z</kbd> | Undoes last action |
+| **Redo** | <kbd>⌘ + Y</kbd> or <kbd>⇧ + ⌘ + Z</kbd> | <kbd>Ctrl + Y</kbd> | Redoes undone action |
+| **Select All** | <kbd>⌘ + A</kbd> | <kbd>Ctrl + A</kbd> | Highlights all content |
+| **Save** | <kbd>⌘ + S</kbd> | <kbd>Ctrl + S</kbd> | Saves document/file |
+| **Find** | <kbd>⌘ + F</kbd> | <kbd>Ctrl + F</kbd> | Opens find dialog |
+
+### 2. Window Snapping & Desktop Management
+
+| Action | Mac Shortcut | Windows Equivalent | Result |
+| :--- | :--- | :--- | :--- |
+| **Snap Left Half** | <kbd>⌘ + ←</kbd> | <kbd>Win + ←</kbd> | Snaps active window to left 50% |
+| **Snap Right Half** | <kbd>⌘ + →</kbd> | <kbd>Win + →</kbd> | Snaps active window to right 50% |
+| **Maximize Window** | <kbd>⌘ + ↑</kbd> | <kbd>Win + ↑</kbd> | Maximizes active window |
+| **Restore / Minimize**| <kbd>⌘ + ↓</kbd> | <kbd>Win + ↓</kbd> | Restores window size / minimizes |
+| **Hop Monitor Left** | <kbd>⇧ + ⌘ + ←</kbd> | <kbd>Win + ⇧ + ←</kbd>| Moves window to left physical monitor |
+| **Hop Monitor Right**| <kbd>⇧ + ⌘ + →</kbd> | <kbd>Win + ⇧ + →</kbd>| Moves window to right physical monitor |
+
+### 3. Application Switching & Navigation
+
+| Action | Shortcut | Behavior |
+| :--- | :--- | :--- |
+| **Windows App Switcher** | <kbd>⌘ + Tab</kbd> | Triggers native Windows Task Switcher (`Alt + Tab`) inside session |
+| **Browser Tab Next** | <kbd>⌥ + ⌘ + →</kbd> | Switches to next Edge / Chrome tab (`Ctrl + Tab`) |
+| **Browser Tab Prev** | <kbd>⌥ + ⌘ + ←</kbd> | Switches to previous Edge / Chrome tab (`Ctrl + Shift + Tab`) |
+| **Native Windows Key** | <kbd>Right ⌘</kbd> | Dedicated physical key for Start Menu & Windows search |
+
+---
+
+## 🛠️ How to Install the Desktop HUD
+
+You can install the floating cheat sheet on your Mac in under 2 minutes:
+
+1. **Download the Bundle:** Visit the [Downloadable Bundles & Installer](/avd-mac-tricks/reference/downloads/#3-shortcuts-cheatsheet-overlay-bundle) page and grab the `shortcuts_overlay.zip` bundle.
+2. **Move to Config Directory:** Unpack `shortcuts_overlay` and `toggle_overlay.sh` into `~/.config/karabiner/bin/`.
+3. **Enable the Karabiner Rule:** Add the `<kbd>⌘ + ?</kbd>` trigger rule to your `karabiner.json` (documented on the [Global Passthroughs](/avd-mac-tricks/karabiner/global-passthrough/) page).
+4. **Customizable HTML:** You can customize the table by opening `~/.config/karabiner/windows_app_cheatsheet.html` in any text editor to add your team's internal shortcuts or web bookmarks!
+
+<GraduationGuide
+  eyebrow="Continue Your Setup"
+  title="Where Would You Like to Go Next?"
+  subtitle="Pick the next upgrade to streamline your macOS Azure Virtual Desktop workflow:"
+  steps={[
+    {
+      badge: "DRIVERKIT CORE",
+      badgeType: "primary",
+      title: "Complete Karabiner Config",
+      description: "Install all 30+ DriverKit keyboard rules with one-click JSON or the automated installer.",
+      href: "/avd-mac-tricks/karabiner/complete-config/",
+      ctaText: "View Karabiner Rules →",
+      icon: "⚡"
+    },
+    {
+      badge: "AUTOMATION SUITE",
+      badgeType: "purple",
+      title: "Keyboard Maestro Recipes",
+      description: "Supercharge remote paste (⌥⌘V), Teams mute triggers, and context-aware clipboard macros.",
+      href: "/avd-mac-tricks/keyboard-maestro/overview/",
+      ctaText: "Explore Macros →",
+      icon: "🧩"
+    },
+    {
+      badge: "HARDWARE TUNING",
+      badgeType: "success",
+      title: "Hardware & Peripherals",
+      description: "Set up AirPods audio routing, YubiKey/DISA Purebred, and multi-monitor Retina resolution.",
+      href: "/avd-mac-tricks/hardware/airpods-soundsource/",
+      ctaText: "Hardware Guides →",
+      icon: "🎧"
+    }
+  ]}
+/>

@@ -8,6 +8,7 @@ updateSummary: "The zero-to-hero onboarding guide for government and enterprise 
 
 import { Card, CardGrid, Badge } from '@astrojs/starlight/components';
 import WeakKneedRoadmap from '../../../components/WeakKneedRoadmap.astro';
+import GraduationGuide from '../../../components/GraduationGuide.astro';
 
 You love your Mac. The hardware is gorgeous, battery life lasts all day, and macOS is your happy place. 
 
@@ -224,3 +225,38 @@ When you are ready to eliminate the keyboard friction and make remote Windows fe
 | **3. Account** | Click **Add Workspace**, enter your `@army.mil` or agency email, and sign in with your CAC. | ✅ Ready |
 | **4. Display** | Check **"Optimize for Retina displays"** under Custom Settings. | ✅ Ready |
 | **5. Muscle Memory** | Import the **Karabiner-Elements** rules when you are ready for native Mac shortcuts. | 🚀 Next Level |
+
+<GraduationGuide
+  eyebrow="Mission Accomplished"
+  title="🎉 You're Connected! Where Should You Go Next?"
+  subtitle="Your base connection is rock-solid. Choose your next upgrade based on your daily work style:"
+  steps={[
+    {
+      badge: "RECOMMENDED NEXT STEP",
+      badgeType: "primary",
+      title: "Fix Mac Muscle Memory (Karabiner)",
+      description: "Remap Left ⌘ to Control and fix ⌘C, ⌘V, ⌘Z, and ⌘A inside Windows so your Mac brain stays happy.",
+      href: "/avd-mac-tricks/karabiner/complete-config/",
+      ctaText: "Get Karabiner Config →",
+      icon: "⚡"
+    },
+    {
+      badge: "AUDIO & CALLS",
+      badgeType: "purple",
+      title: "AirPods Routing (SoundSource)",
+      description: "Eliminate remote Teams audio crashes, route sound seamlessly on the fly, and prevent Wi-Fi stutter.",
+      href: "/avd-mac-tricks/hardware/airpods-soundsource/",
+      ctaText: "AirPods Guide →",
+      icon: "🎧"
+    },
+    {
+      badge: "INTERACTIVE PREVIEW",
+      badgeType: "success",
+      title: "Shortcuts Cheat Sheet HUD",
+      description: "Test drive our floating Heads-Up Display simulator in your browser before remapping your keyboard.",
+      href: "/avd-mac-tricks/reference/cheat-sheet/",
+      ctaText: "Try Simulator →",
+      icon: "⌨️"
+    }
+  ]}
+/>

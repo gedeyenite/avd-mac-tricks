@@ -6,6 +6,8 @@ updateBadge: "UPDATED"
 updateSummary: "Dedicated guide for custom workspace display settings and high-DPI scaling"
 ---
 
+import GraduationGuide from '../../../components/GraduationGuide.astro';
+
 By default, the Microsoft Windows App client on macOS often launches remote desktop sessions constrained to a single monitor and at default, non-Retina scaling. 
 
 On high-DPI Mac displays (MacBook Liquid Retina screens or external 4K/5K displays), default bitmap scaling can result in blurry fonts, fuzzy UI elements, eye strain, or unexpected monitor arrangement.
@@ -71,3 +73,38 @@ Enabling **Custom Settings** per workspace gives you granular control over how t
 
 * **Separate Spaces in Mission Control**: On macOS, open **System Settings > Desktop & Dock** and ensure **"Displays have separate Spaces"** is enabled. This prevents macOS from locking both screens together when switching spaces.
 * **Mixed DPI Setups (MacBook Screen + External 1080p Monitor)**: Windows handles per-monitor DPI scaling well, but dragging windows between a Retina 2x screen and a standard 1x external monitor can momentarily stutter. Keeping "Optimize for Retina displays" enabled ensures Windows calculates appropriate UI scaling factors per monitor.
+
+<GraduationGuide
+  eyebrow="Display Setup Complete"
+  title="🖥️ Razor-Sharp Retina Configured! Next Up:"
+  subtitle="Your monitors are tuned for high-DPI scaling. Continue optimizing your remote setup:"
+  steps={[
+    {
+      badge: "WINDOW SNAPPING",
+      badgeType: "primary",
+      title: "Window Snapping & Multi-Monitor",
+      description: "Hop windows across physical screens with ⇧ + ⌘ + Arrows and snap half-screen with ⌘ + Arrows.",
+      href: "/avd-mac-tricks/karabiner/window-snapping/",
+      ctaText: "Snapping Guide →",
+      icon: "📐"
+    },
+    {
+      badge: "KEYBOARD HARMONIZING",
+      badgeType: "purple",
+      title: "Karabiner Complete Config",
+      description: "Deploy the full DriverKit ruleset to fix copy/paste muscle memory across all screens.",
+      href: "/avd-mac-tricks/karabiner/complete-config/",
+      ctaText: "Karabiner Config →",
+      icon: "⚡"
+    },
+    {
+      badge: "AUDIO PIPELINE",
+      badgeType: "success",
+      title: "AirPods Routing (SoundSource)",
+      description: "Route remote audio dynamically to your AirPods without restarting Windows App.",
+      href: "/avd-mac-tricks/hardware/airpods-soundsource/",
+      ctaText: "AirPods Routing →",
+      icon: "🎧"
+    }
+  ]}
+/>

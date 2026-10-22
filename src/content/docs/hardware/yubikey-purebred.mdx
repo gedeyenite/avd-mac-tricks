@@ -6,6 +6,8 @@ updateBadge: "NEW"
 updateSummary: "Dedicated guide featuring sanitized screenshots, multi-key isolation rules, and legacy key recovery"
 ---
 
+import GraduationGuide from '../../../components/GraduationGuide.astro';
+
 For Department of Defense (DoD), Army, and federal power users accessing **Azure Virtual Desktop (AVD)** or **Microsoft Windows App** on macOS, physical Common Access Cards (CAC) are essential for authentication. However, carrying an external smart card reader and a fragile physical CAC everywhere is cumbersome.
 
 The modern power-user setup utilizes a hardware security key—such as a **FIPS-certified YubiKey 5 Series** (e.g., YubiKey 5 NFC or 5C NFC)—enrolled with DoD PKI derived credentials via **DISA Purebred** (`https://purebred.csd.disa.mil/pb/`). Once provisioned, the YubiKey functions as a full PIV/CCID smart card directly through macOS USB passthrough, enabling one-touch remote logon, digital document signing, and Outlook email encryption.
@@ -183,3 +185,38 @@ This happens because the email messages were encrypted with your *previous* CAC'
 | **macOS does not recognize YubiKey** | CCID interface disabled or USB hub drop | Open Terminal on Mac and run `system_profiler SPUSBDataType`. Ensure the Yubico CCID device is listed. Avoid unpowered USB-A/USB-C splitters. |
 | **PIN is rejected during enrollment** | Confusing CAC PIN with YubiKey PIV PIN | The CAC PIN (used at initial AVD logon) is separate from the YubiKey PIV PIN (used by Purebred, default `123456`). |
 | **Stale certificate prompt in Edge/Chrome** | Windows CryptoAPI local cert cache | In Windows AVD, open Command Prompt and run `certutil -scinfo` or close and relaunch Edge to flush cached token thumbnails. |
+
+<GraduationGuide
+  eyebrow="Hardware Enrolled"
+  title="🔑 Purebred Activated! Where Should You Go Next?"
+  subtitle="Your hardware token is enrolled and ready. Choose your next optimization:"
+  steps={[
+    {
+      badge: "RETINA & DISPLAYS",
+      badgeType: "primary",
+      title: "Multi-Monitor & Retina Setup",
+      description: "Fix blurry Windows rendering on macOS displays and configure smooth multi-monitor setups.",
+      href: "/avd-mac-tricks/hardware/multi-monitor-retina/",
+      ctaText: "Retina Display Guide →",
+      icon: "🖥️"
+    },
+    {
+      badge: "KEYBOARD HARMONIZING",
+      badgeType: "purple",
+      title: "Karabiner Complete Config",
+      description: "Stop the Windows key from opening the Start menu and fix copy/paste muscle memory.",
+      href: "/avd-mac-tricks/karabiner/complete-config/",
+      ctaText: "Karabiner Config →",
+      icon: "⚡"
+    },
+    {
+      badge: "AUDIO PIPELINE",
+      badgeType: "success",
+      title: "AirPods Routing (SoundSource)",
+      description: "Route remote audio to your AirPods dynamically without disconnecting or crashing Teams.",
+      href: "/avd-mac-tricks/hardware/airpods-soundsource/",
+      ctaText: "AirPods Setup →",
+      icon: "🎧"
+    }
+  ]}
+/>
