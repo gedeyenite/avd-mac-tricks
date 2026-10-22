@@ -33,6 +33,14 @@ export default defineConfig({
 					],
 				},
 				{
+					label: 'Hardware & Peripherals',
+					items: [
+						{ label: '🎧 AirPods Routing (SoundSource)', slug: 'hardware/airpods-soundsource' },
+						{ label: '🔑 YubiKey PKI & DISA Purebred', slug: 'hardware/yubikey-purebred' },
+						{ label: '🖥️ Multi-Monitor & Retina Setup', slug: 'hardware/multi-monitor-retina' },
+					],
+				},
+				{
 					label: 'Karabiner DriverKit Fixes',
 					items: [
 						{ label: 'Quick Start: Complete Config', slug: 'karabiner/complete-config' },
@@ -58,7 +66,7 @@ export default defineConfig({
 					label: 'Reference & Community Desk',
 					items: [
 						{ label: 'Downloadable JSON & Recipes', slug: 'reference/downloads' },
-						{ label: 'Community Tips & Tricks', slug: 'reference/community-tips' },
+						{ label: 'Community Tips & Contributors', slug: 'reference/community-tips' },
 						{ label: 'Request a Workflow & Suggest Updates', slug: 'reference/request-workflow' },
 						{ label: 'Troubleshooting & FAQ', slug: 'reference/troubleshooting' },
 					],

@@ -1,16 +1,16 @@
 ---
-title: Community Tips & Tricks
-description: User-submitted tips, hardware workarounds, AirPods audio routing, and AVD client optimizations for Microsoft Windows App on macOS.
+title: Community Tips & Contributors
+description: User-submitted tips, hardware workarounds, Hall of Contributors, and community-driven guides for Microsoft Windows App on macOS.
 lastMajorUpdate: "2026-10-22"
 updateBadge: "UPDATED"
-updateSummary: "Added DISA Purebred YubiKey enrollment, multi-token isolation, and new CAC re-provisioning guide"
+updateSummary: "Elevated dedicated hardware guides and refreshed contributor showcase"
 ---
 
 import { Card, CardGrid, Badge } from '@astrojs/starlight/components';
 
 This guide is built for and powered by the community of Mac power users navigating Azure Virtual Desktop (AVD), Windows 365, and DoD/Enterprise remote environments every day. 
 
-If you discover an undocumented setting, a handy client toggle, or an external hardware trick that makes remote work smoother on macOS, we want to feature it here with full credit to you.
+If you discover an undocumented setting, a handy client toggle, or an external hardware trick that makes remote work smoother on macOS, we feature it with full credit to you.
 
 :::tip[Have a Tip or Trick to Share?]
 Found a clever workaround or client toggle that helped your workflow? 
@@ -21,9 +21,28 @@ Found a clever workaround or client toggle that helped your workflow?
 
 ---
 
-## 🖥️ AVD Setup & Display Settings
+## 🚀 Deep-Dive Hardware Guides (Born From the Community)
 
-Practical tips for configuring the Microsoft Windows App client, multi-monitor workspaces, and macOS display resolution scaling.
+Major community submissions and hardware workarounds have been elevated into full, dedicated guides in our **Hardware & Peripherals** section:
+
+<CardGrid>
+  <Card title="🎧 AirPods Routing (SoundSource)" icon="external">
+    Force per-app audio output to AirPods dynamically without restarting your active remote session or Teams meeting.
+    <p class="card-link"><a href="/avd-mac-tricks/hardware/airpods-soundsource/">Read AirPods & SoundSource Guide →</a></p>
+  </Card>
+  <Card title="🔑 YubiKey PKI & DISA Purebred" icon="star">
+    Enroll multiple YubiKeys without session token collisions, and re-provision after receiving a new CAC without calling AESD.
+    <p class="card-link"><a href="/avd-mac-tricks/hardware/yubikey-purebred/">Read YubiKey Purebred Guide →</a></p>
+  </Card>
+  <Card title="🖥️ Multi-Monitor & Retina Scaling" icon="laptop">
+    Override default bitmap scaling to render razor-sharp Retina fonts and span sessions across multiple Mac displays.
+    <p class="card-link"><a href="/avd-mac-tricks/hardware/multi-monitor-retina/">Read Multi-Monitor & Retina Guide →</a></p>
+  </Card>
+</CardGrid>
+
+---
+
+## 💡 Community Tip Spotlight
 
 ### Multi-Monitor Support & Retina Display Optimization
 
@@ -31,407 +50,9 @@ Practical tips for configuring the Microsoft Windows App client, multi-monitor w
 > 
 > — **[u/RudeTorpedo](https://www.reddit.com/user/RudeTorpedo/)** via [r/army on Reddit](https://www.reddit.com/r/army/comments/1wygtl0/comment/pfb7hkr/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button)
 
-#### Why This Matters
+By default, Microsoft Windows App often launches remote desktop sessions constrained to a single monitor and at default, non-Retina scaling. On high-DPI Mac displays (MacBook Liquid Retina screens or 4K/5K external monitors), default scaling can result in blurry fonts and fuzzy UI elements.
 
-By default, Microsoft Windows App often launches remote desktop sessions constrained to a single monitor and at default, non-Retina scaling. On high-DPI Mac displays (MacBook Liquid Retina screens or 4K/5K external monitors), default scaling can result in blurry fonts, fuzzy UI elements, or unexpected monitor arrangement.
-
-Enabling **Custom Settings** per workspace gives you granular control over how the remote session renders on your Mac.
-
-#### Step-by-Step Instructions
-
-1. **Open Windows App Launch Window**: Open the **Windows App** (formerly Microsoft Remote Desktop) client to your main Workspaces dashboard.
-2. **Hover Over the Desktop Card**: Find the remote PC / host pool icon you connect to. Hover your mouse over the card to reveal the three dots (**`...`**) in the top-right corner.
-3. **Select Configure**: Click the ellipses (**`...`**) and select **Configure** (or **Settings**).
-4. **Enable Custom Settings**: In the configuration dialog, check the box for **"Use custom settings"** (overriding global defaults for this specific connection).
-5. **Adjust Display Preferences**:
-   * **Multiple Monitor Support**: Check **"Use all monitors"** if you want your remote Windows session to span across all connected Mac screens in full screen.
-   * **Optimize for Retina Displays**: Toggle **"Optimize for Retina displays"** (or enable high-DPI scaling) to render Windows text and UI elements with native, sharp crispness instead of stretched bitmap interpolation.
-6. **Save & Reconnect**: Click **Save**. Your next connection will launch across your full multi-monitor layout with razor-sharp Retina resolution.
-
----
-
-## 🎧 Audio & Peripheral Passthrough: AirPods Routing with SoundSource
-
-Connecting external Bluetooth audio gear—especially **Apple AirPods**—to macOS while operating inside **Azure Virtual Desktop (AVD)** or the **Microsoft Windows App** has historically been one of the most frustrating aspects of the remote desktop experience.
-
-Here is the definitive guide to why this happens, how to force seamless passthrough on the fly, and the historical troubleshooting lessons learned over years of audio routing research.
-
----
-
-### 1. The Core Problem: The "Connect Before Launch" Dilemma
-
-Under the standard Microsoft Windows App client architecture on macOS:
-
-* If you connect your AirPods to your Mac **after** launching Windows App or joining a remote virtual desktop session, **audio passthrough fails to switch over properly**.
-* Instead of routing to your newly connected AirPods, remote audio often stays locked to your MacBook Pro speakers, defaults to an internal device, or cuts out entirely.
-* This is especially catastrophic during **Microsoft Teams meetings** or VoIP calls inside the remote desktop: popping in your AirPods to join an incoming call leaves you either broadcasting the meeting to the entire room or scrambling without audio.
-
-#### The "Official" Workaround is Broken
-Microsoft's documented workaround has always been:
-> *"Ensure all audio peripherals are connected to macOS prior to launching your remote desktop session."*
-
-For anyone working dynamic days—answering unexpected calls, taking AirPods out for lunch, swapping dead earbuds into a charging case, or switching between iPhone and Mac—**quitting your active remote session, closing open documents, connecting AirPods, and reconnecting to AVD is completely unacceptable.**
-
----
-
-### 2. The Primary Solution: Per-App Redirection via SoundSource
-
-The permanent fix is to bypass Windows App's internal audio device selector entirely using **[SoundSource](https://rogueamoeba.com/soundsource/) by Rogue Amoeba** *(specifically verified on App Version 6.1.4, ARK Audio Engine 13.5+ on modern macOS)*.
-
-SoundSource operates at the system-level CoreAudio application layer. Instead of waiting for Windows App to detect hardware hot-plug events, SoundSource forcibly intercepts the audio output stream of `com.microsoft.rdc.macos` and directs it to whichever destination you choose.
-
-<div class="diagram-container">
-  <div class="diagram-header">
-    <div class="badge-pill">COREAUDIO REDIRECTION</div>
-    <div class="diagram-title">SoundSource Per-App Stream Interception</div>
-    <div class="diagram-subtitle">Forcibly reroutes Windows App remote audio to AirPods without reconnecting the AVD session.</div>
-  </div>
-
-  <div class="diagram-layer theme-blue">
-    <div class="layer-top">
-      <h4 class="layer-title">Windows App Remote Session (AVD)</h4>
-      <span class="layer-tag tag-blue">Audio Source</span>
-    </div>
-    <ul class="layer-bullets">
-      <li>Process: <code>com.microsoft.rdc.macos</code></li>
-      <li>Outputs remote audio stream to the system default audio sink</li>
-    </ul>
-  </div>
-
-  <div class="diagram-connector">
-    <span class="connector-label">Audio stream captured at CoreAudio layer</span>
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-      <line x1="12" y1="5" x2="12" y2="19"></line>
-      <polyline points="19 12 12 19 5 12"></polyline>
-    </svg>
-  </div>
-
-  <div class="diagram-layer theme-sky">
-    <div class="layer-top">
-      <h4 class="layer-title">SoundSource CoreAudio Interception Layer</h4>
-      <span class="layer-tag tag-sky">Audio Engine</span>
-    </div>
-    <ul class="layer-bullets">
-      <li>Detects Windows App process stream independently of RDP hot-plug events</li>
-      <li>Dynamically overrides hardware output route in real time</li>
-      <li>Applies per-app volume boost & voice frequency equalization</li>
-    </ul>
-  </div>
-
-  <div class="diagram-connector">
-    <span class="connector-label">Dual-channel routing separation</span>
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-      <line x1="12" y1="5" x2="12" y2="19"></line>
-      <polyline points="19 12 12 19 5 12"></polyline>
-    </svg>
-  </div>
-
-  <div class="diagram-split">
-    <div class="split-card success-card">
-      <div class="split-card-header">
-        <span>🎧 Redirect Audio To</span>
-      </div>
-      <p style="margin: 0 0 0.4rem 0; font-weight: 700; color: #4ade80;">Apple AirPods Pro</p>
-      <p style="margin: 0; font-size: 0.8rem; color: var(--sl-color-gray-3);">Microsoft Teams meetings, notification chimes, and remote VoIP calls.</p>
-    </div>
-    <div class="split-card tip-card">
-      <div class="split-card-header">
-        <span>🔊 Mac System Audio</span>
-      </div>
-      <p style="margin: 0 0 0.4rem 0; font-weight: 700; color: #38bdf8;">MacBook Speakers</p>
-      <p style="margin: 0; font-size: 0.8rem; color: var(--sl-color-gray-3);">Local music, Safari videos, and macOS system alerts remain undisturbed.</p>
-    </div>
-  </div>
-</div>
-
-#### Step-by-Step Configuration
-
-1. **Install SoundSource**: Open SoundSource from your macOS menu bar.
-2. **Add Windows App to Applications**:
-   * In the SoundSource popover, look at the **Applications** section.
-   * Click **Add Favorite** (or the `+` icon) and select **Microsoft Windows App** (or `com.microsoft.rdc.macos`).
-3. **Configure Audio Redirection**:
-   * Next to Windows App, find the **Redirect Audio To** dropdown (marked by the up/down arrow icon).
-   * Change it from *No Redirect* to your specific **AirPods** (e.g. *AirPods Pro*).
-4. **Set Volume & Boost**:
-   * Set the volume slider to `100%`. If remote callers sound quiet, use SoundSource's built-in **Boost** feature to amplify remote voice channels without distorting macOS system sounds.
-
-Once configured, you can pop your AirPods into your ears **at any time mid-session or mid-call**. SoundSource instantly captures the remote audio stream and routes it directly to your ears—no restarting, no disconnecting, and zero friction.
-
----
-
-### 3. Historical Context & The Troubleshooting Archive (2021–2022)
-
-Getting to this clean setup was not without trial and error. Throughout 2021 and 2022, using third-party audio interception software with remote desktop streams involved navigating significant side effects:
-
-* **Audio Lag & Buffer Crackling**: Early CoreAudio virtual drivers struggled with variable Bluetooth latency, causing audible pops, clicks, and micro-stutters during heavy network traffic or CPU spikes.
-* **The Infamous Teams "Robotic Voice" Bug**: Occasionally during remote Microsoft Teams calls, incoming and outgoing voices would suddenly drop multiple octaves into a distorted, slow, low-pitch "monster/robot" sound. This buffer sample rate desynchronization was so deep that neither quitting Teams nor disconnecting AirPods fixed it—it required a complete macOS reboot or executing `sudo killall coreaudiod` in Terminal.
-* **Google Meet & Background App Conflicts**: Running local Google Meet sessions while playing audio-rich background applications (such as *Tabletop Simulator*) caused severe sound degradation, channel clipping, and microphone feedback.
-* **Video Playback Lag in Friendly Streaming**: Users streaming video via the **Friendly Streaming App** while SoundSource was active noticed severe video stuttering and A/V desync.
-* **The Audio Channel Scramble**: Troubleshooting these anomalies required countless hours researching macOS audio routing, creating multi-output aggregate devices in *Audio MIDI Setup*, balancing buffer sample rates (44.1 kHz vs 48 kHz), and manipulating discrete audio channels to eliminate echo and low-frequency resonance.
-
----
-
-### 4. The 2026 Landscape: What's Fixed vs. What Remains
-
-Recent updates across modern macOS and SoundSource (v6.1+) have resolved the vast majority of historical headaches:
-* ✅ The low-pitch "robotic voice" bug in Microsoft Teams is completely eliminated.
-* ✅ Audio crackling and Google Meet background degradation have been fixed by modernized ARK audio engine drivers.
-* ✅ Bluetooth sample rate transitions when AirPods switch between stereo listening and microphone input are handled cleanly.
-
-#### Tuning the Latency Buffer
-In **SoundSource > Settings > Audio**, you will find an **Audio Processing Latency** slider:
-
-<div class="visual-slider-wrap">
-  <div class="slider-labels">
-    <span>🎙️ Lower Latency</span>
-    <span>🛡️ More Reliable</span>
-  </div>
-  <div class="slider-track">
-    <div class="slider-thumb"></div>
-  </div>
-  <div class="slider-subtexts">
-    <span>(Reduces mic echo during live calls)</span>
-    <span>(Prevents audio skips over Wi-Fi)</span>
-  </div>
-</div>
-
-> [!TIP] **Optimal Buffer Setting**  
-> Keep the slider centered. Setting it too far toward *Lower Latency* reduces echo during active calls but can introduce skips over lossy Wi-Fi. The center position gives rock-solid stability for both remote Teams meetings and local listening.
-
----
-
-### 5. Crucial Workaround: Resolving Friendly Streaming Lag
-
-While Teams and general audio passthrough are rock-solid, **video stutter in the Friendly Streaming App still persists** if SoundSource attempts to process its media pipeline.
-
-Fortunately, there is a simple 10-second fix using SoundSource's native exclusion list:
-
-1. Open **SoundSource Settings** (<kbd>⌘ ,</kbd>).
-2. Click on the **Audio** tab at the top.
-3. Scroll down to **Excluded Applications**.
-4. Click the **`+ Add Exclusion`** button.
-5. Select **Friendly Streaming** from your Applications folder (you can also exclude macOS accessibility utilities like **VoiceOver** if desired).
-
-<div class="mock-mac-window">
-  <div class="mock-window-header">
-    <div class="mock-window-dots">
-      <span class="mock-dot red"></span>
-      <span class="mock-dot yellow"></span>
-      <span class="mock-dot green"></span>
-    </div>
-    <div class="mock-window-title">SoundSource — Settings</div>
-    <div style="width: 40px;"></div>
-  </div>
-  <div class="mock-window-body">
-    <div class="mock-tabs">
-      <div class="mock-tab">General</div>
-      <div class="mock-tab">Appearance</div>
-      <div class="mock-tab active">Audio (Selected)</div>
-    </div>
-    
-    <div style="margin-bottom: 1.25rem;">
-      <div style="font-size: 0.85rem; font-weight: 700; margin-bottom: 0.5rem;">Audio Processing Latency:</div>
-      <div class="slider-track" style="margin-bottom: 0.35rem;">
-        <div class="slider-thumb"></div>
-      </div>
-    </div>
-
-    <div style="font-size: 0.85rem; font-weight: 700; margin-bottom: 0.5rem;">Excluded Applications:</div>
-    <div class="mock-list-item">
-      <span>🎬 Friendly Streaming</span>
-      <span style="font-size: 0.72rem; color: #34d399; font-weight: 700;">EXCLUDED</span>
-    </div>
-    <div class="mock-list-item">
-      <span>🗣️ VoiceOver</span>
-      <span style="font-size: 0.72rem; color: #34d399; font-weight: 700;">EXCLUDED</span>
-    </div>
-  </div>
-</div>
-
-By adding Friendly Streaming to the Excluded Applications list, SoundSource completely ignores its playback engine. Video streams play with 100% fluid frame rates and zero desync, while your Windows App audio remains securely and conveniently routed to your AirPods!
-
----
-
-## 🔑 Smart Card & YubiKey PKI: Purebred Provisioning via AVD
-
-For Department of Defense (DoD), Army, and federal power users accessing **Azure Virtual Desktop (AVD)** or **Microsoft Windows App** on macOS, physical Common Access Cards (CAC) are essential for authentication. However, carrying an external smart card reader and a fragile physical CAC everywhere is cumbersome.
-
-The modern power-user setup utilizes a hardware security key—such as a **FIPS-certified YubiKey 5 Series** (e.g., YubiKey 5 NFC or 5C NFC)—enrolled with DoD PKI derived credentials via **DISA Purebred** (`https://purebred.csd.disa.mil/pb/`). Once provisioned, the YubiKey functions as a full PIV/CCID smart card directly through macOS USB passthrough, enabling one-touch remote logon, digital document signing, and Outlook email encryption.
-
-However, managing and provisioning YubiKeys inside a virtual AVD session introduces two notorious tripwires:
-
-<div class="diagram-container">
-  <div class="diagram-header">
-    <div class="badge-pill">DISA PUREBRED LIFECYCLE</div>
-    <div class="diagram-title">Derived Credential Enrollment & Renewal</div>
-    <div class="diagram-subtitle">Distinguishing initial hardware setup from routine CAC renewal.</div>
-  </div>
-
-  <div class="diagram-split">
-    <div class="split-card alert-card">
-      <div class="split-card-header">
-        <span>⚠️ Enrolling a New Key</span>
-      </div>
-      <p style="margin: 0 0 0.4rem 0; font-weight: 700; color: #f87171;">DO NOT log in via YubiKey!</p>
-      <p style="margin: 0; font-size: 0.82rem; color: var(--sl-color-gray-3);">
-        You must authenticate to AVD using your <strong>physical CAC</strong> so the session token doesn't lock your active key.
-      </p>
-    </div>
-    <div class="split-card success-card">
-      <div class="split-card-header">
-        <span>💡 Renewed / New CAC</span>
-      </div>
-      <p style="margin: 0 0 0.4rem 0; font-weight: 700; color: #4ade80;">No AESD Ticket or Reset!</p>
-      <p style="margin: 0; font-size: 0.82rem; color: var(--sl-color-gray-3);">
-        Log in with your new CAC, generate an OTP in Purebred self-service, and paste into the desktop app in &lt;60s.
-      </p>
-    </div>
-  </div>
-</div>
-
----
-
-### 1. The Identity Collision Trap: Setting Up a New or Secondary YubiKey
-
-If you are a tech geek with more than one security key (e.g., a **YubiKey 5C NFC** for your Mac's USB-C port and a backup **YubiKey 5 NFC** or **Nano** kept in your travel kit), you will eventually need to provision an additional key from inside your AVD session.
-
-#### The Trap
-
-When connecting to AVD, you might naturally authenticate into Windows using your **already-provisioned YubiKey**. Once inside Windows, you plug in the *new* unprovisioned YubiKey and launch the **User Key Management - Purebred Registration** desktop app.
-
-**What happens?** The Purebred Registration app will **target your existing, logged-in YubiKey** instead of the newly inserted one!
-
-<div class="diagram-container">
-  <div class="diagram-header">
-    <div class="badge-pill">SESSION IDENTITY COLLISION</div>
-    <div class="diagram-title">Why Multi-Key Enrollment Fails When Logged in via YubiKey</div>
-  </div>
-
-  <div class="diagram-split">
-    <div class="split-card tip-card">
-      <div class="split-card-header">
-        <span>💻 Mac Host (macOS)</span>
-      </div>
-      <ul class="layer-bullets" style="margin-top: 0.25rem;">
-        <li><code>Port 1 (USB-C)</code>: Active YubiKey</li>
-        <li><code>Port 2 (USB-A)</code>: New Blank YubiKey</li>
-      </ul>
-    </div>
-    <div class="split-card alert-card">
-      <div class="split-card-header">
-        <span>🔒 AVD Windows Session</span>
-      </div>
-      <ul class="layer-bullets" style="margin-top: 0.25rem;">
-        <li><strong>Windows Logon:</strong> Bound to Active YubiKey</li>
-        <li><strong>Purebred Client:</strong> ❌ Latches onto session token instead of blank key</li>
-      </ul>
-    </div>
-  </div>
-</div>
-
-Because Windows App maps both CCID devices into the VM, the operating system locks the existing key as the active session authentication token. Purebred interrogates the active session identity and focuses on re-provisioning or overwriting the key you are currently using, leaving the new key untouched.
-
-#### The Golden Rule: Authenticate with Your Physical CAC
-
-:::tip[The Provisioning Rule for Secondary Keys]
-**Never log into AVD with an existing YubiKey when provisioning a new one.**
-
-Always insert your **physical Common Access Card (CAC)** into a standard card reader and use it to log into the AVD session.
-:::
-
-By logging into Windows with your physical CAC:
-1. The **CAC** becomes the active session owner.
-2. The newly inserted **YubiKey** is detected as an available, unoccupied CCID target.
-3. The **Purebred Registration** client cleanly binds to the blank YubiKey, allowing you to complete initial enrollment without identity conflicts.
-
----
-
-### 2. The New CAC Myth: Re-Provisioning Without AESD or Resets
-
-When you renew your CAC or receive a replacement card (due to promotion, expiration, or chip replacement), your PKI certificates are updated. A widespread myth among remote workers is that:
-* ❌ All existing YubiKeys are permanently bricked and must be thrown away.
-* ❌ You must completely wipe or factory-reset the YubiKey using YubiKey Manager.
-* ❌ You must submit an urgent ticket to the **Army Enterprise Service Desk (AESD)** or visit an in-person DEERS/RAPIDS office to clear the old tokens.
-
-**None of this is true.** You do not need to contact AESD, wait days for a helpdesk response, or reset your hardware key. You can re-provision your existing YubiKey in under two minutes via the self-service Purebred portal.
-
----
-
-### 3. Step-by-Step Re-Provisioning Workflow (The Self-Service OTP Flow)
-
-Here is the exact procedure to re-link your existing YubiKey when you receive a new CAC:
-
-#### Step 1: Log into AVD with Your New CAC
-Plug your physical CAC reader into your Mac, insert your **new CAC**, and connect to your AVD desktop through Microsoft Windows App (*"I know, so uncivilized, but required for the re-link"*).
-
-#### Step 2: Plug in Your YubiKey & Launch Purebred
-With your remote session running, plug your YubiKey into an available Mac USB port. Inside the Windows AVD desktop, launch the **User Key Management - Purebred Registration** application.
-
-<div style="margin: 1.5rem 0; border-radius: 12px; overflow: hidden; border: 1px solid rgba(56, 189, 248, 0.25); box-shadow: 0 8px 24px rgba(0,0,0,0.3);">
-  <img 
-    src="/avd-mac-tricks/images/purebred-registration-dialog.png" 
-    alt="User Key Management - Purebred Registration Dialog" 
-    style="width: 100%; height: auto; display: block;" 
-  />
-</div>
-
-#### Step 3: Open the Purebred Portal via CAC
-Inside the AVD session (or locally in macOS Edge/Safari using your CAC), navigate to the official DISA Purebred self-service portal:
-👉 **`https://purebred.csd.disa.mil/pb/`**
-
-When prompted, select your new CAC authentication certificate and enter your CAC PIN.
-
-#### Step 4: Locate Your Device & Generate an OTP
-1. On the Purebred homepage, look under **Review your devices** and click **My Devices**.
-2. Locate your YubiKey in the device table. It will be identified by:
-   * **Type**: `Yubico YubiKey OTP+FIDO+CCID`
-   * **Serial Number**: Matches the physical serial number laser-engraved on your key.
-3. In the left-hand **actions** column next to your YubiKey, click **Generate OTP**.
-
-<div style="margin: 1.5rem 0; border-radius: 12px; overflow: hidden; border: 1px solid rgba(56, 189, 248, 0.25); box-shadow: 0 8px 24px rgba(0,0,0,0.3);">
-  <img 
-    src="/avd-mac-tricks/images/purebred-my-devices.png" 
-    alt="DISA Purebred My Devices Portal - Generate OTP Action" 
-    style="width: 100%; height: auto; display: block;" 
-  />
-</div>
-
-4. Purebred will generate a temporary one-time password (OTP) alphanumeric string. Copy this value to your clipboard.
-
-#### Step 5: Complete Re-Enrollment in the Client App
-1. Return to the **Purebred Registration** application window inside AVD.
-2. Confirm the **OTP URL** reads `https://purebred.csd.disa.mil/pb/`.
-3. Paste the copied code into the **OTP Value** field.
-4. Click **Complete Enrollment/Re-Enrollment**.
-5. When prompted, enter your **YubiKey PIV PIN** (default is `123456` unless previously customized).
-
-Purebred communicates with DISA PKI, provisions the new derived credentials into the YubiKey's PIV container, and activates the token. You can now log out, remove your physical CAC, and authenticate into AVD with your updated YubiKey!
-
----
-
-### 4. Bonus Power Step: Recovering Historical S/MIME Encryption Keys
-
-After re-enrolling with a new CAC, you may find that you can log into AVD and sign new documents, but **cannot read older encrypted emails in Microsoft Outlook**.
-
-This happens because the email messages were encrypted with your *previous* CAC's public key, and your re-enrolled YubiKey currently only contains the *new* encryption certificate.
-
-#### The Fix: One-Click Key Recovery
-1. Open the **Purebred Registration** client inside AVD with your YubiKey inserted.
-2. Instead of enrollment, click the **`Recover Old Encryption Keys`** button.
-3. Purebred connects to the DISA Key Escrow archive, downloads your historical private decryption keys, and stores them in your YubiKey's retired key management slots.
-4. Restart Outlook: all archived and historical encrypted messages will decrypt immediately.
-
----
-
-### 5. Troubleshooting & Hardware Checklist
-
-| Symptom | Probable Cause | Recommended Fix |
-| :--- | :--- | :--- |
-| **YubiKey not detected in AVD** | Smart card redirection disabled in Windows App | In Windows App launch window, hover over your PC card, click `...` > **Configure** > **Devices & Audio**, and ensure **Smart cards** is checked. |
-| **macOS does not recognize YubiKey** | CCID interface disabled or USB hub drop | Open Terminal on Mac and run `system_profiler SPUSBDataType`. Ensure the Yubico CCID device is listed. Avoid unpowered USB-A/USB-C splitters. |
-| **PIN is rejected during enrollment** | Confusing CAC PIN with YubiKey PIV PIN | The CAC PIN (used at initial AVD logon) is separate from the YubiKey PIV PIN (used by Purebred, default `123456`). |
-| **Stale certificate prompt in Edge/Chrome** | Windows CryptoAPI local cert cache | In Windows AVD, open Command Prompt and run `certutil -scinfo` or close and relaunch Edge to flush cached token thumbnails. |
+Enabling **Custom Settings** per workspace gives you granular control over how the remote session renders on your Mac. See the full step-by-step instructions in the **[Multi-Monitor & Retina Display Optimization](/avd-mac-tricks/hardware/multi-monitor-retina/)** guide.
 
 ---
 

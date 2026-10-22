@@ -1,0 +1,185 @@
+---
+title: YubiKey PKI & DISA Purebred Setup
+description: Provision and re-enroll YubiKeys with DoD PKI derived credentials via AVD without session token lockouts or AESD helpdesk tickets.
+lastMajorUpdate: "2026-10-22"
+updateBadge: "NEW"
+updateSummary: "Dedicated guide featuring sanitized screenshots, multi-key isolation rules, and legacy key recovery"
+---
+
+For Department of Defense (DoD), Army, and federal power users accessing **Azure Virtual Desktop (AVD)** or **Microsoft Windows App** on macOS, physical Common Access Cards (CAC) are essential for authentication. However, carrying an external smart card reader and a fragile physical CAC everywhere is cumbersome.
+
+The modern power-user setup utilizes a hardware security key—such as a **FIPS-certified YubiKey 5 Series** (e.g., YubiKey 5 NFC or 5C NFC)—enrolled with DoD PKI derived credentials via **DISA Purebred** (`https://purebred.csd.disa.mil/pb/`). Once provisioned, the YubiKey functions as a full PIV/CCID smart card directly through macOS USB passthrough, enabling one-touch remote logon, digital document signing, and Outlook email encryption.
+
+However, managing and provisioning YubiKeys inside a virtual AVD session introduces two notorious tripwires:
+
+<div class="diagram-container">
+  <div class="diagram-header">
+    <div class="badge-pill">DISA PUREBRED LIFECYCLE</div>
+    <div class="diagram-title">Derived Credential Enrollment & Renewal</div>
+    <div class="diagram-subtitle">Distinguishing initial hardware setup from routine CAC renewal.</div>
+  </div>
+
+  <div class="diagram-split">
+    <div class="split-card alert-card">
+      <div class="split-card-header">
+        <span>⚠️ Enrolling a New Key</span>
+      </div>
+      <p style="margin: 0 0 0.4rem 0; font-weight: 700; color: #f87171;">DO NOT log in via YubiKey!</p>
+      <p style="margin: 0; font-size: 0.82rem; color: var(--sl-color-gray-3);">
+        You must authenticate to AVD using your <strong>physical CAC</strong> so the session token doesn't lock your active key.
+      </p>
+    </div>
+    <div class="split-card success-card">
+      <div class="split-card-header">
+        <span>💡 Renewed / New CAC</span>
+      </div>
+      <p style="margin: 0 0 0.4rem 0; font-weight: 700; color: #4ade80;">No AESD Ticket or Reset!</p>
+      <p style="margin: 0; font-size: 0.82rem; color: var(--sl-color-gray-3);">
+        Log in with your new CAC, generate an OTP in Purebred self-service, and paste into the desktop app in &lt;60s.
+      </p>
+    </div>
+  </div>
+</div>
+
+---
+
+## 1. The Identity Collision Trap: Setting Up a New or Secondary YubiKey
+
+If you are a tech geek with more than one security key (e.g., a **YubiKey 5C NFC** for your Mac's USB-C port and a backup **YubiKey 5 NFC** or **Nano** kept in your travel kit), you will eventually need to provision an additional key from inside your AVD session.
+
+### The Trap
+
+When connecting to AVD, you might naturally authenticate into Windows using your **already-provisioned YubiKey**. Once inside Windows, you plug in the *new* unprovisioned YubiKey and launch the **User Key Management - Purebred Registration** desktop app.
+
+**What happens?** The Purebred Registration app will **target your existing, logged-in YubiKey** instead of the newly inserted one!
+
+<div class="diagram-container">
+  <div class="diagram-header">
+    <div class="badge-pill">SESSION IDENTITY COLLISION</div>
+    <div class="diagram-title">Why Multi-Key Enrollment Fails When Logged in via YubiKey</div>
+  </div>
+
+  <div class="diagram-split">
+    <div class="split-card tip-card">
+      <div class="split-card-header">
+        <span>💻 Mac Host (macOS)</span>
+      </div>
+      <ul class="layer-bullets" style="margin-top: 0.25rem;">
+        <li><code>Port 1 (USB-C)</code>: Active YubiKey</li>
+        <li><code>Port 2 (USB-A)</code>: New Blank YubiKey</li>
+      </ul>
+    </div>
+    <div class="split-card alert-card">
+      <div class="split-card-header">
+        <span>🔒 AVD Windows Session</span>
+      </div>
+      <ul class="layer-bullets" style="margin-top: 0.25rem;">
+        <li><strong>Windows Logon:</strong> Bound to Active YubiKey</li>
+        <li><strong>Purebred Client:</strong> ❌ Latches onto session token instead of blank key</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+Because Windows App maps both CCID devices into the VM, the operating system locks the existing key as the active session authentication token. Purebred interrogates the active session identity and focuses on re-provisioning or overwriting the key you are currently using, leaving the new key untouched.
+
+### The Golden Rule: Authenticate with Your Physical CAC
+
+:::tip[The Provisioning Rule for Secondary Keys]
+**Never log into AVD with an existing YubiKey when provisioning a new one.**
+
+Always insert your **physical Common Access Card (CAC)** into a standard card reader and use it to log into the AVD session.
+:::
+
+By logging into Windows with your physical CAC:
+1. The **CAC** becomes the active session owner.
+2. The newly inserted **YubiKey** is detected as an available, unoccupied CCID target.
+3. The **Purebred Registration** client cleanly binds to the blank YubiKey, allowing you to complete initial enrollment without identity conflicts.
+
+---
+
+## 2. The New CAC Myth: Re-Provisioning Without AESD or Resets
+
+When you renew your CAC or receive a replacement card (due to promotion, expiration, or chip replacement), your PKI certificates are updated. A widespread myth among remote workers is that:
+* ❌ All existing YubiKeys are permanently bricked and must be thrown away.
+* ❌ You must completely wipe or factory-reset the YubiKey using YubiKey Manager.
+* ❌ You must submit an urgent ticket to the **Army Enterprise Service Desk (AESD)** or visit an in-person DEERS/RAPIDS office to clear the old tokens.
+
+**None of this is true.** You do not need to contact AESD, wait days for a helpdesk response, or reset your hardware key. You can re-provision your existing YubiKey in under two minutes via the self-service Purebred portal.
+
+---
+
+## 3. Step-by-Step Re-Provisioning Workflow (The Self-Service OTP Flow)
+
+Here is the exact procedure to re-link your existing YubiKey when you receive a new CAC:
+
+### Step 1: Log into AVD with Your New CAC
+Plug your physical CAC reader into your Mac, insert your **new CAC**, and connect to your AVD desktop through Microsoft Windows App (*"I know, so uncivilized, but required for the re-link"*).
+
+### Step 2: Plug in Your YubiKey & Launch Purebred
+With your remote session running, plug your YubiKey into an available Mac USB port. Inside the Windows AVD desktop, launch the **User Key Management - Purebred Registration** application.
+
+<div style="margin: 1.5rem 0; border-radius: 12px; overflow: hidden; border: 1px solid rgba(56, 189, 248, 0.25); box-shadow: 0 8px 24px rgba(0,0,0,0.3);">
+  <img 
+    src="/avd-mac-tricks/images/purebred-registration-dialog.png" 
+    alt="User Key Management - Purebred Registration Dialog" 
+    style="width: 100%; height: auto; display: block;" 
+  />
+</div>
+
+### Step 3: Open the Purebred Portal via CAC
+Inside the AVD session (or locally in macOS Edge/Safari using your CAC), navigate to the official DISA Purebred self-service portal:  
+👉 **`https://purebred.csd.disa.mil/pb/`**
+
+When prompted, select your new CAC authentication certificate and enter your CAC PIN.
+
+### Step 4: Locate Your Device & Generate an OTP
+1. On the Purebred homepage, look under **Review your devices** and click **My Devices**.
+2. Locate your YubiKey in the device table. It will be identified by:
+   * **Type**: `Yubico YubiKey OTP+FIDO+CCID`
+   * **Serial Number**: Matches the physical serial number laser-engraved on your key.
+3. In the left-hand **actions** column next to your YubiKey, click **Generate OTP**.
+
+<div style="margin: 1.5rem 0; border-radius: 12px; overflow: hidden; border: 1px solid rgba(56, 189, 248, 0.25); box-shadow: 0 8px 24px rgba(0,0,0,0.3);">
+  <img 
+    src="/avd-mac-tricks/images/purebred-my-devices.png" 
+    alt="DISA Purebred My Devices Portal - Generate OTP Action" 
+    style="width: 100%; height: auto; display: block;" 
+  />
+</div>
+
+4. Purebred will generate a temporary one-time password (OTP) alphanumeric string. Copy this value to your clipboard.
+
+### Step 5: Complete Re-Enrollment in the Client App
+1. Return to the **Purebred Registration** application window inside AVD.
+2. Confirm the **OTP URL** reads `https://purebred.csd.disa.mil/pb/`.
+3. Paste the copied code into the **OTP Value** field.
+4. Click **Complete Enrollment/Re-Enrollment**.
+5. When prompted, enter your **YubiKey PIV PIN** (default is `123456` unless previously customized).
+
+Purebred communicates with DISA PKI, provisions the new derived credentials into the YubiKey's PIV container, and activates the token. You can now log out, remove your physical CAC, and authenticate into AVD with your updated YubiKey!
+
+---
+
+## 4. Bonus Power Step: Recovering Historical S/MIME Encryption Keys
+
+After re-enrolling with a new CAC, you may find that you can log into AVD and sign new documents, but **cannot read older encrypted emails in Microsoft Outlook**.
+
+This happens because the email messages were encrypted with your *previous* CAC's public key, and your re-enrolled YubiKey currently only contains the *new* encryption certificate.
+
+### The Fix: One-Click Key Recovery
+1. Open the **Purebred Registration** client inside AVD with your YubiKey inserted.
+2. Instead of enrollment, click the **`Recover Old Encryption Keys`** button.
+3. Purebred connects to the DISA Key Escrow archive, downloads your historical private decryption keys, and stores them in your YubiKey's retired key management slots.
+4. Restart Outlook: all archived and historical encrypted messages will decrypt immediately.
+
+---
+
+## 5. Troubleshooting & Hardware Checklist
+
+| Symptom | Probable Cause | Recommended Fix |
+| :--- | :--- | :--- |
+| **YubiKey not detected in AVD** | Smart card redirection disabled in Windows App | In Windows App launch window, hover over your PC card, click `...` > **Configure** > **Devices & Audio**, and ensure **Smart cards** is checked. |
+| **macOS does not recognize YubiKey** | CCID interface disabled or USB hub drop | Open Terminal on Mac and run `system_profiler SPUSBDataType`. Ensure the Yubico CCID device is listed. Avoid unpowered USB-A/USB-C splitters. |
+| **PIN is rejected during enrollment** | Confusing CAC PIN with YubiKey PIV PIN | The CAC PIN (used at initial AVD logon) is separate from the YubiKey PIV PIN (used by Purebred, default `123456`). |
+| **Stale certificate prompt in Edge/Chrome** | Windows CryptoAPI local cert cache | In Windows AVD, open Command Prompt and run `certutil -scinfo` or close and relaunch Edge to flush cached token thumbnails. |

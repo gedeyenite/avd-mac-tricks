@@ -1,0 +1,73 @@
+---
+title: Multi-Monitor & Retina Display Optimization
+description: Configure Microsoft Windows App for razor-sharp Retina display scaling and multi-monitor desktop workspaces on macOS.
+lastMajorUpdate: "2026-10-22"
+updateBadge: "UPDATED"
+updateSummary: "Dedicated guide for custom workspace display settings and high-DPI scaling"
+---
+
+By default, the Microsoft Windows App client on macOS often launches remote desktop sessions constrained to a single monitor and at default, non-Retina scaling. 
+
+On high-DPI Mac displays (MacBook Liquid Retina screens or external 4K/5K displays), default bitmap scaling can result in blurry fonts, fuzzy UI elements, eye strain, or unexpected monitor arrangement.
+
+Enabling **Custom Settings** per workspace gives you granular control over how the remote session renders on your Mac.
+
+---
+
+## The Community Fix: Custom Workspace Properties
+
+> "On the launch window, if you hover over whichever server you are using, click the ellipses and go into configure, check the block for 'Use custom settings' and you can setup multiple monitor support and retina display."
+> 
+> — **[u/RudeTorpedo](https://www.reddit.com/user/RudeTorpedo/)** via [r/army on Reddit](https://www.reddit.com/r/army/comments/1wygtl0/comment/pfb7hkr/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button)
+
+---
+
+## Step-by-Step Instructions
+
+1. **Open Windows App Launch Window**: Open the **Windows App** (formerly Microsoft Remote Desktop) client to your main Workspaces dashboard.
+2. **Hover Over the Desktop Card**: Find the remote PC / host pool icon you connect to. Hover your mouse over the card to reveal the three dots (**`...`**) in the top-right corner.
+3. **Select Configure**: Click the ellipses (**`...`**) and select **Configure** (or **Settings**).
+4. **Enable Custom Settings**: In the configuration dialog, check the box for **"Use custom settings"** (overriding global defaults for this specific connection).
+5. **Adjust Display Preferences**:
+   * **Multiple Monitor Support**: Check **"Use all monitors"** if you want your remote Windows session to span across all connected Mac screens in full screen.
+   * **Optimize for Retina Displays**: Toggle **"Optimize for Retina displays"** (or enable high-DPI scaling) to render Windows text and UI elements with native, sharp crispness instead of stretched bitmap interpolation.
+6. **Save & Reconnect**: Click **Save**. Your next connection will launch across your full multi-monitor layout with razor-sharp Retina resolution.
+
+<div class="mock-mac-window">
+  <div class="mock-window-header">
+    <div class="mock-window-dots">
+      <span class="mock-dot red"></span>
+      <span class="mock-dot yellow"></span>
+      <span class="mock-dot green"></span>
+    </div>
+    <div class="mock-window-title">Edit PC / Workspace — Display Settings</div>
+    <div style="width: 40px;"></div>
+  </div>
+  <div class="mock-window-body">
+    <div class="mock-tabs">
+      <div class="mock-tab">General</div>
+      <div class="mock-tab active">Display (Selected)</div>
+      <div class="mock-tab">Devices & Audio</div>
+    </div>
+    
+    <div class="mock-list-item">
+      <span>🖥️ Use custom settings</span>
+      <span style="font-size: 0.72rem; color: #34d399; font-weight: 700;">ENABLED</span>
+    </div>
+    <div class="mock-list-item">
+      <span>📐 Optimize for Retina displays</span>
+      <span style="font-size: 0.72rem; color: #34d399; font-weight: 700;">CHECKED</span>
+    </div>
+    <div class="mock-list-item">
+      <span>🖥️🖥️ Use all monitors</span>
+      <span style="font-size: 0.72rem; color: #34d399; font-weight: 700;">OPTIONAL</span>
+    </div>
+  </div>
+</div>
+
+---
+
+## Pro-Tips for Multi-Monitor Mac Users
+
+* **Separate Spaces in Mission Control**: On macOS, open **System Settings > Desktop & Dock** and ensure **"Displays have separate Spaces"** is enabled. This prevents macOS from locking both screens together when switching spaces.
+* **Mixed DPI Setups (MacBook Screen + External 1080p Monitor)**: Windows handles per-monitor DPI scaling well, but dragging windows between a Retina 2x screen and a standard 1x external monitor can momentarily stutter. Keeping "Optimize for Retina displays" enabled ensures Windows calculates appropriate UI scaling factors per monitor.

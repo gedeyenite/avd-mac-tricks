@@ -63,7 +63,7 @@ These are the most common tripwires encountered when configuring Karabiner-Eleme
 * **Symptom:** Connecting your AirPods after launching Windows App leaves audio blasting through MacBook speakers or silent in remote Teams meetings.
 * **Why it happens:** Windows App captures macOS CoreAudio sinks at launch and does not dynamically bind to newly connected Bluetooth devices mid-session.
 * **The Solution:** Use **SoundSource** to force per-app redirection (`Windows App` -> `AirPods`).
-* **Complete Guide:** See our full troubleshooting breakdown, buffer latency recommendations, and Friendly Streaming workaround in the **[AirPods Routing with SoundSource](/avd-mac-tricks/reference/community-tips/#-audio--peripheral-passthrough-airpods-routing-with-soundsource)** guide.
+* **Complete Guide:** See our full troubleshooting breakdown, buffer latency recommendations, and Friendly Streaming workaround in the **[AirPods Routing with SoundSource](/avd-mac-tricks/hardware/airpods-soundsource/)** guide.
 
 ---
 
@@ -72,7 +72,7 @@ These are the most common tripwires encountered when configuring Karabiner-Eleme
 * **Symptom:** You plug in a new or secondary YubiKey inside AVD to enroll it, but the Purebred Registration app keeps trying to re-enroll or overwrite your existing, currently functioning YubiKey.
 * **Why it happens:** If you logged into the AVD Windows session using an existing YubiKey, Windows locks that token as the active logon session owner. Purebred interrogates the active session identity and ignores the newly inserted secondary key.
 * **The Solution:** Log out of AVD and **authenticate using your physical CAC in a card reader**. This frees up connected YubiKeys to be recognized as clean, unoccupied enrollment targets.
-* **Complete Guide:** See **[The Identity Collision Trap: Setting Up a New or Secondary YubiKey](/avd-mac-tricks/reference/community-tips/#1-the-identity-collision-trap-setting-up-a-new-or-secondary-yubikey)**.
+* **Complete Guide:** See **[The Identity Collision Trap: Setting Up a New or Secondary YubiKey](/avd-mac-tricks/hardware/yubikey-purebred/#1-the-identity-collision-trap-setting-up-a-new-or-secondary-yubikey)**.
 
 ---
 
@@ -81,7 +81,7 @@ These are the most common tripwires encountered when configuring Karabiner-Eleme
 * **Symptom:** You renewed or replaced your physical CAC and your YubiKeys stopped working for remote authentication.
 * **The Myth:** Users assume they need to wipe the YubiKey or open an urgent ticket with the Army Enterprise Service Desk (AESD).
 * **The Solution:** No helpdesk ticket or factory reset is needed. Log into AVD using your new CAC, launch the **Purebred Registration** app, open `https://purebred.csd.disa.mil/pb/` -> **My Devices**, click **Generate OTP**, and paste the OTP into the client app to re-bind your keys in seconds.
-* **Complete Guide:** See **[The New CAC Myth & Step-by-Step Self-Service Re-Provisioning](/avd-mac-tricks/reference/community-tips/#2-the-new-cac-myth-re-provisioning-without-aesd-or-resets)**.
+* **Complete Guide:** See **[The New CAC Myth & Step-by-Step Self-Service Re-Provisioning](/avd-mac-tricks/hardware/yubikey-purebred/#2-the-new-cac-myth-re-provisioning-without-aesd-or-resets)**.
 
 ---
 
